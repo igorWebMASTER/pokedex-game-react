@@ -8,11 +8,17 @@ export const ButtonWrapper = styled.button`
   font-weight: bold;
   font-size: 1.6rem;
   line-height: 1.6;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
   text-align: center;
   color: #ffffff;
   cursor: pointer;
   transition: all 0.2s;
   text-transform: uppercase;
+
+  span{
+   font-weight:bold;
+   font-size: 1.8rem;
+  }
 
   &.icon {
     display: flex;
