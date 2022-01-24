@@ -40,4 +40,9 @@ export const SideBarItem = styled.li`
     &:not(last-of-type) {
         margin-bottom: 1.6rem;
     }
+
+    ${({ isUsed }) => isUsed && `
+        background-color: #fff !important;
+        border: 4px solid #00d68f !important;
+    `}
 `;
