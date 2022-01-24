@@ -8,4 +8,12 @@ export const MapWrapper = styled.div`
   background-color: #5dae12;
   background-size: cover;
   height: 100vh;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Character = styled.div`
+  
+  
 `;
