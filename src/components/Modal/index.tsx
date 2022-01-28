@@ -168,8 +168,6 @@ export function ModalGeneral({ catchedPokemons,  onHandleCatchedPokdemon }: Moda
               {randomPokemonData?.abilities?.slice(0, 2).map((info: any, index: number) => (
                       <span key={info.ability.name}>
                           {info.ability.name}
-                          {index === 1 &&  ' ' }
-                          {index === 0 && ', ' }
                      </span>
                 ))}
               </S.AbilitiesInfoContainer>

@@ -332,3 +332,11 @@ export const EditNamePokemon = styled.div`
     }
   }
 `
+
+export const Error = styled.span`
+  color: #ff0000;
+  position: relative;
+  font-size: 1.2rem;
+  left: -109px;
+  top: -13px;
+`;

@@ -1,16 +1,27 @@
-import React, { Fragment, useState } from 'react';
+import React, {  useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
 import { translateStats, translateType } from 'utils/translate';
 import Button from '../Button';
 import { getColorOfTypePokemon } from 'utils/getColorOfTypePokemon';
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import CloseModal from 'assets/images/close.png'
 import editIcon from 'assets/images/editIcon.png'
 import CheckIcon from 'assets/images/checkIcon.png'
 
+const changeNamePokemonSchema = yup.object().shape({
+  name: yup
+    .string()
+    .min(3, "Nome Inválido")
+    .required("Nome Inválido")
+    .matches(/^[aA-zZ\s]+$/, "Somente Letras no nome"),
+});
+
 import InputText from 'components/InputText';
+import { useForm } from 'react-hook-form';
 
 export interface PokemonProps {
   lenght: number;
@@ -50,6 +61,15 @@ export function ModalPokemonInfo({
 }: ModalProps) {
   const [openEditName, setOpenEditName] = useState(false);
   const [editName, setEditName] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(changeNamePokemonSchema),
+  });
   
   function getStatsIcon(stat: string) {
     const stats = {
@@ -62,6 +82,11 @@ export function ModalPokemonInfo({
   
     return stats[stat] || stats.attack;
   };
+
+  function handleChangeName(data: any){
+    onHandleEditNamePokemon(pokemonData.id, data.name);
+    setOpenEditName(!openEditName)
+  }
   
   return (
     <>
@@ -97,33 +122,32 @@ export function ModalPokemonInfo({
               </S.ModalTextBody>
             )}
           {openEditName && (
-            <form>
+            <form onSubmit={handleSubmit(handleChangeName)}>
               <S.EditNamePokemon>
                 <InputText 
                   className=""
                   placeholder="Nome do Pokemon"
-                  name="name"
                   hasShadow
                   label=""
                   type="text" 
-                  onChange={(e: { target: { value: React.SetStateAction<string>; }; }) =>  {
-                  setEditName(e.target.value)
-                
-                }} />
+                  {...register('name')}
+                 />
                 <button 
-                  
-                  onClick={() => {
-                  if(editName === '') return;
-                  onHandleEditNamePokemon(pokemonData.id, editName);
-                  setOpenEditName(!openEditName)
-                  setEditName('')
-                }}>
+                  type="submit"
+                  >
                     <img src={CheckIcon} alt="check-icon" />
                 </button>
-                <button onClick={() => setOpenEditName(!openEditName)}>
+
+                <button type="button"onClick={() => {
+                  setOpenEditName(!openEditName)
+                  setValue('name', '')
+                }}>
                   <img src={CloseModal} alt="close-icon" />
                 </button>
+
             </S.EditNamePokemon>
+            {errors.name && <S.Error>{errors.name.message}</S.Error>}
+
             </form>
           )}
             <br />
@@ -187,7 +211,7 @@ export function ModalPokemonInfo({
               {pokemonData?.abilities?.slice(0, 2).map((info: any, index: number) => (
                   <span key={index}>
                       {info?.ability?.name}
-                      {index === 0 ? ' ' : ','}
+                      {index === 0 && ', '}
                 </span>
               ))}
             </S.AbilitiesInfoContainer>
