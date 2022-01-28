@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import InputText from 'components/InputText';
 import { SelectType } from 'components/Select';
@@ -7,6 +7,7 @@ import * as yup from "yup";
 
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { PokedexContext } from 'context/pokedexContext';
 
 
 import * as S from './styles'
@@ -55,9 +56,8 @@ const addCustomPokemonSchema = yup.object().shape({
 });
 
 
-export function FormAddPokemon({
-  onSubmit,
-}: any) {
+export function FormAddPokemon() {
+  
   const {
     register,
     handleSubmit,
@@ -85,7 +85,9 @@ export function FormAddPokemon({
     }
   });
   const [selectedTypes, setSelectedTypes] = useState<any>([])
-  const [focusedInput, setFocusedInput] = useState([])
+  const [focusedInput, setFocusedInput] = useState([]);
+  const { handleAddCustomPokemon } = useContext(PokedexContext);
+
 
   function handleSelectType(type: any) {
     setSelectedTypes([{
@@ -104,7 +106,7 @@ export function FormAddPokemon({
       types: selectedTypes,
       hp: String(watch('hp'))
     }
-    onSubmit(newData)
+    handleAddCustomPokemon(newData)
   }
 
   const increaseHp = () => {
@@ -197,7 +199,7 @@ export function FormAddPokemon({
   return (
     <S.FormContainer >
        {/* onClick={} */}
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(createPokemon)} >
         <InputText
            label="Nome"
            type="text"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import AshFront from 'assets/images/ashFront.png';
 import AshLeftLeg from 'assets/images/ashLeftLeg.png';
@@ -7,12 +7,17 @@ import AshStop from 'assets/images/ashStop.png';
 import * as S from './styles';
 import { Tooltip } from '../Tooltip';
 
-export function Ash({ catchedPokemons, onHandleGetRandomPokemon, isSearching }: any) {
+import { PokedexContext } from 'context/pokedexContext';
+import { PokemonProps } from '../ModalPokemonInfo';
+
+
+export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   const [sprite, setSprite] = useState(AshFront);
   const [tooltipStatus, setTooltipStatus] = useState("");
+  const { slots } = useContext(PokedexContext)
 
   function verifyPokemon() {
-    const isOutOfSlots = catchedPokemons.every((pokemon: { id: number; }) => pokemon.id);
+    const isOutOfSlots = slots.every((pokemon: PokemonProps) => pokemon.id);
 
     if(isOutOfSlots){
       setTooltipStatus("out");
@@ -23,10 +28,10 @@ export function Ash({ catchedPokemons, onHandleGetRandomPokemon, isSearching }: 
   }
 
   useEffect(() => {
-    if(catchedPokemons){
+    if(slots){
       verifyPokemon()
     }
-  },[catchedPokemons])
+  },[slots])
 
   useEffect(() => {
       setTimeout(() => {

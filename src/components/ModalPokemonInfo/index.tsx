@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
@@ -22,6 +22,7 @@ const changeNamePokemonSchema = yup.object().shape({
 
 import InputText from 'components/InputText';
 import { useForm } from 'react-hook-form';
+import { PokedexContext } from 'context/pokedexContext';
 
 export interface PokemonProps {
   lenght: number;
@@ -46,21 +47,18 @@ export interface PokemonProps {
 
 interface ModalProps {
   pokemonData: PokemonProps;
-  onHandleReleasePokemon: (info: any) => void;
-  onHandleEditNamePokemon: (info: any, name: string) => void;
   openCloseModal: boolean;
   requestCloseModal: () => void;
 }
 
 export function ModalPokemonInfo({
   pokemonData,
-  onHandleReleasePokemon,
-  onHandleEditNamePokemon,
   openCloseModal,
   requestCloseModal,
 }: ModalProps) {
   const [openEditName, setOpenEditName] = useState(false);
   const [editName, setEditName] = useState('');
+  const { handleEditNamePokemon, handleReleasePokemon } = useContext(PokedexContext)
 
   const {
     register,
@@ -84,7 +82,7 @@ export function ModalPokemonInfo({
   };
 
   function handleChangeName(data: any){
-    onHandleEditNamePokemon(pokemonData.id, data.name);
+    handleEditNamePokemon(pokemonData.id, data.name);
     setOpenEditName(!openEditName)
   }
   
@@ -242,7 +240,7 @@ export function ModalPokemonInfo({
                 icon=""
                 onlyIcon=""
                 onClick={() => {
-                  onHandleReleasePokemon(pokemonData?.id)
+                  handleReleasePokemon(pokemonData?.id)
                   requestCloseModal();
                 }}
               />

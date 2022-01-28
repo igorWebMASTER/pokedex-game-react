@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import Button from 'components/Button';
 
@@ -10,24 +10,25 @@ import pokeAvatar from 'assets/images/poke-avatar.png';
 import * as S from './styled';
 import { ModalPokemonInfo } from '../ModalPokemonInfo';
 import { ModalAddPokemon } from '../ModalAddPokemon';
+import { PokedexContext } from 'context/pokedexContext';
 // import useSound from 'use-sound';
 
-function Sidebar({ catchedPokemons, onHandleEditNamePokemon, onHandleReleasePokemon, onHandleAddCustomPokemon }) {
+function Sidebar() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalAddCustomPokemon, setModaAddCustomPokemon] = useState(false);
-
+  const { slots, handleAddCustomPokemon: onHandleAddCustomPokemon } = useContext(PokedexContext);
 
   const [selectedPokemonData, setSelectedPokemonData] = useState([]);
 
   useEffect(() => {
-    if (catchedPokemons) {
+    if (slots) {
       setSelectedPokemonData(() => {
-        const [pokemon] = catchedPokemons && catchedPokemons.filter((pokemon) => pokemon.id === selectedPokemonData.id);
+        const [pokemon] = slots && slots.filter((pokemon) => pokemon.id === selectedPokemonData.id);
         if (!pokemon) return [];
         return pokemon;
       })
     }
-  }, [catchedPokemons])
+  }, [slots])
 
   function handleSelectPokemon(pokemon) {
     setSelectedPokemonData(pokemon);
@@ -58,10 +59,8 @@ function Sidebar({ catchedPokemons, onHandleEditNamePokemon, onHandleReleasePoke
   return (
     <S.SideBarWrapper>
       <ModalPokemonInfo
-        onHandleReleasePokemon={onHandleReleasePokemon}
         requestCloseModal={handleOpenCatchedPokemonModal}
         openCloseModal={modalIsOpen}
-        onHandleEditNamePokemon={onHandleEditNamePokemon}
         pokemonData={selectedPokemonData}
       />
       <ModalAddPokemon
@@ -70,7 +69,7 @@ function Sidebar({ catchedPokemons, onHandleEditNamePokemon, onHandleReleasePoke
         openCloseModal={modalAddCustomPokemon}
       />
       <S.SideBarList>
-        {catchedPokemons && catchedPokemons.
+        {slots && slots.
           map((pokemon) => {
             return (
               <S.SideBarItem isUsed={pokemon.id} key={pokemon?.id}>
@@ -98,7 +97,7 @@ function Sidebar({ catchedPokemons, onHandleEditNamePokemon, onHandleReleasePoke
 
       <Button
         onClick={handleOpenAddPokemonModal} icon={iconPlus}
-        disabled={isEmpty(catchedPokemons)}
+        disabled={isEmpty(slots)}
       />
     </S.SideBarWrapper>
   );

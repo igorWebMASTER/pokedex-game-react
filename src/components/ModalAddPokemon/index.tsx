@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
 import { FormAddPokemon } from './FormAddPokemon';
 
-import CloseModal from 'assets/images/close.png'
+import CloseModal from 'assets/images/close.png';
+
 
 interface ModalProps {
-  onHandleAddCustomPokemon: (info: any) => void;
   openCloseModal: boolean;
   requestCloseModal: () => void;
 }
 
 export function ModalAddPokemon({
-  onHandleAddCustomPokemon,
   openCloseModal,
   requestCloseModal,
 }: ModalProps) {
-
   return (
     <>
     {openCloseModal && (<S.ModalOverlay>
@@ -42,10 +40,7 @@ export function ModalAddPokemon({
               </div>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormAddPokemon
-                onSubmit={onHandleAddCustomPokemon}
-                requestCloseModal={requestCloseModal}
-              />
+              <FormAddPokemon  />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>

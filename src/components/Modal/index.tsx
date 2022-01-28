@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import * as S from './styles';
 import { Ash } from '../Ash';
@@ -11,7 +11,9 @@ import { translateType } from 'utils/translate';
 import { getPokemonById } from 'app/api';
 import { getColorOfTypePokemon } from 'utils/getColorOfTypePokemon';
 
-interface PokemonProps {
+import { PokedexContext } from 'context/pokedexContext';
+
+export interface PokemonProps {
   lenght: number;
   name: string;
   weight: number;
@@ -33,17 +35,15 @@ interface PokemonProps {
   }[];
 }
 
-interface ModalProps {
-  catchedPokemons: PokemonProps[];
-  onHandleCatchedPokdemon: (info: any) => void;
-}
 
-export function ModalGeneral({ catchedPokemons,  onHandleCatchedPokdemon }: ModalProps)  {
+export function ModalGeneral()  {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [randomPokemonData, setRandomPokemonData] = useState<PokemonProps>(
     {} as PokemonProps
   );
+
+  const {  addPokemonToSlots } = useContext(PokedexContext);
 
   function openModal() {
     setIsOpen(true);
@@ -78,7 +78,6 @@ export function ModalGeneral({ catchedPokemons,  onHandleCatchedPokdemon }: Moda
       <Ash
         onHandleGetRandomPokemon={handleGetRandomPokemon}
         isSearching={isLoading}
-        catchedPokemons={catchedPokemons}
       />
       {modalIsOpen && (
         <S.ModalOverlay>
@@ -175,7 +174,7 @@ export function ModalGeneral({ catchedPokemons,  onHandleCatchedPokdemon }: Moda
                 <S.ButtonCatchPokemon
                   type="button"
                   onClick={() => {
-                    onHandleCatchedPokdemon(randomPokemonData)
+                    addPokemonToSlots(randomPokemonData)
                     closeModal();
                   }}
                 >

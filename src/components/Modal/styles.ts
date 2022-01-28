@@ -19,16 +19,22 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 380px;
-  min-height: 500px;
-  max-height:500px;
+  min-height: 520px;
+  max-height:520px;
+  width: 100%;
+  min-width:390px;
   overflow: scroll;
   position: relative;
 
-  min-width: 350px;
+  /* min-width: 350px; */
   border-radius: 10px;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
   text-align: center;
   position: relative;
+
+  @media screen and (max-width: 390px) {
+    min-width: 300px;
+  }
 `
 
 export const ModalHeader = styled.div`

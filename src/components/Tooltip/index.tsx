@@ -7,7 +7,14 @@ import SearchingTooltipImg from '../../assets/images/searchingTooltip.png';
 import * as S from './styles'
 import { motion } from 'framer-motion';
 
-export function Tooltip({ type, loading, status }: any) {
+
+interface TooltipProps {
+  type?: string;
+  loading: boolean;
+  status: string;
+}
+
+export function Tooltip({  loading, status }: TooltipProps) {
   if(loading) {
       return (
           <>

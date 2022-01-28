@@ -1,5 +1,6 @@
 
 import GlobalStyled from 'assets/styles/globalStyled';
+import { PokedexProvider } from './context/pokedexContext';
 
 import Routes from './routes';
 
@@ -7,8 +8,10 @@ function App() {
 
   return (
     <>
-      <GlobalStyled />
-      <Routes />
+       <PokedexProvider>
+        <GlobalStyled />
+        <Routes />
+      </PokedexProvider>
     </>
   );
 }
