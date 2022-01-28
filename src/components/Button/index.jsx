@@ -1,11 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import * as S from "./styled";
+import * as S from './styled';
 
-const Button = ({ text, icon, onClick, onlyIcon }) => (
-  <S.ButtonWrapper className={`${icon ? "icon" : ""}`} onClick={onClick}>
-    {icon ? <S.Icon src={icon} /> : <S.Text>{text}</S.Text>}
-  </S.ButtonWrapper>
-);
+function Button({ text, icon, onClick, onlyIcon, ...rest }) {
+  return (
+    <S.ButtonWrapper
+      className={`${icon ? 'icon' : ''}`}
+      onClick={onClick}
+      {...rest}
+    >
+      {icon ? <S.Icon src={icon} /> : <S.Text>{text}</S.Text>}
+    </S.ButtonWrapper>
+  );
+}
 
 export default Button;

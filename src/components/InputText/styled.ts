@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const InputTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.6rem;
+  /* margin-bottom: 1.6rem; */
 `;
 
 export const Label = styled.label`
@@ -13,9 +13,10 @@ export const Label = styled.label`
   line-height: 1.6;
   text-transform: uppercase;
   color: #2e3a59;
+  text-align:left;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input < { hasShadow?: boolean } > `
   width: 100%;
   font-weight: 700;
   font-size: 1.6rem;
@@ -26,14 +27,25 @@ export const Input = styled.input`
   overflow: hidden;
   display: flex;
   flex-direction: column;
-
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  
   &:focus,
   &:active {
     border-color: #598bff;
-  }
+  } 
 
   &::placeholder {
     color: #c5cef4;
     font-weight: 400;
   }
+
+
+  }
 `;
+
+
+export const Error = styled.div`
+  text-align: left;
+  font-size: 1.2rem;
+  position: relative;
+  color: #ff0000;`

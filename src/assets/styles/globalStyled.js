@@ -1,6 +1,22 @@
 import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
+  // create root css variables
+  :root {
+    --primary-default: #00D68F;
+    --primary-dark: #004A45;
+    --primary-transparent: rgba(0, 214, 135, 0, 48);
+    --action-dark: rgba(219, 44, 102, 1);
+    --action-default: rgba(255, 61, 113, 1);
+
+    --type-normal: rgba(196, 192, 180, 1);
+    --type-eletric: rgba(224, 141, 0, 1);
+    --type-fighting: rgba(133, 40, 22, 1);
+
+    --modal-background: rgba(0, 0, 0, 0.35);
+  }
+
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -18,11 +34,17 @@ export default createGlobalStyle`
     height: 100%;
     font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
+  ::-webkit-scrollbar{
+    width: 1px;
+    height: 1px;
+  }
+  
+
   body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+ 
     color: #222;
   }
 

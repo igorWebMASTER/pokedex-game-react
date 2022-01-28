@@ -1,121 +1,194 @@
 import React, { useState } from 'react';
-import Modal  from 'react-modal';
-import { motion } from "framer-motion"
 
 import * as S from './styles';
-import axios from 'axios';
-import capitalize from 'utils/capitalize';
 import { Ash } from '../Ash';
+
+import PokeBall from 'assets/images/pokeball.png'
+import CloseModal from 'assets/images/close.png'
+
+import { motion } from 'framer-motion';
+import { translateType } from 'utils/translate';
+import { getPokemonById } from 'app/api';
+import { getColorOfTypePokemon } from 'utils/getColorOfTypePokemon';
 
 interface PokemonProps {
   lenght: number;
   name: string;
   weight: number;
   height: number;
-  sprites : {
+  sprites: {
     front_default: string;
-  }
+  };
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
+  types: string[];
+  abilities: {
+    ability: {
+      name: string;
+    };
+  }[];
 }
 
 interface ModalProps {
-  onHandleCatchedPokdemon : (info: any) => void;
+  catchedPokemons: PokemonProps[];
+  onHandleCatchedPokdemon: (info: any) => void;
 }
 
-export function ModalGeneral({ onHandleCatchedPokdemon }: ModalProps) {
-    let subtitle : any;
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [randomPokemonData, setRandomPokemonData] = useState<PokemonProps>({} as PokemonProps);
+export function ModalGeneral({ catchedPokemons,  onHandleCatchedPokdemon }: ModalProps)  {
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [randomPokemonData, setRandomPokemonData] = useState<PokemonProps>(
+    {} as PokemonProps
+  );
 
-     function openModal() {
-        setIsOpen(true);
-     }
-    
-     function closeModal() {
-        setIsOpen(false);
-      }
-
-      function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
-      }
-
-    const customStyles = {
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-        },
-    };
-
-
-    function generatePokemonId() {
-      const idPokemon = Math.floor((Math.random() * 897)+1)
-      return idPokemon
-    }
-
-    async function handleGetRandomPokemon(){
-          
-          try{
-            setIsLoading(true);
-            let pokemonId = generatePokemonId();
-
-            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-            const pokemonData = response.data;
-            setRandomPokemonData(pokemonData);
-            openModal()
-            
-          } catch(e){
-            console.log(e)
-          } finally{
-            setInterval(() => {
-              setIsLoading(false);
-            }, 1000);
-          }
-            
-    }
-
-
-    // if(isLoading){
-    //   return(
-    //       <h1>Carregando...</h1>
-    //   )
-    // }
-
-      return ( 
-        <S.ModalContainer>
-           <Ash onHandleGetRandomPokemon={handleGetRandomPokemon} isSearching={isLoading} />
-            {/* <button onClick={() => {
-              openModal()
-              handleGetRandomPokemon()
-            }}>Open Modal</button> */}
-            
-            {modalIsOpen && (
-                <Modal
-                    isOpen={modalIsOpen}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModal}
-                    style={customStyles}
-                    contentLabel="Example Modal"
-                >
-                    <img src={randomPokemonData?.sprites?.front_default} alt="" />
-                    {`${capitalize(randomPokemonData?.name)}`} <br/>
-                    
-                    HP       ALTURA      PESO
-                    45/45     {randomPokemonData?.height}CM   {randomPokemonData?.weight}KG
-                    <br />
-                    <button type="button" onClick={() => {
-                        onHandleCatchedPokdemon(randomPokemonData)
-                        closeModal()
-                      }}>
-                      CAPTURAR
-                    </button>
-                </Modal>
-            )}
-        </S.ModalContainer>
-      );
-
+  function openModal() {
+    setIsOpen(true);
   }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function generatePokemonId() {
+    const idPokemon = Math.floor(Math.random() * 897 + 1);
+    return idPokemon;
+  }
+
+  async function handleGetRandomPokemon() {
+    try {
+      setIsLoading(true);
+      const pokemonId = generatePokemonId();
+      const pokemonData = await getPokemonById(pokemonId)
+      setTimeout(() => {
+       setRandomPokemonData(pokemonData);
+       openModal();
+       setIsLoading(false);
+      }, 1000)
+    } catch (e) {
+      console.log(e);
+    } 
+  }
+
+  return (
+    <>
+      <Ash
+        onHandleGetRandomPokemon={handleGetRandomPokemon}
+        isSearching={isLoading}
+        catchedPokemons={catchedPokemons}
+      />
+      {modalIsOpen && (
+        <S.ModalOverlay>
+          <motion.div
+            initial={{ y: 200, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 20,
+            }}
+          >
+          <S.ModalContainer>
+            <S.ModalHeader>
+              <button 
+                type="button"
+                onClick={closeModal}
+              >
+                <img src={CloseModal} alt="" />
+              </button>
+              <div>
+                <img src={randomPokemonData?.sprites?.front_default} alt="" />
+              </div>
+            </S.ModalHeader>
+            <S.ModalBody>
+              <S.ModalTextBody>
+              {`${randomPokemonData?.name}`} 
+              </S.ModalTextBody>
+              <br />
+              <S.ModalAbilitiesInfo>
+                <div>
+                  <span>
+                    HP
+                  </span>
+                  <span className="main-status">
+                    {randomPokemonData?.stats?.find(  
+                      (stat: any) => stat.stat.name === 'hp'
+                    )?.base_stat}
+
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    ALTURA
+                  </span>
+                  <span className="main-status">
+                    {(randomPokemonData?.height / 10).toFixed(2)} M
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    PESO
+                  </span>
+                  <span className="main-status">
+                    {randomPokemonData?.weight}KG
+                  </span>
+                </div>
+              </S.ModalAbilitiesInfo>
+              <br />
+              <S.HorizontalLine>
+                   <div>
+                   </div> 
+                   <span>Tipo </span>
+                   <div>
+                   </div>
+              </S.HorizontalLine>
+
+              <S.TypeInfoContainer>
+                {randomPokemonData?.types?.map((info: any) => (
+                  <S.Badge 
+                    key={info.type.name} 
+                    color={getColorOfTypePokemon(info?.type?.name)}
+                  >
+                      {translateType(info.type.name)}
+                  </S.Badge>
+                ))}
+               </S.TypeInfoContainer>
+
+               <S.HorizontalLine>
+                   <div>
+                   </div> 
+                     <span>HABILIDADES </span>
+                    <div>
+                    </div>
+              </S.HorizontalLine>
+              <S.AbilitiesInfoContainer>
+              {randomPokemonData?.abilities?.slice(0, 2).map((info: any, index: number) => (
+                      <span key={info.ability.name}>
+                          {info.ability.name}
+                          {index === 1 &&  ' ' }
+                          {index === 0 && ', ' }
+                     </span>
+                ))}
+              </S.AbilitiesInfoContainer>
+              <S.CaptureButtonContainer>
+                <S.ButtonCatchPokemon
+                  type="button"
+                  onClick={() => {
+                    onHandleCatchedPokdemon(randomPokemonData)
+                    closeModal();
+                  }}
+                >
+                  <img src={PokeBall} alt="pokeball" />
+                </S.ButtonCatchPokemon>
+              </S.CaptureButtonContainer>
+            </S.ModalBody>
+          </S.ModalContainer>
+         </motion.div>
+       </S.ModalOverlay>
+       )} 
+     </>
+  );
+}

@@ -13,6 +13,7 @@ export const Label = styled.label`
   line-height: 1.6;
   text-transform: uppercase;
   color: #2e3a59;
+  text-align: left;
 `;
 
 export const InputContent = styled.div`
@@ -23,6 +24,7 @@ export const Input = styled.input`
   width: 100%;
   font-weight: 700;
   font-size: 1.6rem;
+  height: 47px;
   padding: 1.2rem 0 1.2rem 0.8rem;
   background: #ffffff;
   border: 2px solid #e4e9f2;
@@ -87,4 +89,9 @@ export const Arrow = styled.img`
   &.increase {
     transform: rotate(180deg);
   }
+`;
+
+export const Error = styled.div`
+  color: #e74c3c;
+  text-align: left;
 `;

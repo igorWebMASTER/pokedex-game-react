@@ -1,111 +1,93 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import Sidebar from "components/Sidebar";
+import Sidebar from 'components/Sidebar';
 
-import * as S from "./styled";
+import { ModalGeneral } from 'components/Modal';
+import * as S from './styled';
 
-import { ModalGeneral } from "components/Modal";
-
-
-
-const MapPage = () => {
-  const [slots, setSlots] = useState(() => {
-    const data = localStorage.getItem("@pokedex");
-    const parsedData = data ? JSON.parse(data) : [];
-
-    console.log(parsedData)
-
-    if(parsedData.length <= 0 ) return Array(6).fill([]);
-
-    return parsedData;
-  });
-
-  useEffect(() => {
-    console.log(slots)
-  }
-  , [slots]);
-
-
-  useEffect(() => {
-    const newData = {
-      ...slots,
-    }
-
-    console.log(slots)
-
-      localStorage.setItem('slots', JSON.stringify(slots));
-  }, [slots]);
+function MapPage() {
+  const [slots, setSlots] = useState(Array(6).fill([]));
 
   const addPokemonToSlots = (pokemon) => {
     if (slots.find((slot) => slot.id === pokemon.id)) return;
-      slots.map((slot, index) => {
-        if (!slot.id) {
-          console.log(slots[index])
-          setSlots([
-            ...slots.slice(0, index),
-            pokemon,
-            ...slots.slice(index + 1),
-          ]);
-        }
-
-        return slots;
-      });
-
-      localStorage.setItem('slots', JSON.stringify(slots));
+    slots.map((slot, index) => {
+      if (!slot.id) {
+        setSlots([
+          ...slots.slice(0, index),
+          pokemon,
+          ...slots.slice(index + 1),
+        ]);
+      }
+      return slots;
+    });
   };
 
+  const handleEditNamePokemon = (pokemonId, name) => {
+    if (!slots.find((slot) => slot.id === pokemonId));
+    slots.map((slot, index) => {
+      if (slot.id === pokemonId) {
+        const newSlots = {
+          ...slots[index],
+          name,
+        }
 
-  function handleReleasePokemon(pokemonId){
-    if(!pokemonId) return;
+        setSlots([
+          ...slots.slice(0, index),
+          newSlots,
+          ...slots.slice(index + 1),
+        ]);
+      }
 
-    if (slots.find((slot) => slot.id === pokemonId)) 
-    {
+      return slots;
+    });
+  }
+
+  function handleReleasePokemon(pokemonId) {
+    if (!pokemonId) return;
+    if (slots.find((slot) => slot.id === pokemonId)) {
       const newSlots = slots.map((pokemon) => {
-        if(pokemon.id === pokemonId) return []
-        return pokemon
+        if (pokemon.id === pokemonId) return [];
+        return pokemon;
       });
 
       setSlots(newSlots);
-
-    };
-
-    localStorage.setItem('slots', JSON.stringify(slots));
+    }
   }
 
-  function handleAddCustomPokemon(data){
+  function handleAddCustomPokemon(data) {
+    const id = Math.floor(Math.random() * 1000000);
     const newPokemonData = {
       ...data,
-      id: Math.random()
-    }
-    console.log(`sadasd`)
-    alert(`das`)
-    console.log(data)
-
+      id: id,
+    };
     if (slots.find((slot) => slot.name === data.name)) return;
-      slots.map((slot, index) => {
-        if (!slot.id) {
-          setSlots([
-            ...slots.slice(0, index),
-            newPokemonData,
-            ...slots.slice(index + 1),
-          ]);
-        }
-
-        return slots;
-      });
-
+    slots.map((slot, index) => {
+      if (!slot.id) {
+        setSlots([
+          ...slots.slice(0, index),
+          newPokemonData,
+          ...slots.slice(index + 1),
+        ]);
+      }
+      return slots;
+    });
   }
 
   return (
     <S.MapWrapper className="map">
-      <Sidebar 
-        catchedPokemons={slots} 
-        onHandleReleasePokemon={handleReleasePokemon} 
-        onHandleAddCustomPokemon={handleAddCustomPokemon} 
+      <Sidebar
+        catchedPokemons={slots}
+        onHandleReleasePokemon={handleReleasePokemon}
+        onHandleAddCustomPokemon={handleAddCustomPokemon}
+        onHandleEditNamePokemon={handleEditNamePokemon}
+
       />
-      <ModalGeneral onHandleCatchedPokdemon={addPokemonToSlots} />
-  </S.MapWrapper>
-  )
-};
+      <ModalGeneral
+        catchedPokemons={slots}
+        onHandleCatchedPokdemon={addPokemonToSlots}
+      />
+    </S.MapWrapper>
+  );
+}
 
 export default MapPage;

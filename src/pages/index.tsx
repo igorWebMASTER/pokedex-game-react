@@ -1,5 +1,4 @@
-import { LandingPage } from './LandingPage';
-import Map  from './Map';
-import Home from './Home';
+import { InitialPage } from './InitialPage';
+import Map from './Map';
 
-export { Home, Map,  LandingPage } ;
+export { Map, InitialPage };
