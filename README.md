@@ -17,12 +17,13 @@
 
 ## Algumas Bibliotecas utilizadas:
 
-- Axios <br>
+- Axios para chamadas API<br>
 - React Hoook Form
-- Yup para validação <br>
+- Yup para validações <br>
 - Styled Components para estilização<br>
 - React Router para rotas <br>
 - Framer Motion para animações <br>
+- React Hook Form para lidar com formulários <br>
 
 
 ## Faça o clone do Reposiório e depois instale as Dependências
