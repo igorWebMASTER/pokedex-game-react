@@ -194,7 +194,7 @@ export function ModalPokemonInfo({
             <S.HorizontalLine>
                  <div>
                  </div> 
-                 <span>ESTATISTICAS </span>
+                 <span>ESTATÍSTICAS </span>
                  <div>
                  </div>
             </S.HorizontalLine>

@@ -47,8 +47,8 @@ Dê ⭐️ se você gostou deste projeto!
 
 ---
 
-<a href="" alt="link podedex ftde">Link para página no ar</a> <br>
-![Print Home](caminho)
+<a href="https://pokedex-2022.netlify.app/" alt="link podedex ftde">Link para página no ar</a> <br>
+![Print Home](prints/print-pokedex.png)
 
 <p align="center">
 Feito com ❤️
