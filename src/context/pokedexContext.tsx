@@ -96,8 +96,6 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
       }}
     >
       {children}
-
-      
     </PokedexContext.Provider>
   );
 }

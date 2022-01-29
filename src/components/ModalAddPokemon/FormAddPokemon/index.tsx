@@ -104,7 +104,6 @@ export function FormAddPokemon() {
     const newData = {
       ...data, 
       types: selectedTypes,
-      hp: String(watch('hp'))
     }
     handleAddCustomPokemon(newData)
   }

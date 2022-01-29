@@ -7,8 +7,6 @@ import * as S from './styled';
 
 function MapPage() {
 
-
-
   return (
     <S.MapWrapper className="map">
       <Sidebar />

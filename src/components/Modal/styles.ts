@@ -22,7 +22,7 @@ export const ModalContainer = styled.div`
   min-height: 520px;
   max-height:520px;
   width: 100%;
-  min-width:390px;
+  min-width:35rem;
   overflow: scroll;
   position: relative;
 
@@ -32,8 +32,8 @@ export const ModalContainer = styled.div`
   text-align: center;
   position: relative;
 
-  @media screen and (max-width: 390px) {
-    min-width: 300px;
+  @media screen and (max-width: 35rem) {
+    min-width:32rem;
   }
 `
 
