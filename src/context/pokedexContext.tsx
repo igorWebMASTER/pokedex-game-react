@@ -1,6 +1,5 @@
 import { PokemonProps } from 'components/ModalPokemonInfo';
-import { ModalGeneral } from 'components/Modal';
-import { createContext, ReactNode, useState, useCallback } from 'react';
+import { createContext, ReactNode, useState, useCallback, useEffect } from 'react';
 
 interface PokedexContextData {
   addPokemonToSlots: Function;
@@ -18,25 +17,36 @@ interface PokedexProviderProps {
 export const PokedexContext = createContext({} as PokedexContextData);
 
 export function PokedexProvider({ children }: PokedexProviderProps) {
-  const [slots, setSlots] = useState(Array(6).fill([]));
+  const getInitialPokedexState = () => {
+    const data = JSON.parse(localStorage.getItem('@pokedex-game') as any) || Array(6).fill([]);
+    return data;
+  };
 
-  const addPokemonToSlots = (pokemon: any) => {
-    if (slots.find((slot) => slot.id === pokemon.id)) return;
-    slots.map((slot, index) => {
+  const [slots, setSlots] = useState<any>(getInitialPokedexState) ;
+
+  useEffect(() => {
+    if(slots) {
+      localStorage.setItem('@pokedex-game', JSON.stringify(slots))
+    }
+  }, [slots])
+
+  const addPokemonToSlots = (pokemon: PokemonProps) => {
+    if (slots.find((slot: { id: string; }) => slot.id === pokemon.id)) return;
+    slots.map((slot: { id: string; }, index: number) => {
       if (!slot.id) {
-        setSlots([
-          ...slots.slice(0, index),
-          pokemon,
-          ...slots.slice(index + 1),
-        ]);
+        setSlots((state: PokemonProps[]) => ([
+            ...slots.slice(0, index),
+            pokemon,
+            ...slots.slice(index + 1),
+        ]));
       }
       return slots;
     });
   };
 
   const handleEditNamePokemon = (pokemonId: string, name: string) => {
-    if (!slots.find((slot) => slot.id === pokemonId)) return;
-    slots.map((slot, index) => {
+    if (!slots.find((slot: { id: string; }) => slot.id === pokemonId)) return;
+    slots.map((slot: { id: string; }, index: number) => {
       if (slot.id === pokemonId) {
         const newSlots = {
           ...slots[index],
@@ -56,8 +66,8 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
 
   function handleReleasePokemon(pokemonId: string) {
     if (!pokemonId) return;
-    if (slots.find((slot) => slot.id === pokemonId)) {
-      const newSlots = slots.map((pokemon) => {
+    if (slots.find((slot: { id: string; }) => slot.id === pokemonId)) {
+      const newSlots = slots.map((pokemon: { id: string; }) => {
         if (pokemon.id === pokemonId) return [];
         return pokemon;
       });
@@ -66,14 +76,14 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     }
   }
 
-  function handleAddCustomPokemon(data: any) {
+  function handleAddCustomPokemon(data: PokemonProps) {
     const id = Math.floor(Math.random() * 1000000);
     const newPokemonData = {
       ...data,
       id: id,
     };
-    if (slots.find((slot) => slot.name === data.name)) return;
-    slots.map((slot, index) => {
+    if (slots.find((slot: { name: string; }) => slot.name === data.name)) return;
+    slots.map((slot: { id: string; }, index: number) => {
       if (!slot.id) {
         setSlots([
           ...slots.slice(0, index),
