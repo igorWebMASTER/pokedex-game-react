@@ -21,7 +21,7 @@ const changeNamePokemonSchema = yup.object().shape({
 });
 
 import InputText from 'components/InputText';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { PokedexContext } from 'context/pokedexContext';
 
 export interface PokemonProps {
@@ -72,7 +72,7 @@ export function ModalPokemonInfo({
   } = useForm({
     resolver: yupResolver(changeNamePokemonSchema),
   });
-  
+
   function getStatsIcon(stat: string) {
     const stats = {
       hp: require('../../assets/images/sword.png'),
@@ -81,18 +81,16 @@ export function ModalPokemonInfo({
       star: require('../../assets/images/plus.png'),
       speed: require('../../assets/images/sword.png'),
     } as any;
-  
+
     return stats[stat] || stats.attack;
   };
 
-  function handleChangeName(data: any){
+  function handleChangeName(data: PokemonProps){
     handleEditNamePokemon(pokemonData.id, data.name);
     setOpenEditName(!openEditName)
+    setValue('name', '');
   }
 
-
-  console.log(pokemonData);
-  
   return (
     <>
       {openCloseModal && (
@@ -108,7 +106,7 @@ export function ModalPokemonInfo({
         >
         <S.ModalContainer>
           <S.ModalHeader>
-             <button 
+             <button
                 type="button"
                 onClick={requestCloseModal}
               >
@@ -121,23 +119,23 @@ export function ModalPokemonInfo({
           <S.ModalBody>
             {!openEditName && (
               <S.ModalTextBody onClick={() => setOpenEditName(!openEditName)}>
-                {`${pokemonData?.name}`} 
+                {`${pokemonData?.name}`}
 
                 <img src={editIcon} alt="" />
               </S.ModalTextBody>
             )}
           {openEditName && (
-            <form onSubmit={handleSubmit(handleChangeName)}>
+            <form onSubmit={handleSubmit(handleChangeName as SubmitHandler<FieldValues>)}>
               <S.EditNamePokemon>
-                <InputText 
+                <InputText
                   className=""
                   placeholder="Nome do Pokemon"
                   hasShadow
                   label=""
-                  type="text" 
+                  type="text"
                   {...register('name')}
                  />
-                <button 
+                <button
                   type="submit"
                   >
                     <img src={CheckIcon} alt="check-icon" />
@@ -162,7 +160,7 @@ export function ModalPokemonInfo({
                   HP
                 </span>
                 <span className="main-status">
-                  {/* {pokemonData?.stats?.find(  
+                  {/* {pokemonData?.stats?.find(
                     (stat: any) => stat.stat.name === 'hp'
                   )?.base_stat} */}
                   {pokemonData?.base_experience ??  pokemonData.hp}
@@ -188,7 +186,7 @@ export function ModalPokemonInfo({
             <br />
             <S.HorizontalLine>
                  <div>
-                 </div> 
+                 </div>
                   <span>Tipo </span>
                  <div>
                  </div>
@@ -197,21 +195,21 @@ export function ModalPokemonInfo({
             <S.TypeInfoContainer>
               {Object.values(pokemonData?.types)?.map((info: any) => (
                 <>
-                  <S.Badge 
+                  <S.Badge
                     key={info?.type?.name ?? info.name}
                     color={getColorOfTypePokemon(info?.type?.name ?? `${info?.value}`.toLowerCase())}
                   >
                       {translateType(info?.type?.name) || info.name }
                   </S.Badge>
               </>
-                
+
               ))}
 
              </S.TypeInfoContainer>
 
              <S.HorizontalLine>
                  <div>
-                 </div> 
+                 </div>
                    <span>HABILIDADES </span>
                   <div>
                   </div>
@@ -235,7 +233,7 @@ export function ModalPokemonInfo({
             </S.AbilitiesInfoContainer>
             <S.HorizontalLine>
                  <div>
-                 </div> 
+                 </div>
                  <span>ESTATÍSTICAS </span>
                  <div>
                  </div>
@@ -249,36 +247,36 @@ export function ModalPokemonInfo({
                      <span>{translateStats(info?.stat?.name)}</span>
                     </div>
                       <div key={info?.stat?.name}>
-                          <h3>{info?.base_stat}</h3> 
+                          <h3>{info?.base_stat}</h3>
                       </div>
                   </S.StaticsContainer>
                 )})}
 
                 {!pokemonData?.stats && (
-                  <>  
+                  <>
                     <S.StaticsContainer >
                     <div>
                       <img src={getStatsIcon(pokemonData?.attack as any)} alt={""} />
                      <span>{translateStats(pokemonData.attack)}</span>
                     </div>
                       <div>
-                          <h3>{pokemonData?.attack}</h3> 
+                          <h3>{pokemonData?.attack}</h3>
                       </div>
 
                   </S.StaticsContainer>
                 <S.StaticsContainer >
-                      
+
                     <div>
                       <img src={getStatsIcon(pokemonData?.defense as any)} alt={""} />
                      <span>{translateStats(pokemonData.defense)}</span>
                     </div>
                       <div>
-                          <h3>{pokemonData?.defense}</h3> 
+                          <h3>{pokemonData?.defense}</h3>
                       </div>
                       </S.StaticsContainer>
                   </>
                 )}
-                  
+
             </S.StatisticsInfoContainer>
             <S.CaptureButtonContainer>
               <Button
