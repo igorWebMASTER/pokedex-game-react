@@ -40,7 +40,7 @@ export function ModalAddPokemon({
               </div>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormAddPokemon  />
+              <FormAddPokemon onHandleModal={requestCloseModal} />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>

@@ -21,32 +21,40 @@ const addCustomPokemonSchema = yup.object().shape({
     .required("Nome Inválido")
     .matches(/^[aA-zZ\s]+$/, "Somente Letras no nome"),
   hp: yup
-  .number()
-  .required("Digite um HP"),
+    .number()
+    .min(1, "HP Inválido")
+    .required("Digite um HP"),
   weight: yup
     .number()
+    .min(1, "Peso Inválido")
     .required("Campo requerido"),
   height: yup
-  .number()
-  .required("Campo requerido"),
+    .number()
+    .min(1, "Altura Inválida")
+    .required("Campo requerido"),
+  types: yup
+    .array()
+    .required("Campo requerido"),
   ability1:  yup
-  .string()
-   .required("Campo requerido"),
+    .string()
+    .required("Campo requerido"),
   ability2:  yup
-  .string()
-   .required("Campo requerido"),
+    .string()
+    .required("Campo requerido"),
   ability3:  yup
-  .string()
-  .required("Campo requerido"),
+    .string()
+    .required("Campo requerido"),
   ability4:  yup
-  .string()
-   .required("Campo requerido"),
+    .string()
+    .required("Campo requerido"),
   defense:  yup
-  .number()
-   .required("Campo requerido"),
+    .number()
+    .min(1, "Defesa Inválida")
+    .required("Campo requerido"),
   attack:  yup
-  .number()
-   .required("Campo requerido"),
+    .number()
+    .min(1, "Ataque Inválido")
+    .required("Campo requerido"),
   // specialDefense:  yup
   // .number()
   //  .required("Campo requerido"),
@@ -56,7 +64,8 @@ const addCustomPokemonSchema = yup.object().shape({
 });
 
 
-export function FormAddPokemon() {
+
+export function FormAddPokemon({ onHandleModal }: any) {
   
   const {
     register,
@@ -72,7 +81,7 @@ export function FormAddPokemon() {
       name: "",
       height: 0,
       weight:0,
-      type: "",
+      types: [],
       image: "",
       ability1: "",
       ability2: "",
@@ -87,6 +96,7 @@ export function FormAddPokemon() {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
   const [focusedInput, setFocusedInput] = useState([]);
   const { handleAddCustomPokemon } = useContext(PokedexContext);
+  console.log(errors)
 
 
   function handleSelectType(type: any) {
@@ -104,8 +114,15 @@ export function FormAddPokemon() {
     const newData = {
       ...data, 
       types: selectedTypes,
+      abilities: {
+        ability1: data?.ability1,
+        ability2: data?.ability2,
+        ability3: data?.ability3,
+        ability4: data?.ability4,
+      }
     }
     handleAddCustomPokemon(newData)
+    onHandleModal()
   }
 
   const increaseHp = () => {
@@ -240,7 +257,11 @@ export function FormAddPokemon() {
                 <div>
                 </div>
           </ModalForm.HorizontalLine>
-          <SelectType handleSelectType={handleSelectType}/>
+          <SelectType 
+            handleSelectType={handleSelectType}
+            {...register('types')}
+            error={errors.types}
+          />
           <ModalForm.HorizontalLine>
                 <div>
                 </div> 

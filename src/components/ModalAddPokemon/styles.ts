@@ -60,7 +60,7 @@ export const ModalHeader = styled.div`
 
   div{
     z-index: 999;
-    width: calc(100% - 35%);
+    width: calc(100% - 41%);
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -88,7 +88,7 @@ export const ModalHeader = styled.div`
 
 export const ModalBody = styled.div`  
   display: flex;
-  height: calc(100vh + 344px);
+  height: calc(100vh + 551px);
   padding: 0 2rem;
   width: 100%;
   position: absolute;

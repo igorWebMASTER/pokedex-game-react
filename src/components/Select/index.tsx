@@ -1,8 +1,10 @@
 import React, { createRef, forwardRef } from 'react';
 import Multiselect from 'multiselect-react-dropdown'
 
+import * as S from './styles';
 
-export const SelectType = forwardRef(({ onChange, handleSelectType, onBlur, name, label, ...props }: any, ref) => {
+
+export const SelectType = forwardRef(({ onChange, error, handleSelectType, onBlur, name, label, ...props }: any, ref) => {
 
   const options = [
     { name: 'Normal', id: 1, value: 'Normal' },
@@ -37,6 +39,8 @@ export const SelectType = forwardRef(({ onChange, handleSelectType, onBlur, name
         displayValue="name" 
         placeholder="Selecione o(s) tipo(s)"
       />
+
+      {error && (<S.Error>{error.message}</S.Error>)}
     </>
   )
 });

@@ -57,9 +57,7 @@ export function ModalPokemonInfo({
   requestCloseModal,
 }: ModalProps) {
   const [openEditName, setOpenEditName] = useState(false);
-  const [editName, setEditName] = useState('');
   const { handleEditNamePokemon, handleReleasePokemon } = useContext(PokedexContext)
-
   const {
     register,
     handleSubmit,
@@ -85,6 +83,7 @@ export function ModalPokemonInfo({
     handleEditNamePokemon(pokemonData.id, data.name);
     setOpenEditName(!openEditName)
   }
+
   
   return (
     <>
@@ -188,14 +187,18 @@ export function ModalPokemonInfo({
             </S.HorizontalLine>
 
             <S.TypeInfoContainer>
-              {pokemonData?.types?.map((info: any) => (
-                <S.Badge 
-                  key={info?.type?.name ?? info?.name}
-                  color={getColorOfTypePokemon(info?.type?.name ?? info?.name)}
-                >
-                    {translateType(info?.type?.name ?? info?.name)}
-                </S.Badge>
+              {Object.values(pokemonData?.types)?.map((info: any) => (
+                <>
+                  <S.Badge 
+                    key={info?.type?.name ?? info.name}
+                    color={getColorOfTypePokemon(info?.type?.name ?? `${info?.value}`.toLowerCase())}
+                  >
+                      {translateType(info?.type?.name) || info.name }
+                  </S.Badge>
+              </>
+                
               ))}
+
              </S.TypeInfoContainer>
 
              <S.HorizontalLine>
@@ -206,9 +209,9 @@ export function ModalPokemonInfo({
                   </div>
             </S.HorizontalLine>
             <S.AbilitiesInfoContainer>
-              {pokemonData?.abilities?.slice(0, 2).map((info: any, index: number) => (
+              {pokemonData?.abilities && pokemonData?.abilities?.slice(0, 2).map((abilitity: any, index: number) => (
                   <span key={index}>
-                      {info?.ability?.name}
+                      {abilitity?.ability?.name}
                       {index === 0 && ', '}
                 </span>
               ))}

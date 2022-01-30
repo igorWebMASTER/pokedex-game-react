@@ -37,7 +37,7 @@ export function translateType(type: string) {
         case 'fairy':
             return 'Fada';
         default:
-            return 'Desconhecido';
+            return '';
     }
 }
 

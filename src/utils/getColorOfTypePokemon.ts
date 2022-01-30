@@ -20,5 +20,5 @@ export const getColorOfTypePokemon = (type: string) => {
         water: "#3B9BF1",
     } as any
 
-    return types[type] || '#fff';
+    return types[type] || '#3B9BF1';
 }

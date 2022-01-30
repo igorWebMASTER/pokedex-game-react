@@ -239,7 +239,7 @@ export const CaptureButtonContainer = styled.div`
   button{
       
       position: fixed;
-      top: 79%;
+      top: 87%;
       max-width:300px;
       filter: drop-shadow(0 0px 2.15rem rgba(0, 0, 0, 0.347));
       margin: 0% auto; /* Will not center vertically and won't work in IE6/7. */
