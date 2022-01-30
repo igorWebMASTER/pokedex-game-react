@@ -28,8 +28,8 @@ export const ModalContainer = styled.div`
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
   text-align: center;
 
-  @media screen and (max-width: 35rem) {
-    min-width: 300px;
+  @media screen and (max-width: 350px){
+    min-width: 26rem;
   }
 `
 
@@ -61,7 +61,7 @@ export const ModalHeader = styled.div`
 
   div{
     z-index: 999;
-    width: 60%;
+    width: calc(100% - 35%);
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -73,9 +73,14 @@ export const ModalHeader = styled.div`
     position: relative;
     top: -20px;
 
+    @media screen and (max-width: 320px){
+      width: calc(100% - 20%);
+    }
+    
+
     img{
       width: 100%;
-      max-width: 160px;
+      max-width: 120px;
     }
 
   }
@@ -181,20 +186,19 @@ export const TypeInfoContainer = styled.div`
 `
 
 export const Badge = styled.div<{ color?: string }>`
-    width: 30%;
+    width: 38.3%;
     display: flex;
     margin: 0 0.7rem;
     text-transform: uppercase;
     border-radius: 16px;
     align-items: center;
     justify-content: center;
-    padding: 0.7rem;
+    padding: 0.6rem 0.7rem;
     background-color: green;
     color:#fff;
     font-size: 1.2rem;
     font-weight: bold;
     background-color: ${props => props.color};
-
   `;
 
 export const AbilitiesInfoContainer = styled.div`

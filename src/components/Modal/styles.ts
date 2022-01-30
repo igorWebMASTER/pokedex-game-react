@@ -19,22 +19,22 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 380px;
-  min-height: 520px;
-  max-height:520px;
+  min-height: 30rem;
+  min-width: 34rem;
+  height: 50rem;
   width: 100%;
-  min-width:35rem;
-  overflow: scroll;
+  overflow: auto;
   position: relative;
 
   /* min-width: 350px; */
   border-radius: 10px;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
   text-align: center;
-  position: relative;
 
-  @media screen and (max-width: 35rem) {
-    min-width:32rem;
+  @media screen and (max-width: 350px){
+    min-width: 26rem;
   }
+
 `
 
 export const ModalHeader = styled.div`
@@ -69,7 +69,7 @@ export const ModalHeader = styled.div`
 
   div{
     z-index: 999;
-    width: 60%;
+    width: calc(100% - 35%);
     height: 210px;
     display: flex;
     flex-direction: column;
@@ -81,6 +81,10 @@ export const ModalHeader = styled.div`
   position: relative;
     top: -20px;
 
+
+    @media screen and (max-width: 320px){
+      width: calc(100% - 20%);
+    }
     
 
     img{
@@ -177,14 +181,14 @@ export const TypeInfoContainer = styled.div`
 `
 
 export const Badge = styled.div<{ color: string }>`
-    width: 30%;
+    width: 38.3%;
     display: flex;
     margin: 0 0.7rem;
     text-transform: uppercase;
     border-radius: 16px;
     align-items: center;
     justify-content: center;
-    padding: 0.7rem;
+    padding: 0.6rem 0.7rem;
     background-color: green;
     color:#fff;
     font-size: 1.2rem;
