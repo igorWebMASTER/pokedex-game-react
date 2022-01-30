@@ -20,20 +20,20 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
 
   const [hoverRef, isHovered] = useHover();
 
-  function verifyPokemon() {
+  function verifyPokemonAvailability() {
     const isOutOfSlots = slots.every((pokemon: PokemonProps) => pokemon.id);
 
     if(isOutOfSlots){
       setTooltipStatus("out");
       return;
     }
-  
+
     setTooltipStatus("available");
   }
 
   useEffect(() => {
     if(slots){
-      verifyPokemon()
+      verifyPokemonAvailability()
     }
   },[slots])
 
@@ -61,13 +61,12 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
 
   return (
     <S.Character tooltipStatus={tooltipStatus}>
-      {isHovered && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
-        
+      {isHovered && !isSearching && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
+      {isSearching && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
+
         <div ref={hoverRef as any}>
-          <img 
-            
+          <img
             src={!isSearching ? AshFront : sprite}
-            // onMouseEnter={() => setIsHovering(true)}
             onClick={() => {
               if(tooltipStatus === "available"){
                 onHandleGetRandomPokemon();
