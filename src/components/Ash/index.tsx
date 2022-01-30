@@ -10,11 +10,15 @@ import { Tooltip } from '../Tooltip';
 import { PokedexContext } from 'context/pokedexContext';
 import { PokemonProps } from '../ModalPokemonInfo';
 
+import { useHover } from 'hooks/useHover';
+
 
 export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   const [sprite, setSprite] = useState(AshFront);
-  const [tooltipStatus, setTooltipStatus] = useState("");
-  const { slots } = useContext(PokedexContext)
+  const [tooltipStatus, setTooltipStatus] = useState("available");
+  const { slots } = useContext(PokedexContext);
+
+  const [hoverRef, isHovered] = useHover();
 
   function verifyPokemon() {
     const isOutOfSlots = slots.every((pokemon: PokemonProps) => pokemon.id);
@@ -57,19 +61,20 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
 
   return (
     <S.Character tooltipStatus={tooltipStatus}>
-      <Tooltip type="" loading={isSearching} status={tooltipStatus} />
-        {!isSearching && (
-          <img
-            src={AshFront}
-            alt="ash"
+      {isHovered && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
+        
+        <div ref={hoverRef as any}>
+          <img 
+            
+            src={!isSearching ? AshFront : sprite}
+            // onMouseEnter={() => setIsHovering(true)}
             onClick={() => {
               if(tooltipStatus === "available"){
                 onHandleGetRandomPokemon();
-              }
-            }}
-          />
-        )}
-      {isSearching && <img src={sprite} alt="ash" />}
+            }
+          }}
+          alt="ash" />
+        </div>
     </S.Character>
   );
 }

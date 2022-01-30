@@ -13,6 +13,7 @@ const InputNumber = forwardRef(({ label, placeholder, onSet, handleIncrease, han
         <S.Input
           ref={ref}
           type="number"
+          min={0}
           {...props}
           placeholder={placeholder}
         />
