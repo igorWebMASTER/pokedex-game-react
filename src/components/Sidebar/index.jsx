@@ -53,7 +53,9 @@ function Sidebar() {
   }
 
   function isEmpty(array) {
-    return array.every(element => element.length !== 0);
+    if(Array.isArray(array)){
+      return array.every(element => element.length !== 0);
+    }
   }
 
   return (
@@ -69,7 +71,7 @@ function Sidebar() {
         openCloseModal={modalAddCustomPokemon}
       />
       <S.SideBarList>
-        {slots && slots.
+        {slots && slots.length > 0 && slots.
           map((pokemon) => {
             return (
               <S.SideBarItem isUsed={pokemon.id} key={pokemon?.id}>

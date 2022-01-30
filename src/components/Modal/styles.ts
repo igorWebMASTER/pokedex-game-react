@@ -6,7 +6,7 @@ export const ModalOverlay = styled.div`
   top: 0;
   bottom: 0;
   left: 0;
-  
+
   right: 0;
   position: fixed;
   justify-content: center;
@@ -49,8 +49,8 @@ export const ModalHeader = styled.div`
   align-items: center;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  
-   
+
+
   button {
     margin-left: auto;
     margin-right: 20px;
@@ -85,7 +85,7 @@ export const ModalHeader = styled.div`
     @media screen and (max-width: 320px){
       width: calc(100% - 20%);
     }
-    
+
 
     img{
       width: 100%;
@@ -96,7 +96,7 @@ export const ModalHeader = styled.div`
   }
 `
 
-export const ModalBody = styled.div`  
+export const ModalBody = styled.div`
   display: flex;
   height: 540px;
   padding: 0 2rem;
@@ -109,12 +109,12 @@ export const ModalBody = styled.div`
   align-items: center;
   background: #fff;
 
-  
+
 `
 
 export const ModalTextBody = styled.div`
   text-transform: uppercase;
-  font-weight: bold;  
+  font-weight: bold;
   font-size: 2rem;
   margin-top: 5rem;
   color: #004a45;
@@ -136,11 +136,11 @@ export const ModalAbilitiesInfo = styled.div`
     flex-direction: column;
     border-left: 1px solid #ccc;
     color: #004a45;
-    
+
     span{
       margin: 0.2rem 0;
       font-size: 1.1rem;
-      font-weight: bold; 
+      font-weight: bold;
     }
 
     span.main-status{
@@ -195,35 +195,38 @@ export const Badge = styled.div<{ color: string }>`
     font-weight: bold;
     background-color: ${props => props.color};
 
-   
+
   `;
 
 export const AbilitiesInfoContainer = styled.div`
     display: flex;
-  
+
     span{
       font-size: 1.2rem;
       text-transform: uppercase;
       font-weight: bold;
       margin: 1.4rem 0.5rem;
     }
-  
+
   `
 
 export const CaptureButtonContainer = styled.div`
-    display: flex; 
+     position: fixed;
+     top: 73%;
+     left: 0;
+     right: 0;
 `
 
 export const ButtonCatchPokemon = styled.button`
     border: none;
     background: transparent;
-    position: fixed;
-    top: 72%;
+    /* position: fixed;
+    top: 72%; */
     max-width: 120px;
     width: ;
     margin: 0% auto;
     left: 0;
-    right: 0; 
+    right: 0;
 
     img{
       width: 100%;

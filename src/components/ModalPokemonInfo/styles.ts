@@ -20,7 +20,7 @@ export const ModalContainer = styled.div`
   flex-direction: column;
   min-height: 600px;
   max-height:500px;
-  overflow: scroll;
+  overflow: auto;
   position: relative;
 
   min-width: 350px;
@@ -45,8 +45,8 @@ export const ModalHeader = styled.div`
   align-items: center;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  
-   
+
+
   button {
     margin-left: auto;
     margin-right: 20px;
@@ -76,7 +76,7 @@ export const ModalHeader = styled.div`
     @media screen and (max-width: 320px){
       width: calc(100% - 20%);
     }
-    
+
 
     img{
       width: 100%;
@@ -86,7 +86,7 @@ export const ModalHeader = styled.div`
   }
 `
 
-export const ModalBody = styled.div`  
+export const ModalBody = styled.div`
   display: flex;
   height: 800px;
   padding: 0 2rem;
@@ -99,12 +99,12 @@ export const ModalBody = styled.div`
   align-items: center;
   background: #fff;
 
-  
+
 `
 
 export const ModalTextBody = styled.div`
   text-transform: uppercase;
-  font-weight: bold;  
+  font-weight: bold;
   font-size: 2rem;
   margin: 1em 0;
   padding: 0 2rem;
@@ -141,11 +141,11 @@ export const ModalAbilitiesInfo = styled.div`
     flex-direction: column;
     border-left: 1px solid #ccc;
     color: #004a45;
-    
+
     span{
       margin: 0.2rem 0;
       font-size: 1.1rem;
-      font-weight: bold; 
+      font-weight: bold;
     }
 
     span.main-status{
@@ -205,15 +205,15 @@ export const AbilitiesInfoContainer = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    
+
     div{
       display: flex;
       align-items: center;
       span{
         font-weight: bold;
       }
-      
-      
+
+
       img{
         margin-right: 1rem;
         align-self: center;
@@ -231,20 +231,21 @@ export const AbilitiesInfoContainer = styled.div`
       font-weight: bold;
       margin: 1rem 0.5rem;
     }
-  
+
   `
 
 export const CaptureButtonContainer = styled.div`
+    position: fixed;
+     margin: 0% auto;
+     left: 0;
+      right: 0;
 
   button{
-      
-      position: fixed;
-      top: 87%;
+
+
       max-width:300px;
       filter: drop-shadow(0 0px 2.15rem rgba(0, 0, 0, 0.347));
-      margin: 0% auto; /* Will not center vertically and won't work in IE6/7. */
-      left: 0;
-      right: 0;
+
   }
 `
 
@@ -286,15 +287,15 @@ export const StaticsContainer = styled.div`
   display: flex;
     justify-content: space-between;
     width: 100%;
-    
+
     div{
       display: flex;
       align-items: center;
       span{
         font-weight: bold;
       }
-      
-      
+
+
       img{
         margin-right: 1rem;
         align-self: center;

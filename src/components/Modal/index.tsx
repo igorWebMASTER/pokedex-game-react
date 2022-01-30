@@ -70,7 +70,7 @@ export function ModalGeneral()  {
       }, 1000)
     } catch (e) {
       console.log(e);
-    } 
+    }
   }
 
   return (
@@ -92,7 +92,7 @@ export function ModalGeneral()  {
           >
           <S.ModalContainer>
             <S.ModalHeader>
-              <button 
+              <button
                 type="button"
                 onClick={closeModal}
               >
@@ -104,7 +104,7 @@ export function ModalGeneral()  {
             </S.ModalHeader>
             <S.ModalBody>
               <S.ModalTextBody>
-              {`${randomPokemonData?.name}`} 
+              {`${randomPokemonData?.name}`}
               </S.ModalTextBody>
               <br />
               <S.ModalAbilitiesInfo>
@@ -113,7 +113,7 @@ export function ModalGeneral()  {
                     HP
                   </span>
                   <span className="main-status">
-                    {randomPokemonData?.stats?.find(  
+                    {randomPokemonData?.stats?.find(
                       (stat: any) => stat.stat.name === 'hp'
                     )?.base_stat}
 
@@ -139,7 +139,7 @@ export function ModalGeneral()  {
               <br />
               <S.HorizontalLine>
                    <div>
-                   </div> 
+                   </div>
                    <span>Tipo </span>
                    <div>
                    </div>
@@ -147,8 +147,8 @@ export function ModalGeneral()  {
 
               <S.TypeInfoContainer>
                 {randomPokemonData?.types?.map((info: any) => (
-                  <S.Badge 
-                    key={info.type.name} 
+                  <S.Badge
+                    key={info.type.name}
                     color={getColorOfTypePokemon(info?.type?.name)}
                   >
                       {translateType(info.type.name)}
@@ -158,7 +158,7 @@ export function ModalGeneral()  {
 
                <S.HorizontalLine>
                    <div>
-                   </div> 
+                   </div>
                      <span>HABILIDADES </span>
                     <div>
                     </div>
@@ -185,7 +185,7 @@ export function ModalGeneral()  {
           </S.ModalContainer>
          </motion.div>
        </S.ModalOverlay>
-       )} 
+       )}
      </>
   );
 }
