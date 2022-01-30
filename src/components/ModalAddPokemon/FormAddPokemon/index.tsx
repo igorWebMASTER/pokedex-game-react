@@ -96,7 +96,6 @@ export function FormAddPokemon({ onHandleModal }: any) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
   const [focusedInput, setFocusedInput] = useState([]);
   const { handleAddCustomPokemon } = useContext(PokedexContext);
-  console.log(errors)
 
 
   function handleSelectType(type: any) {
@@ -114,12 +113,12 @@ export function FormAddPokemon({ onHandleModal }: any) {
     const newData = {
       ...data, 
       types: selectedTypes,
-      abilities: {
-        ability1: data?.ability1,
-        ability2: data?.ability2,
-        ability3: data?.ability3,
-        ability4: data?.ability4,
-      }
+      // abilities: {
+      //   ability1: data?.ability1,
+      //   ability2: data?.ability2,
+      //   ability3: data?.ability3,
+      //   ability4: data?.ability4,
+      // }
     }
     handleAddCustomPokemon(newData)
     onHandleModal()

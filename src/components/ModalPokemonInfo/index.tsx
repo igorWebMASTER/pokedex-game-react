@@ -31,6 +31,8 @@ export interface PokemonProps {
   weight: number;
   base_experience: number;
   hp: number;
+  attack?: string;
+  defense?: string;
   height: number;
   sprites: {
     front_default: string;
@@ -42,7 +44,11 @@ export interface PokemonProps {
     };
   }[];
   types: string[];
-  abilities: string[];
+  abilities?: string[];
+  ability1?: string;
+  ability2?: string;
+  ability3?: string;
+  ability4?: string;
 }
 
 interface ModalProps {
@@ -84,6 +90,8 @@ export function ModalPokemonInfo({
     setOpenEditName(!openEditName)
   }
 
+
+  console.log(pokemonData);
   
   return (
     <>
@@ -209,12 +217,21 @@ export function ModalPokemonInfo({
                   </div>
             </S.HorizontalLine>
             <S.AbilitiesInfoContainer>
-              {pokemonData?.abilities && pokemonData?.abilities?.slice(0, 2).map((abilitity: any, index: number) => (
+              {pokemonData?.abilities ? pokemonData?.abilities?.slice(0, 2).map((abilitity: any, index: number) => (
                   <span key={index}>
-                      {abilitity?.ability?.name}
+                      {`${abilitity?.ability?.name}`}
                       {index === 0 && ', '}
                 </span>
-              ))}
+              )): (
+                <>
+                <span>
+                  {pokemonData?.ability1}</span>
+                 <span> {pokemonData?.ability2}</span>
+                <span>  {pokemonData?.ability3}</span>
+                <span>  {pokemonData?.ability4}</span>
+
+                </>
+              )}
             </S.AbilitiesInfoContainer>
             <S.HorizontalLine>
                  <div>
@@ -236,6 +253,32 @@ export function ModalPokemonInfo({
                       </div>
                   </S.StaticsContainer>
                 )})}
+
+                {!pokemonData?.stats && (
+                  <>  
+                    <S.StaticsContainer >
+                    <div>
+                      <img src={getStatsIcon(pokemonData?.attack as any)} alt={""} />
+                     <span>{translateStats(pokemonData.attack)}</span>
+                    </div>
+                      <div>
+                          <h3>{pokemonData?.attack}</h3> 
+                      </div>
+
+                  </S.StaticsContainer>
+                <S.StaticsContainer >
+                      
+                    <div>
+                      <img src={getStatsIcon(pokemonData?.defense as any)} alt={""} />
+                     <span>{translateStats(pokemonData.defense)}</span>
+                    </div>
+                      <div>
+                          <h3>{pokemonData?.defense}</h3> 
+                      </div>
+                      </S.StaticsContainer>
+                  </>
+                )}
+                  
             </S.StatisticsInfoContainer>
             <S.CaptureButtonContainer>
               <Button
