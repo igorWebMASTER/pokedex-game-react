@@ -52,6 +52,8 @@ export function translateStats(stat: any) {
         "attack": "Ataque",
         "shield": "Defesa",
         "defense": "Defesa",
+        "specialAttack": "Ataque Especial",
+        "specialDefense": "Defesa Especial",
         "special-attack": "Ataque Especial",
         "special-defense": "Defesa Especial",
         "speed": "Velocidade",

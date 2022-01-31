@@ -8,9 +8,9 @@ import * as S from './styles';
 import { Tooltip } from '../Tooltip';
 
 import { PokedexContext } from 'context/pokedexContext';
-import { PokemonProps } from '../ModalPokemonInfo';
 
 import { useHover } from 'hooks/useHover';
+import { PokemonProps } from 'dtos/pokemon';
 
 
 export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {

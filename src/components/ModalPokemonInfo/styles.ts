@@ -20,8 +20,11 @@ export const ModalContainer = styled.div`
   flex-direction: column;
   min-height: 600px;
   max-height:500px;
-  overflow: auto;
   position: relative;
+
+  white-space: nowrap;
+  overflow: auto;
+  text-overflow: ellipsis;
 
   min-width: 350px;
   border-radius: 10px;
@@ -152,29 +155,6 @@ export const ModalAbilitiesInfo = styled.div`
       font-size: 1.9rem;
       font-weight: bold;
     }
-  }
-`
-
-export const HorizontalLine = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
-
-  span{
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #004a45;
-    margin: 0 1rem;
-  }
-
-  div{
-    width: 100%;
-    padding: 0 1rem;
-    height: 1px;
-    background: #ccc;
   }
 `
 

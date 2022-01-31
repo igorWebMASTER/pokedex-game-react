@@ -3,79 +3,31 @@ import React, { useContext, useEffect, useState } from 'react';
 import InputText from 'components/InputText';
 import { SelectType } from 'components/Select';
 import InputNumber from 'components/InputNumber';
-import * as yup from "yup";
 
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { PokedexContext } from 'context/pokedexContext';
-
 
 import * as S from './styles'
 import * as ModalForm from '../styles'
 import Button from 'components/Button';
-
-const addCustomPokemonSchema = yup.object().shape({
-  name: yup
-    .string()
-    .min(3, "Nome Inválido")
-    .required("Nome Inválido")
-    .matches(/^[aA-zZ\s]+$/, "Somente Letras no nome"),
-  hp: yup
-    .number()
-    .min(1, "HP Inválido")
-    .required("Digite um HP"),
-  weight: yup
-    .number()
-    .min(1, "Peso Inválido")
-    .required("Campo requerido"),
-  height: yup
-    .number()
-    .min(1, "Altura Inválida")
-    .required("Campo requerido"),
-  types: yup
-    .array()
-    .required("Campo requerido"),
-  ability1:  yup
-    .string()
-    .required("Campo requerido"),
-  ability2:  yup
-    .string()
-    .required("Campo requerido"),
-  ability3:  yup
-    .string()
-    .required("Campo requerido"),
-  ability4:  yup
-    .string()
-    .required("Campo requerido"),
-  defense:  yup
-    .number()
-    .min(1, "Defesa Inválida")
-    .required("Campo requerido"),
-  attack:  yup
-    .number()
-    .min(1, "Ataque Inválido")
-    .required("Campo requerido"),
-  // specialDefense:  yup
-  // .number()
-  //  .required("Campo requerido"),
-  // specialAttack:  yup
-  // .number()
-  // .required("Campo requerido"),
-});
-
-
+import { formSchema } from 'app/validations';
+import { HorizontalLine } from 'components/HorizontalLine';
 
 export function FormAddPokemon({ onHandleModal }: any) {
-  
+  const [selectedTypes, setSelectedTypes] = useState<any>([])
+  const [pokemonData, setPokemonData] = useState<any>([])
+
+  const { handleAddCustomPokemon } = useContext(PokedexContext);
   const {
     register,
     handleSubmit,
-    setValue, 
+    setValue,
     watch,
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(addCustomPokemonSchema),
+    resolver: yupResolver(formSchema),
     defaultValues: {
       hp: 0,
       name: "",
@@ -89,29 +41,23 @@ export function FormAddPokemon({ onHandleModal }: any) {
       ability4: "",
       defense: 0,
       attack: 0,
-      // specialDefense: 0,
-      // specialAttack: 0,
+      specialDefense: 0,
+      specialAttack: 0,
     }
   });
-  const [selectedTypes, setSelectedTypes] = useState<any>([])
-  const [focusedInput, setFocusedInput] = useState([]);
-  const { handleAddCustomPokemon } = useContext(PokedexContext);
-
 
   function handleSelectType(type: any) {
     setSelectedTypes([{
       name: type.name,
       id: type.id,
       value: type.value,
-    }])
-    
+    }]);
     setSelectedTypes(type)
   }
 
   function createPokemon(data: any){
-
     const newData = {
-      ...data, 
+      ...data,
       types: selectedTypes,
       // abilities: {
       //   ability1: data?.ability1,
@@ -120,9 +66,24 @@ export function FormAddPokemon({ onHandleModal }: any) {
       //   ability4: data?.ability4,
       // }
     }
+
+    setPokemonData(newData)
+
+
+
     handleAddCustomPokemon(newData)
     onHandleModal()
   }
+
+  // useEffect(() => {
+  //   if (pokemonData) {
+  //     Object.entries(pokemonData).forEach(
+  //       ([name, value]) => {
+  //         setValue(name as any, value)
+  //         console.log(name, value)
+  //       });
+  //   }
+  // }, [setValue, pokemonData]);
 
   const increaseHp = () => {
     const quantity = watch("hp");
@@ -135,7 +96,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
       setValue("hp", quantity - 1);
     }
   };
-  
+
   const increaseWeight = () => {
     const quantity = watch("weight");
     setValue("weight", quantity + 1);
@@ -146,7 +107,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
       setValue("weight", quantity - 1);
     }
   };
-  
+
   const increaseHeight = () => {
     const quantity = watch("height");
     setValue("height", quantity + 1);
@@ -157,7 +118,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
       setValue("height", quantity - 1);
     }
   };
- 
+
   const increaseAttack = () => {
     const quantity = watch("attack");
     setValue("attack", quantity + 1);
@@ -168,7 +129,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
       setValue("attack", quantity - 1);
     }
   };
- 
+
   const increaseDefense = () => {
     const quantity = watch("defense");
     setValue("defense", quantity + 1);
@@ -181,39 +142,33 @@ export function FormAddPokemon({ onHandleModal }: any) {
   };
 
   const increaseSpecialDefense = () => {
-    const quantity = watch("attack");
-    setValue("attack", quantity + 1);
+    const quantity = watch("specialDefense");
+    setValue("specialDefense", quantity + 1);
   }
- 
+
   const decreaseSpecialDefense = () => {
-    const quantity = watch("attack");
+    const quantity = watch("specialDefense");
     if (quantity > 1) {
-      setValue("attack", quantity - 1);
-    }
-  };
-  
-  const increaseSpecialAttack = () => {
-    const quantity = watch("attack");
-    setValue("attack", quantity + 1);
-  }
- 
-  const decreaseSpecialAttack = () => {
-    const quantity = watch("attack");
-    if (quantity > 1) {
-      setValue("attack", quantity - 1);
+      setValue("specialDefense", quantity - 1);
     }
   };
 
-//   useEffect(() => {
-//     if (userData) {
-//       Object.entries(userData).forEach(
-//         ([name, value]) => setValue(name, value));
-//     }
-// }, [setValue, userData]);
- 
+  const increaseSpecialAttack = () => {
+    const quantity = watch("specialAttack");
+    setValue("specialAttack", quantity + 1);
+  }
+
+  const decreaseSpecialAttack = () => {
+    const quantity = watch("specialAttack");
+    if (quantity > 1) {
+      setValue("specialAttack", quantity - 1);
+    }
+  };
+
+
+
   return (
     <S.FormContainer >
-       {/* onClick={} */}
       <form onSubmit={handleSubmit(createPokemon)} >
         <InputText
            label="Nome"
@@ -225,6 +180,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
           <InputNumber
               label="HP"
               type="number"
+              readOnly
               {...register('hp')}
               handleIncrease={increaseHp}
               handleDecrease={decreaseHp}
@@ -234,6 +190,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
               label="Peso"
               {...register('weight')}
               suffix={"Kg"}
+              readOnly
               handleIncrease={increaseWeight}
               handleDecrease={decreaseWeight}
               error={errors.weight}
@@ -242,6 +199,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
               label="ALTURA"
               type="number"
               //  name="hp"
+              readOnly
               suffix={"Cm"}
               placeholder="Altura"
               handleIncrease={increaseHeight}
@@ -249,25 +207,13 @@ export function FormAddPokemon({ onHandleModal }: any) {
               error={errors.height}
               {...register('height')}
             />
-          <ModalForm.HorizontalLine>
-                <div>
-                </div> 
-                <span>Tipo </span>
-                <div>
-                </div>
-          </ModalForm.HorizontalLine>
-          <SelectType 
+           <HorizontalLine  title={'Tipo'}/>
+          <SelectType
             handleSelectType={handleSelectType}
             {...register('types')}
             error={errors.types}
           />
-          <ModalForm.HorizontalLine>
-                <div>
-                </div> 
-                <span>HABILIDADES </span>
-                <div>
-                </div>
-          </ModalForm.HorizontalLine>
+           <HorizontalLine  title={'HABILIDADES'}/>
             <InputText
               label=""
               type="text"
@@ -297,16 +243,13 @@ export function FormAddPokemon({ onHandleModal }: any) {
               error={errors.ability4}
             />
           <ModalForm.HorizontalLine>
-            <div>
-              </div> 
-              <span>ESTATÍSTICAS </span>
-              <div>
-            </div>
+            <HorizontalLine  title={'ESTATÍSTICAS'}/>
           </ModalForm.HorizontalLine>
           <InputNumber
             label="DEFESA"
             type="number"
             icon=""
+            readOnly
             suffix={""}
             placeholder="00"
             handleIncrease={increaseDefense}
@@ -317,6 +260,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
           <InputNumber
             label="ATAQUE"
             type="number"
+            readOnly
             suffix={""}
             placeholder="00"
             handleIncrease={increaseAttack}
@@ -324,11 +268,12 @@ export function FormAddPokemon({ onHandleModal }: any) {
             error={errors.attack}
             {...register('attack')}
           />
-          {/* <InputNumber
+           <InputNumber
             label="SPECIAL-DEFENSE"
             type="number"
             suffix={""}
             placeholder="00"
+            readOnly
             handleIncrease={increaseSpecialDefense}
             handleDecrease={decreaseSpecialDefense}
             error={errors.specialDefense}
@@ -339,11 +284,12 @@ export function FormAddPokemon({ onHandleModal }: any) {
             type="number"
             suffix={""}
             placeholder="00"
+            readOnly
             handleIncrease={increaseSpecialAttack}
             handleDecrease={decreaseSpecialAttack}
             error={errors.specialAttack}
             {...register('specialAttack')}
-          /> */}
+          />
            <Button
               text="CRIAR POKEMON"
               icon=""

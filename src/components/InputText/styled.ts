@@ -27,12 +27,13 @@ export const Input = styled.input < { hasShadow?: boolean } > `
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  
+
+
+
   &:focus,
   &:active {
     border-color: #598bff;
-  } 
+  }
 
   &::placeholder {
     color: #c5cef4;
@@ -40,7 +41,6 @@ export const Input = styled.input < { hasShadow?: boolean } > `
   }
 
 
-  }
 `;
 
 

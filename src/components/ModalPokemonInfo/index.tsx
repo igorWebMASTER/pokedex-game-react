@@ -1,4 +1,4 @@
-import React, {  useContext, useState } from 'react';
+import React, {  Fragment, useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
@@ -23,33 +23,8 @@ const changeNamePokemonSchema = yup.object().shape({
 import InputText from 'components/InputText';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { PokedexContext } from 'context/pokedexContext';
-
-export interface PokemonProps {
-  lenght: number;
-  name: string;
-  id: string;
-  weight: number;
-  base_experience: number;
-  hp: number;
-  attack?: string;
-  defense?: string;
-  height: number;
-  sprites: {
-    front_default: string;
-  };
-  stats: {
-    base_stat: number;
-    stat: {
-      name: string;
-    };
-  }[];
-  types: string[];
-  abilities?: string[];
-  ability1?: string;
-  ability2?: string;
-  ability3?: string;
-  ability4?: string;
-}
+import { PokemonProps } from 'dtos/pokemon';
+import { HorizontalLine } from '../HorizontalLine';
 
 interface ModalProps {
   pokemonData: PokemonProps;
@@ -76,10 +51,12 @@ export function ModalPokemonInfo({
   function getStatsIcon(stat: string) {
     const stats = {
       hp: require('../../assets/images/sword.png'),
-      attack: require('../../assets/images/shield.png'),
+      attack: require('../../assets/images/sword.png'),
       shield: require('../../assets/images/shield.png'),
       star: require('../../assets/images/plus.png'),
       speed: require('../../assets/images/sword.png'),
+      specialAttack: require('../../assets/images/sword.png'),
+      specialDefense: require('../../assets/images/shield.png'),
     } as any;
 
     return stats[stat] || stats.attack;
@@ -95,204 +72,191 @@ export function ModalPokemonInfo({
     <>
       {openCloseModal && (
         <S.ModalOverlay>
-        <motion.div
-          initial={{ y: 200, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
-          }}
-        >
-        <S.ModalContainer>
-          <S.ModalHeader>
-             <button
-                type="button"
-                onClick={requestCloseModal}
-              >
-                <img src={CloseModal} alt="" />
-              </button>
-            <div>
-              <img src={pokemonData?.sprites?.front_default} alt="" />
-            </div>
-          </S.ModalHeader>
-          <S.ModalBody>
-            {!openEditName && (
-              <S.ModalTextBody onClick={() => setOpenEditName(!openEditName)}>
-                {`${pokemonData?.name}`}
-
-                <img src={editIcon} alt="" />
-              </S.ModalTextBody>
-            )}
-          {openEditName && (
-            <form onSubmit={handleSubmit(handleChangeName as SubmitHandler<FieldValues>)}>
-              <S.EditNamePokemon>
-                <InputText
-                  className=""
-                  placeholder="Nome do Pokemon"
-                  hasShadow
-                  label=""
-                  type="text"
-                  {...register('name')}
-                 />
-                <button
-                  type="submit"
-                  >
-                    <img src={CheckIcon} alt="check-icon" />
+          <motion.div
+            initial={{ y: 200, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 20,
+            }}
+          >
+          <S.ModalContainer>
+            <S.ModalHeader>
+              <button
+                  type="button"
+                  onClick={requestCloseModal}
+                >
+                  <img src={CloseModal} alt="" />
                 </button>
-
-                <button type="button"onClick={() => {
-                  setOpenEditName(!openEditName)
-                  setValue('name', '')
-                }}>
-                  <img src={CloseModal} alt="close-icon" />
-                </button>
-
-            </S.EditNamePokemon>
-            {errors.name && <S.Error>{errors.name.message}</S.Error>}
-
-            </form>
-          )}
-            <br />
-            <S.ModalAbilitiesInfo>
               <div>
-                <span>
-                  HP
-                </span>
-                <span className="main-status">
-                  {/* {pokemonData?.stats?.find(
-                    (stat: any) => stat.stat.name === 'hp'
-                  )?.base_stat} */}
-                  {pokemonData?.base_experience ??  pokemonData.hp}
-                </span>
+                <img src={pokemonData?.sprites?.front_default} alt="" />
               </div>
-              <div>
-                <span>
-                  ALTURA
-                </span>
-                <span className="main-status">
-                  {(pokemonData?.height / 10).toFixed(2)} M
-                </span>
-              </div>
-              <div>
-                <span>
-                  PESO
-                </span>
-                <span className="main-status">
-                  {pokemonData?.weight}KG
-                </span>
-              </div>
-            </S.ModalAbilitiesInfo>
-            <br />
-            <S.HorizontalLine>
-                 <div>
-                 </div>
-                  <span>Tipo </span>
-                 <div>
-                 </div>
-            </S.HorizontalLine>
+            </S.ModalHeader>
+            <S.ModalBody>
+              {!openEditName && (
+                <S.ModalTextBody onClick={() => setOpenEditName(!openEditName)}>
+                  {`${pokemonData?.name}`}
 
-            <S.TypeInfoContainer>
-              {Object.values(pokemonData?.types)?.map((info: any) => (
-                <>
-                  <S.Badge
-                    key={info?.type?.name ?? info.name}
-                    color={getColorOfTypePokemon(info?.type?.name ?? `${info?.value}`.toLowerCase())}
-                  >
-                      {translateType(info?.type?.name) || info.name }
-                  </S.Badge>
-              </>
-
-              ))}
-
-             </S.TypeInfoContainer>
-
-             <S.HorizontalLine>
-                 <div>
-                 </div>
-                   <span>HABILIDADES </span>
-                  <div>
-                  </div>
-            </S.HorizontalLine>
-            <S.AbilitiesInfoContainer>
-              {pokemonData?.abilities ? pokemonData?.abilities?.slice(0, 2).map((abilitity: any, index: number) => (
-                  <span key={index}>
-                      {`${abilitity?.ability?.name}`}
-                      {index === 0 && ', '}
-                </span>
-              )): (
-                <>
-                <span>
-                  {pokemonData?.ability1}</span>
-                 <span> {pokemonData?.ability2}</span>
-                <span>  {pokemonData?.ability3}</span>
-                <span>  {pokemonData?.ability4}</span>
-
-                </>
+                  <img src={editIcon} alt="" />
+                </S.ModalTextBody>
               )}
-            </S.AbilitiesInfoContainer>
-            <S.HorizontalLine>
-                 <div>
-                 </div>
-                 <span>ESTATÍSTICAS </span>
-                 <div>
-                 </div>
-            </S.HorizontalLine>
-            <S.StatisticsInfoContainer>
-            {pokemonData?.stats?.map((info: any, index) => {
-              return (
-                  <S.StaticsContainer key={index}>
-                    <div>
-                      <img src={getStatsIcon(info?.stat?.name)} alt={""} />
-                     <span>{translateStats(info?.stat?.name)}</span>
-                    </div>
-                      <div key={info?.stat?.name}>
-                          <h3>{info?.base_stat}</h3>
-                      </div>
-                  </S.StaticsContainer>
-                )})}
+            {openEditName && (
+              <form onSubmit={handleSubmit(handleChangeName as SubmitHandler<FieldValues>)}>
+                <S.EditNamePokemon>
+                  <InputText
+                    className=""
+                    placeholder="Nome do Pokemon"
+                    hasShadow={true}
+                    label=""
+                    type="text"
+                    {...register('name')}
+                  />
+                  <button
+                    type="submit"
+                    >
+                      <img src={CheckIcon} alt="check-icon" />
+                  </button>
 
-                {!pokemonData?.stats && (
+                  <button type="button"onClick={() => {
+                    setOpenEditName(!openEditName)
+                    setValue('name', '')
+                  }}>
+                    <img src={CloseModal} alt="close-icon" />
+                  </button>
+
+              </S.EditNamePokemon>
+              {errors.name && <S.Error>{errors.name.message}</S.Error>}
+
+              </form>
+            )}
+              <br />
+              <S.ModalAbilitiesInfo>
+                <div>
+                  <span>
+                    HP
+                  </span>
+                  <span className="main-status">
+                    {pokemonData?.base_experience ??  pokemonData.hp}
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    ALTURA
+                  </span>
+                  <span className="main-status">
+                    {(pokemonData?.height / 10).toFixed(2)} M
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    PESO
+                  </span>
+                  <span className="main-status">
+                    {pokemonData?.weight}KG
+                  </span>
+                </div>
+              </S.ModalAbilitiesInfo>
+              <br />
+            <HorizontalLine title={'Tipo'} />
+              <S.TypeInfoContainer>
+                {Object.values(pokemonData?.types)?.map((info: any) => (
+                  <Fragment  key={info?.type?.name ?? info.name}>
+                    <S.Badge
+                      color={getColorOfTypePokemon(info?.type?.name ?? `${info?.value}`.toLowerCase())}
+                    >
+                        {translateType(info?.type?.name) || info.name }
+                    </S.Badge>
+                  </Fragment>
+                ))}
+              </S.TypeInfoContainer>
+              <HorizontalLine title={'Habilidades'} />
+              <S.AbilitiesInfoContainer>
+                {pokemonData?.abilities ? pokemonData?.abilities?.slice(0, 2).map((abilitity: any, index: number) => (
+                    <span key={abilitity?.ability?.name}>
+                        {`${abilitity?.ability?.name}`}
+                        {index === 0 && ', '}
+                  </span>
+                )): (
                   <>
-                    <S.StaticsContainer >
-                    <div>
-                      <img src={getStatsIcon(pokemonData?.attack as any)} alt={""} />
-                     <span>{translateStats(pokemonData.attack)}</span>
-                    </div>
-                      <div>
-                          <h3>{pokemonData?.attack}</h3>
-                      </div>
-
-                  </S.StaticsContainer>
-                <S.StaticsContainer >
-
-                    <div>
-                      <img src={getStatsIcon(pokemonData?.defense as any)} alt={""} />
-                     <span>{translateStats(pokemonData.defense)}</span>
-                    </div>
-                      <div>
-                          <h3>{pokemonData?.defense}</h3>
-                      </div>
-                      </S.StaticsContainer>
+                    <span>
+                    {pokemonData?.ability1}</span>
+                    <span> {pokemonData?.ability2}</span>
+                    <span>  {pokemonData?.ability3}</span>
+                    <span>  {pokemonData?.ability4}</span>
                   </>
                 )}
-
-            </S.StatisticsInfoContainer>
-            <S.CaptureButtonContainer>
-              <Button
-                text="LIBERAR POKEMON"
-                icon=""
-                onlyIcon=""
-                onClick={() => {
-                  handleReleasePokemon(pokemonData?.id)
-                  requestCloseModal();
-                }}
-              />
-            </S.CaptureButtonContainer>
-          </S.ModalBody>
-        </S.ModalContainer>
-       </motion.div>
-     </S.ModalOverlay>
+              </S.AbilitiesInfoContainer>
+              <HorizontalLine title={'ESTATÍSTICAS'} />
+              <S.StatisticsInfoContainer>
+              {pokemonData?.stats?.map((info: any, index) => {
+                return (
+                    <S.StaticsContainer key={info?.stat?.name}>
+                      <div>
+                        <img src={getStatsIcon(info?.stat?.name)} alt={""} />
+                      <span>{translateStats(info?.stat?.name)}</span>
+                      </div>
+                        <div key={info?.stat?.name}>
+                            <h3>{info?.base_stat}</h3>
+                        </div>
+                    </S.StaticsContainer>
+                  )})}
+                  {!pokemonData?.stats && (
+                    <>
+                      <S.StaticsContainer >
+                       <div>
+                        <img src={getStatsIcon(pokemonData?.attack as any)} alt={"attack"} />
+                       <span>{translateStats(pokemonData.attack)}</span>
+                       </div>
+                        <div>
+                            <h3>{pokemonData?.attack}</h3>
+                        </div>
+                    </S.StaticsContainer>
+                  <S.StaticsContainer >
+                      <div>
+                        <img src={getStatsIcon(pokemonData?.defense as any)} alt={"defense"} />
+                      <span>{translateStats(pokemonData.defense)}</span>
+                      </div>
+                        <div>
+                            <h3>{pokemonData?.defense}</h3>
+                        </div>
+                        </S.StaticsContainer>
+                        <S.StaticsContainer >
+                      <div>
+                        <img src={getStatsIcon(pokemonData?.specialAttack as any)} alt={"special-attack"} />
+                      <span>{translateStats(pokemonData.specialAttack)}</span>
+                      </div>
+                        <div>
+                            <h3>{pokemonData?.specialAttack}</h3>
+                        </div>
+                    </S.StaticsContainer>
+                  <S.StaticsContainer >
+                      <div>
+                        <img src={getStatsIcon(pokemonData?.specialDefense as any)} alt={"special-defense"} />
+                      <span>{translateStats(pokemonData.specialDefense)}</span>
+                      </div>
+                        <div>
+                            <h3>{pokemonData?.specialDefense}</h3>
+                        </div>
+                        </S.StaticsContainer>
+                    </>
+                  )}
+              </S.StatisticsInfoContainer>
+              <S.CaptureButtonContainer>
+                <Button
+                  text="LIBERAR POKEMON"
+                  icon=""
+                  onlyIcon=""
+                  onClick={() => {
+                    handleReleasePokemon(pokemonData?.id)
+                    requestCloseModal();
+                  }}
+                />
+              </S.CaptureButtonContainer>
+            </S.ModalBody>
+          </S.ModalContainer>
+        </motion.div>
+      </S.ModalOverlay>
      )}
      </>
   );

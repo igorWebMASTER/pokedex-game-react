@@ -1,4 +1,4 @@
-import { PokemonProps } from 'components/ModalPokemonInfo';
+import { PokemonProps } from 'dtos/pokemon';
 import { createContext, ReactNode, useState, useCallback, useEffect } from 'react';
 
 interface PokedexContextData {
