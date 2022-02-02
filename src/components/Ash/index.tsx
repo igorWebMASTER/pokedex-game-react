@@ -38,6 +38,7 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   },[slots])
 
   useEffect(() => {
+    if(isSearching){
       setTimeout(() => {
         switch(sprite){
           case AshFront:
@@ -57,15 +58,16 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
             break;
         }
       }, 300);
-  }, [sprite]);
+    }
+  }, [sprite, isSearching]);
 
   return (
     <S.Character tooltipStatus={tooltipStatus}>
-      {isHovered && !isSearching && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
-      {isSearching && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
-
+      {isHovered && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
+      {!isHovered && isSearching && <Tooltip loading={isSearching} status={tooltipStatus} />}
+        
         <div ref={hoverRef as any}>
-          <img
+          <img 
             src={!isSearching ? AshFront : sprite}
             onClick={() => {
               if(tooltipStatus === "available"){

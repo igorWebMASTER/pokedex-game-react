@@ -53,12 +53,12 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
           name,
         }
 
-        setSlots([
-          ...slots.slice(0, index),
-          newSlots,
-          ...slots.slice(index + 1),
-        ]);
-      }
+          setSlots([
+            ...slots.slice(0, index),
+            newSlots,
+            ...slots.slice(index + 1),
+          ]);
+        }
 
       return slots;
     });

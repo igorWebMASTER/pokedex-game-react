@@ -11,6 +11,7 @@ import * as S from './styled';
 import { ModalPokemonInfo } from '../ModalPokemonInfo';
 import { ModalAddPokemon } from '../ModalAddPokemon';
 import { PokedexContext } from 'context/pokedexContext';
+import useSound from 'use-sound';
 // import useSound from 'use-sound';
 
 function Sidebar() {
@@ -39,7 +40,7 @@ function Sidebar() {
     setIsOpen(!modalIsOpen);
   }
 
-  // const [play] = useSound(boopSfx);
+  const [play] = useSound(boopSfx);
 
   function handleOpenAddPokemonModal() {
     setModaAddCustomPokemon(!modalAddCustomPokemon);
@@ -48,14 +49,11 @@ function Sidebar() {
 
   function handleAddCustomPokemon(data) {
     onHandleAddCustomPokemon(data);
-    console.log(data)
     setModaAddCustomPokemon(!modalAddCustomPokemon);
   }
 
   function isEmpty(array) {
-    if(Array.isArray(array)){
-      return array.every(element => element.length !== 0);
-    }
+    return array.every(element => element.length !== 0);
   }
 
   return (
@@ -71,10 +69,10 @@ function Sidebar() {
         openCloseModal={modalAddCustomPokemon}
       />
       <S.SideBarList>
-        {slots && slots.length > 0 && slots.
-          map((pokemon) => {
+        {slots && slots.
+          map((pokemon, index) => {
             return (
-              <S.SideBarItem isUsed={pokemon.id} key={pokemon?.id}>
+              <S.SideBarItem key={index} isUsed={pokemon.id} >
                 {pokemon?.id ? (
                   <img
                     loading="eager"
