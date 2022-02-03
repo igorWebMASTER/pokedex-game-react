@@ -97,20 +97,26 @@ console.log(pokemonData)
               </div>
             </S.ModalHeader>
             <S.ModalBody>
-              {!openEditName && (
-                <S.ModalTextBody onClick={() => setOpenEditName(!openEditName)}>
-                  {`${pokemonData?.name}`}
+              {pokemonData.order ? (
+                <>
+                  {!openEditName && (
+                    <S.ModalTextBody onClick={() => setOpenEditName(!openEditName)}>
+                      {`${pokemonData?.name}`}
 
-                  <img src={editIcon} alt="" />
-                </S.ModalTextBody>
+                        <img src={editIcon} alt="" />
+                    </S.ModalTextBody>
+                  )}
+                </>
+              ) : (
+                <>
+                <S.Text onClick={() => {
+                    requestCloseModal()
+                    handleModalEditCustomPokemon()
+                  }}>
+                     Editar pokemon
+                  </S.Text>
+                </>
               )}
-
-             <S.Text onClick={() => {
-               requestCloseModal()
-               handleModalEditCustomPokemon()
-             }}>
-                Editar pokemon
-              </S.Text>
             {openEditName && (
               <form onSubmit={handleSubmit(handleChangeName as SubmitHandler<FieldValues>)}>
                 <S.EditNamePokemon>
