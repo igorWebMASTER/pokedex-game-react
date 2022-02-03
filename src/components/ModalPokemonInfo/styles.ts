@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const ModalOverlay = styled.div`
   background: var(--modal-background);
@@ -14,10 +14,14 @@ export const ModalOverlay = styled.div`
   z-index:90;
 `
 
-export const Text = styled.h1`
+export const Text = styled.h1<{ isHovered : boolean }>`
   margin-bottom: 1rem;
   text-decoration: underline;
   color: var(--link-color);
+
+  ${props => props.isHovered && css`
+    cursor: pointer;
+  `}
 
 `
 
@@ -125,7 +129,7 @@ export const ModalTextBody = styled.div`
   display: flex;
   align-items: center;
 
-  margin-left: 40px;
+  /* margin-left: 40px; */
 
   img{
     margin-left: 10px;

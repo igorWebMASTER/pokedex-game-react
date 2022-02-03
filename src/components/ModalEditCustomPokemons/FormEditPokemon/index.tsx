@@ -13,6 +13,7 @@ import * as ModalForm from '../styles'
 import Button from 'components/Button';
 import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
+import toast from 'react-hot-toast';
 
 interface FormAddPokemonProps {
   onHandleModal: () => void;
@@ -65,6 +66,18 @@ export function FormEditPokemon({ onHandleModal, pokemonData }: FormAddPokemonPr
     }
 
     handleEditCustomPokemon(newData)
+    onHandleModal();
+    toast.success("Pokemon editado com sucesso!", {
+      style: {
+        border: '1px solid #713200',
+        padding: '16px',
+        color: '#157100',
+      },
+      iconTheme: {
+        primary: '#713200',
+        secondary: '#FFFAEE',
+      },
+    })
   }
 
   const increaseHp = () => {
@@ -146,7 +159,6 @@ export function FormEditPokemon({ onHandleModal, pokemonData }: FormAddPokemonPr
       setValue("specialAttack", quantity - 1);
     }
   };
-
 
 
   return (

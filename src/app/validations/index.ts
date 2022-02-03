@@ -18,9 +18,7 @@ export const formSchema = yup.object().shape({
     .number()
     .min(1, "Altura Inválida")
     .required("Campo requerido"),
-  types: yup
-    .array()
-    .required("Campo requerido"),
+  types: yup.mixed().notOneOf(['1'], 'Selecione uma opção'),
   ability1:  yup
     .string()
     .required("Campo requerido"),

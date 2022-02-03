@@ -50,7 +50,6 @@ export function ModalPokemonInfo({
     resolver: yupResolver(changeNamePokemonSchema),
   });
 
-console.log(pokemonData)
   function getStatsIcon(stat: string) {
     const stats = {
       "hp": require('../../assets/images/sword.png'),
@@ -115,7 +114,9 @@ console.log(pokemonData)
                 <S.Text onClick={() => {
                     requestCloseModal()
                     handleModalEditCustomPokemon()
-                  }}>
+                  }}
+                  isHovered
+                >
                      Editar pokemon
                   </S.Text>
                 </>
