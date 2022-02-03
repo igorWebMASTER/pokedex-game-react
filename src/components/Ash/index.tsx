@@ -7,15 +7,19 @@ import AshStop from 'assets/images/ashStop.png';
 import * as S from './styles';
 import { Tooltip } from '../Tooltip';
 
+const blip = require("../../assets/sounds/blip.mp3");
+
 import { PokedexContext } from 'context/pokedexContext';
 
 import { useHover } from 'hooks/useHover';
 import { PokemonProps } from 'dtos/pokemon';
 
+import useSound from 'use-sound';
+
 
 export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   const [sprite, setSprite] = useState(AshFront);
-  const [tooltipStatus, setTooltipStatus] = useState("available");
+  const [tooltipStatus, setTooltipStatus] = useState("available" );
   const { slots } = useContext(PokedexContext);
 
   const [hoverRef, isHovered] = useHover();
@@ -24,11 +28,19 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
     const isOutOfSlots = slots.every((pokemon: PokemonProps) => pokemon.id);
 
     if(isOutOfSlots){
-      setTooltipStatus("out");
+      setTooltipStatus("full");
       return;
     }
 
     setTooltipStatus("available");
+  }
+
+  const [play] = useSound(blip);
+
+  function handleSoundSFX(status: string){
+    if(status === "full"){
+      play();
+    }
   }
 
   useEffect(() => {
@@ -38,7 +50,9 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   },[slots])
 
   useEffect(() => {
-    if(isSearching){
+    let initial = true;
+
+    if(isSearching && initial){
       setTimeout(() => {
         switch(sprite){
           case AshFront:
@@ -59,7 +73,18 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
         }
       }, 300);
     }
+
+    return () => {
+      initial = false
+    }
   }, [sprite, isSearching]);
+
+  function handleImage(){
+    if(!isSearching ){
+      return AshFront;
+    }
+    return sprite;
+  }
 
   return (
     <S.Character tooltipStatus={tooltipStatus}>
@@ -68,10 +93,16 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
         
         <div ref={hoverRef as any}>
           <img 
-            src={!isSearching ? AshFront : sprite}
+            src={handleImage()}
             onClick={() => {
               if(tooltipStatus === "available"){
                 onHandleGetRandomPokemon();
+            }
+            
+          }}
+          onMouseEnter={() => {
+            if(tooltipStatus === "full"){
+              handleSoundSFX("full");
             }
           }}
           alt="ash" />

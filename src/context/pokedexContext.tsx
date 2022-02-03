@@ -3,6 +3,7 @@ import { createContext, ReactNode, useState, useCallback, useEffect } from 'reac
 
 interface PokedexContextData {
   addPokemonToSlots: Function;
+  setSlots: Function;
   handleEditNamePokemon:Function;
   handleReleasePokemon: Function;
   handleAddCustomPokemon: Function;
@@ -22,7 +23,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     return data;
   };
 
-  const [slots, setSlots] = useState<any>(getInitialPokedexState) ;
+  const [slots, setSlots] = useState(getInitialPokedexState) ;
 
   useEffect(() => {
     if(slots) {
@@ -32,9 +33,13 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
 
   const addPokemonToSlots = (pokemon: PokemonProps) => {
     if (slots.find((slot: { id: string; }) => slot.id === pokemon.id)) return;
+    
+    
     slots.map((slot: { id: string; }, index: number) => {
+      
       if (!slot.id) {
-        setSlots((state: PokemonProps[]) => ([
+       
+        setSlots(([
             ...slots.slice(0, index),
             pokemon,
             ...slots.slice(index + 1),
@@ -46,7 +51,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
 
   const handleEditNamePokemon = (pokemonId: string, name: string) => {
     if (!slots.find((slot: { id: string; }) => slot.id === pokemonId)) return;
-    slots.map((slot: { id: string; }, index: number) => {
+     slots.map((slot: { id: string; }, index: number) => {
       if (slot.id === pokemonId) {
         const newSlots = {
           ...slots[index],
@@ -99,6 +104,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     <PokedexContext.Provider
       value={{
         slots,
+        setSlots,
         addPokemonToSlots,
         handleReleasePokemon,
         handleEditNamePokemon,
