@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
-import { FormAddPokemon } from './FormEditPokemon';
+import { FormEditPokemon } from './FormEditPokemon';
 
 import CloseModal from 'assets/images/close.png';
 
@@ -43,7 +43,7 @@ export function ModalEditCustomPokemons({
               </div>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormAddPokemon onHandleModal={requestCloseModal} pokemonData={pokemonData} />
+              <FormEditPokemon onHandleModal={requestCloseModal} pokemonData={pokemonData} />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>

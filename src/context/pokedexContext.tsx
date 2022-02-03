@@ -6,6 +6,7 @@ interface PokedexContextData {
   setSlots: Function;
   handleEditNamePokemon:Function;
   handleReleasePokemon: Function;
+  handleEditCustomPokemon: Function;
   handleAddCustomPokemon: Function;
   slots: PokemonProps[];
 }
@@ -31,7 +32,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     }
   }, [slots])
 
-  const addPokemonToSlots = (pokemon: PokemonProps) => {
+  function addPokemonToSlots  (pokemon: PokemonProps) {
     if (slots.find((slot: { id: string; }) => slot.id === pokemon.id)) return;
     
     
@@ -49,7 +50,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     });
   };
 
-  const handleEditNamePokemon = (pokemonId: string, name: string) => {
+  function handleEditNamePokemon  (pokemonId: string, name: string) {
     if (!slots.find((slot: { id: string; }) => slot.id === pokemonId)) return;
      slots.map((slot: { id: string; }, index: number) => {
       if (slot.id === pokemonId) {
@@ -68,7 +69,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
       return slots;
     });
   }
-
+  
   function handleReleasePokemon(pokemonId: string) {
     if (!pokemonId) return;
     if (slots.find((slot: { id: string; }) => slot.id === pokemonId)) {
@@ -100,6 +101,18 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     });
   }
 
+  const handleEditCustomPokemon = (pokemon: any) => {
+    const newSlots = slots.map((slot: { id: string; }) => {
+        if (slot.id === pokemon.id) {
+          return pokemon
+        }
+        return slot;
+     }
+    );
+    setSlots(newSlots);
+  }
+  
+
   return (
     <PokedexContext.Provider
       value={{
@@ -109,6 +122,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
         handleReleasePokemon,
         handleEditNamePokemon,
         handleAddCustomPokemon,
+        handleEditCustomPokemon
       }}
     >
       {children}

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import Button from 'components/Button';
 
-
 import iconPlus from 'assets/images/plus.png';
 import pokeAvatar from 'assets/images/poke-avatar.png';
 
@@ -20,10 +19,12 @@ function Sidebar() {
 
   const [selectedPokemonData, setSelectedPokemonData] = useState([]);
 
+
   useEffect(() => {
     if (slots) {
       setSelectedPokemonData(() => {
         const [pokemon] = slots && slots.filter((pokemon) => pokemon.id === selectedPokemonData.id);
+       
         if (!pokemon) return [];
         return pokemon;
       })

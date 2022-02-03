@@ -14,23 +14,19 @@ import Button from 'components/Button';
 import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
 
-import { PokemonProps } from 'dtos/pokemon';
-
 interface FormAddPokemonProps {
   onHandleModal: () => void;
   pokemonData?: any
 }
 
-export function FormAddPokemon({ onHandleModal, pokemonData }: FormAddPokemonProps) {
+export function FormEditPokemon({ onHandleModal, pokemonData }: FormAddPokemonProps) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
-  console.log(pokemonData)
-  const { handleAddCustomPokemon } = useContext(PokedexContext);
+  const { handleEditCustomPokemon } = useContext(PokedexContext);
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(formSchema),
@@ -61,25 +57,15 @@ export function FormAddPokemon({ onHandleModal, pokemonData }: FormAddPokemonPro
     setSelectedTypes(type)
   }
 
-  function createPokemon(data: any){
+  function editCustomPokemon(data: any){
     const newData = {
+      ...pokemonData,
       ...data,
       types: selectedTypes,
     }
 
-    handleAddCustomPokemon(newData)
-    onHandleModal()
+    handleEditCustomPokemon(newData)
   }
-
-  // useEffect(() => {
-  //   if (pokemonData) {
-  //     Object.entries(pokemonData).forEach(
-  //       ([name, value]) => {
-  //         setValue(name as any, value)
-  //         console.log(name, value)
-  //       });
-  //   }
-  // }, [setValue, pokemonData]);
 
   const increaseHp = () => {
     const quantity = watch("hp");
@@ -165,7 +151,7 @@ export function FormAddPokemon({ onHandleModal, pokemonData }: FormAddPokemonPro
 
   return (
     <S.FormContainer >
-      <form onSubmit={handleSubmit(createPokemon)} >
+      <form onSubmit={handleSubmit(editCustomPokemon)} >
         <InputText
            label="Nome"
            type="text"
@@ -287,10 +273,9 @@ export function FormAddPokemon({ onHandleModal, pokemonData }: FormAddPokemonPro
             {...register('specialAttack')}
           />
            <Button
-              text="CRIAR POKEMON"
+              text="EDITAR POKEMON"
               icon=""
               onlyIcon=""
-              onClick={() => console.log('')}
             />
       </form>
     </S.FormContainer>
