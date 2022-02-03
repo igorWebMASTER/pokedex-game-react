@@ -1,4 +1,5 @@
 export interface PokemonProps {
+  [x: string]: any;
   lenght: number;
   name: string;
   id: string;
@@ -25,4 +26,5 @@ export interface PokemonProps {
   ability2?: string;
   ability3?: string;
   ability4?: string;
+  pokemon: boolean;
 }
