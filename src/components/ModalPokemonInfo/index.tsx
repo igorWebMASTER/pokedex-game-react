@@ -109,6 +109,9 @@ console.log(pokemonData)
                 </>
               ) : (
                 <>
+                 <S.ModalTextBody >
+                      {`${pokemonData?.name}`}
+                 </S.ModalTextBody>
                 <S.Text onClick={() => {
                     requestCloseModal()
                     handleModalEditCustomPokemon()
