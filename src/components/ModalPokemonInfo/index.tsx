@@ -29,12 +29,14 @@ import { HorizontalLine } from '../HorizontalLine';
 interface ModalProps {
   pokemonData: PokemonProps;
   openCloseModal: boolean;
+  handleModalEditCustomPokemon: any;
   requestCloseModal: () => void;
 }
 
 export function ModalPokemonInfo({
   pokemonData,
   openCloseModal,
+  handleModalEditCustomPokemon,
   requestCloseModal,
 }: ModalProps) {
   const [openEditName, setOpenEditName] = useState(false);
@@ -48,15 +50,16 @@ export function ModalPokemonInfo({
     resolver: yupResolver(changeNamePokemonSchema),
   });
 
+console.log(pokemonData)
   function getStatsIcon(stat: string) {
     const stats = {
-      hp: require('../../assets/images/sword.png'),
-      attack: require('../../assets/images/sword.png'),
-      shield: require('../../assets/images/shield.png'),
-      star: require('../../assets/images/plus.png'),
-      speed: require('../../assets/images/sword.png'),
-      specialAttack: require('../../assets/images/sword.png'),
-      specialDefense: require('../../assets/images/shield.png'),
+      "hp": require('../../assets/images/sword.png'),
+      "attack": require('../../assets/images/sword.png'),
+      "defense": require('../../assets/images/shield.png'),
+      "star": require('../../assets/images/plus.png'),
+      "speed": require('../../assets/images/speed.png'),
+      "special-attack": require('../../assets/images/sword.png'),
+      "special-defense": require('../../assets/images/shield.png'),
     } as any;
 
     return stats[stat] || stats.attack;
@@ -101,6 +104,13 @@ export function ModalPokemonInfo({
                   <img src={editIcon} alt="" />
                 </S.ModalTextBody>
               )}
+
+             <S.Text onClick={() => {
+               requestCloseModal()
+               handleModalEditCustomPokemon()
+             }}>
+                Editar pokemon
+              </S.Text>
             {openEditName && (
               <form onSubmit={handleSubmit(handleChangeName as SubmitHandler<FieldValues>)}>
                 <S.EditNamePokemon>
@@ -126,8 +136,7 @@ export function ModalPokemonInfo({
                   </button>
 
               </S.EditNamePokemon>
-              {errors.name && <S.Error>{errors.name.message}</S.Error>}
-
+                {errors.name && <S.Error>{errors.name.message}</S.Error>}
               </form>
             )}
               <br />
@@ -187,9 +196,9 @@ export function ModalPokemonInfo({
                   </>
                 )}
               </S.AbilitiesInfoContainer>
-              <HorizontalLine title={'ESTATÍSTICAS'} />
+               <HorizontalLine title={'ESTATÍSTICAS'} />
               <S.StatisticsInfoContainer>
-              {pokemonData?.stats?.map((info: any, index) => {
+              {pokemonData?.stats?.map((info: any) => {
                 return (
                     <S.StaticsContainer key={info?.stat?.name}>
                       <div>
@@ -214,7 +223,7 @@ export function ModalPokemonInfo({
                     </S.StaticsContainer>
                   <S.StaticsContainer >
                       <div>
-                        <img src={getStatsIcon(pokemonData?.defense as any)} alt={"defense"} />
+                        <img src={getStatsIcon("defense")} alt={"defense"} />
                       <span>{translateStats(pokemonData.defense)}</span>
                       </div>
                         <div>
@@ -223,7 +232,7 @@ export function ModalPokemonInfo({
                         </S.StaticsContainer>
                         <S.StaticsContainer >
                       <div>
-                        <img src={getStatsIcon(pokemonData?.specialAttack as any)} alt={"special-attack"} />
+                        <img src={getStatsIcon("special-attack")} alt={"special-attack"} />
                       <span>{translateStats(pokemonData.specialAttack)}</span>
                       </div>
                         <div>
@@ -232,7 +241,7 @@ export function ModalPokemonInfo({
                     </S.StaticsContainer>
                   <S.StaticsContainer >
                       <div>
-                        <img src={getStatsIcon(pokemonData?.specialDefense as any)} alt={"special-defense"} />
+                        <img src={getStatsIcon("special-defense")} alt={"special-defense"} />
                       <span>{translateStats(pokemonData.specialDefense)}</span>
                       </div>
                         <div>

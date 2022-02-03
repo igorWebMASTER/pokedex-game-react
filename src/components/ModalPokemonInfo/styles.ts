@@ -14,6 +14,13 @@ export const ModalOverlay = styled.div`
   z-index:90;
 `
 
+export const Text = styled.h1`
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  color: var(--link-color);
+
+`
+
 export const ModalContainer = styled.div`
   width: 100%;
   display: flex;
