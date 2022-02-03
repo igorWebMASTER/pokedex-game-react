@@ -55,7 +55,7 @@ export function Tooltip({  loading, status }: TooltipProps) {
     )
  }
 
- if(status === 'out'){ 
+ if(status === 'full'){ 
    return(  <>
         <S.TooltipContainer>
             <motion.div

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 
 import Button from 'components/Button';
 
-import boopSfx from '../../assets/sounds/Stat Fall Down.mp3';
 
 import iconPlus from 'assets/images/plus.png';
 import pokeAvatar from 'assets/images/poke-avatar.png';
@@ -11,11 +10,11 @@ import * as S from './styled';
 import { ModalPokemonInfo } from '../ModalPokemonInfo';
 import { ModalAddPokemon } from '../ModalAddPokemon';
 import { PokedexContext } from 'context/pokedexContext';
-import useSound from 'use-sound';
-// import useSound from 'use-sound';
+import { ModalEditCustomPokemons } from '../ModalEditCustomPokemons';
 
 function Sidebar() {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalEditPokemon, setIsOpenEditPokemon] = useState(false);
   const [modalAddCustomPokemon, setModaAddCustomPokemon] = useState(false);
   const { slots, handleAddCustomPokemon: onHandleAddCustomPokemon } = useContext(PokedexContext);
 
@@ -40,16 +39,21 @@ function Sidebar() {
     setIsOpen(!modalIsOpen);
   }
 
-  const [play] = useSound(boopSfx);
+  function handleModalEditCustomPokemon() {
+    setIsOpenEditPokemon(!modalEditPokemon);
+  }
 
   function handleOpenAddPokemonModal() {
     setModaAddCustomPokemon(!modalAddCustomPokemon);
-    play();
   }
 
   function handleAddCustomPokemon(data) {
     onHandleAddCustomPokemon(data);
     setModaAddCustomPokemon(!modalAddCustomPokemon);
+  }
+
+  function handleEditCustomPokemon(pokemon){
+    setSelectedPokemonData(pokemon);
   }
 
   function isEmpty(array) {
@@ -61,12 +65,19 @@ function Sidebar() {
       <ModalPokemonInfo
         requestCloseModal={handleOpenCatchedPokemonModal}
         openCloseModal={modalIsOpen}
+        handleModalEditCustomPokemon={handleModalEditCustomPokemon}
         pokemonData={selectedPokemonData}
       />
       <ModalAddPokemon
         onHandleAddCustomPokemon={handleAddCustomPokemon}
         requestCloseModal={handleOpenAddPokemonModal}
         openCloseModal={modalAddCustomPokemon}
+      />
+      <ModalEditCustomPokemons 
+        pokemonData={selectedPokemonData} 
+        onHandleEditCustomPokemon={handleEditCustomPokemon}
+        requestCloseModal={handleModalEditCustomPokemon}
+        openCloseModal={modalEditPokemon}
       />
       <S.SideBarList>
         {slots && slots.
