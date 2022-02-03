@@ -6,6 +6,7 @@ import { ModalCatchPokemon } from 'components/ModalCatchPokemon';
 import * as S from './styled';
 import { Ash } from 'components/Ash';
 import { getPokemonById } from 'app/api';
+import { Toaster } from 'react-hot-toast';
 
 function MapPage() {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -46,6 +47,8 @@ function MapPage() {
     }
   }
   return (
+    <>
+    <Toaster/>
     <S.MapWrapper className="map">
       <Sidebar />
       <ModalCatchPokemon 
@@ -58,6 +61,7 @@ function MapPage() {
         isSearching={isLoading}
       />
     </S.MapWrapper>
+    </>
   );
 }
 
