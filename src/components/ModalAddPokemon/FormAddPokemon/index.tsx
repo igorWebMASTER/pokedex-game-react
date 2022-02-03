@@ -16,7 +16,6 @@ import { HorizontalLine } from 'components/HorizontalLine';
 
 export function FormAddPokemon({ onHandleModal }: any) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
-  const [pokemonData, setPokemonData] = useState<any>([])
 
   const { handleAddCustomPokemon } = useContext(PokedexContext);
   const {
@@ -24,7 +23,6 @@ export function FormAddPokemon({ onHandleModal }: any) {
     handleSubmit,
     setValue,
     watch,
-    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(formSchema),
@@ -59,17 +57,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
     const newData = {
       ...data,
       types: selectedTypes,
-      // abilities: {
-      //   ability1: data?.ability1,
-      //   ability2: data?.ability2,
-      //   ability3: data?.ability3,
-      //   ability4: data?.ability4,
-      // }
     }
-
-    setPokemonData(newData)
-
-
 
     handleAddCustomPokemon(newData)
     onHandleModal()
@@ -165,8 +153,6 @@ export function FormAddPokemon({ onHandleModal }: any) {
     }
   };
 
-
-
   return (
     <S.FormContainer >
       <form onSubmit={handleSubmit(createPokemon)} >
@@ -198,7 +184,6 @@ export function FormAddPokemon({ onHandleModal }: any) {
           <InputNumber
               label="ALTURA"
               type="number"
-              //  name="hp"
               readOnly
               suffix={"Cm"}
               placeholder="Altura"

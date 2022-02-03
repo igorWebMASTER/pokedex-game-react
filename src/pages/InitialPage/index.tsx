@@ -4,8 +4,6 @@ import Button from 'components/Button';
 import pokemonLogo from 'assets/images/pokemonLogo.png';
 import { Link } from 'react-router-dom';
 import * as Styled from './styles';
-import useSound from 'use-sound';
-
 
 export function InitialPage() {
 

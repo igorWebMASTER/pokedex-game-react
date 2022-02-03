@@ -16,6 +16,7 @@ export function ModalAddPokemon({
   openCloseModal,
   requestCloseModal,
 }: ModalProps) {
+
   return (
     <>
     {openCloseModal && (<S.ModalOverlay>
