@@ -88,7 +88,7 @@ export const ModalHeader = styled.div`
 
 export const ModalBody = styled.div`  
   display: flex;
-  height: calc(100vh + 551px);
+  height: 1309px;
   padding: 0 2rem;
   width: 100%;
   position: absolute;
