@@ -36,49 +36,18 @@ export interface PokemonProps {
 }
 
 
-export function ModalGeneral()  {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [randomPokemonData, setRandomPokemonData] = useState<PokemonProps>(
-    {} as PokemonProps
-  );
+export function ModalCatchPokemon({ randomPokemonData, modalIsOpen, closeModal }: any)  {
+
 
   const {  addPokemonToSlots } = useContext(PokedexContext);
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function generatePokemonId() {
-    const idPokemon = Math.floor(Math.random() * 897 + 1);
-    return idPokemon;
-  }
-
-  async function handleGetRandomPokemon() {
-    try {
-      setIsLoading(true);
-      const pokemonId = generatePokemonId();
-      const pokemonData = await getPokemonById(pokemonId)
-      setTimeout(() => {
-       setRandomPokemonData(pokemonData);
-       openModal();
-       setIsLoading(false);
-      }, 1000)
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  
+  
+  
 
   return (
     <>
-      <Ash
-        onHandleGetRandomPokemon={handleGetRandomPokemon}
-        isSearching={isLoading}
-      />
+      
       {modalIsOpen && (
         <S.ModalOverlay>
           <motion.div
