@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 
 import Sidebar from 'components/Sidebar';
 
@@ -6,31 +6,21 @@ import { ModalCatchPokemon } from 'components/ModalCatchPokemon';
 import * as S from './styled';
 import { Ash } from 'components/Ash';
 import { getPokemonById } from 'app/api';
-import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+
 
 function MapPage() {
-  const [modalIsOpen, setIsOpen] = useState(false);
-
+  // const [modalIsOpen, setIsOpen] = useState(false);
   function generatePokemonId() {
     const idPokemon = Math.floor(Math.random() * 897 + 1);
     return idPokemon;
   }
 
   const [isLoading, setIsLoading] = useState(false);
-  
 
   const [randomPokemonData, setRandomPokemonData] = useState(
     {} as import('dtos/pokemon').PokemonProps
   );
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
 
   async function handleGetRandomPokemon() {
     try {
@@ -39,28 +29,27 @@ function MapPage() {
       const pokemonData = await getPokemonById(pokemonId)
       setTimeout(() => {
        setRandomPokemonData(pokemonData);
-       openModal();
-       setIsLoading(false);
-      }, 1000)
-    } catch (e) {
-      console.log(e);
+      //  openModal();
+
+      }, 2000)
+    } catch (e: any ) {
+      toast.error('Não foi possível gerar o pokemon neste momento. tente novamente mais tarde!')
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
     <>
-    <Toaster/>
-    <S.MapWrapper className="map">
-      <Sidebar />
-      <ModalCatchPokemon 
-        randomPokemonData={randomPokemonData}
-        closeModal={closeModal} 
-        modalIsOpen={modalIsOpen} 
-      />
-      <Ash
-        onHandleGetRandomPokemon={handleGetRandomPokemon}
-        isSearching={isLoading}
-      />
-    </S.MapWrapper>
+      <S.MapWrapper className="map">
+        <Sidebar />
+        <ModalCatchPokemon
+          randomPokemonData={randomPokemonData}
+        />
+        <Ash
+          onHandleGetRandomPokemon={handleGetRandomPokemon}
+          isSearching={isLoading}
+        />
+      </S.MapWrapper>
     </>
   );
 }

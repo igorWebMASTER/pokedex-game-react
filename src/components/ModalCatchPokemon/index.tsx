@@ -1,54 +1,32 @@
 import React, { useContext, useState } from 'react';
 
 import * as S from './styles';
-import { Ash } from '../Ash';
 
 import PokeBall from 'assets/images/pokeball.png'
 import CloseModal from 'assets/images/close.png'
 
 import { motion } from 'framer-motion';
 import { translateType } from 'utils/translate';
-import { getPokemonById } from 'app/api';
 import { getColorOfTypePokemon } from 'utils/getColorOfTypePokemon';
 
 import { PokedexContext } from 'context/pokedexContext';
+import { useUI } from 'hooks/useUI';
+import { HorizontalLine } from 'components/HorizontalLine';
 
-export interface PokemonProps {
-  lenght: number;
-  name: string;
-  weight: number;
-  height: number;
-  sprites: {
-    front_default: string;
-  };
-  stats: {
-    base_stat: number;
-    stat: {
-      name: string;
-    };
-  }[];
-  types: string[];
-  abilities: {
-    ability: {
-      name: string;
-    };
-  }[];
-}
-
-
-export function ModalCatchPokemon({ randomPokemonData, modalIsOpen, closeModal }: any)  {
-
-
+export function ModalCatchPokemon({ randomPokemonData}: any)  {
   const {  addPokemonToSlots } = useContext(PokedexContext);
+  const {  closeModal } = useUI() as any;
 
-  
-  
-  
+  console.log({randomPokemonData})
+
+  if(randomPokemonData.lenght <= 0){
+    return null;
+  }
 
   return (
     <>
-      
-      {modalIsOpen && (
+
+      {/* {modalIsOpen && ( */}\
         <S.ModalOverlay>
           <motion.div
             initial={{ y: 200, opacity: 0 }}
@@ -75,7 +53,6 @@ export function ModalCatchPokemon({ randomPokemonData, modalIsOpen, closeModal }
               <S.ModalTextBody>
               {`${randomPokemonData?.name}`}
               </S.ModalTextBody>
-              <br />
               <S.ModalAbilitiesInfo>
                 <div>
                   <span>
@@ -106,14 +83,7 @@ export function ModalCatchPokemon({ randomPokemonData, modalIsOpen, closeModal }
                 </div>
               </S.ModalAbilitiesInfo>
               <br />
-              <S.HorizontalLine>
-                   <div>
-                   </div>
-                   <span>Tipo </span>
-                   <div>
-                   </div>
-              </S.HorizontalLine>
-
+              <HorizontalLine title={'Tipo'} />
               <S.TypeInfoContainer>
                 {randomPokemonData?.types?.map((info: any) => (
                   <S.Badge
@@ -124,14 +94,7 @@ export function ModalCatchPokemon({ randomPokemonData, modalIsOpen, closeModal }
                   </S.Badge>
                 ))}
                </S.TypeInfoContainer>
-
-               <S.HorizontalLine>
-                   <div>
-                   </div>
-                     <span>HABILIDADES </span>
-                    <div>
-                    </div>
-              </S.HorizontalLine>
+               <HorizontalLine title={'HABILIDADES'} />
               <S.AbilitiesInfoContainer>
               {randomPokemonData?.abilities?.slice(0, 2).map((info: any, index: number) => (
                       <span key={info.ability.name}>
@@ -154,7 +117,7 @@ export function ModalCatchPokemon({ randomPokemonData, modalIsOpen, closeModal }
           </S.ModalContainer>
          </motion.div>
        </S.ModalOverlay>
-       )}
+       {/* )} */}
      </>
   );
 }

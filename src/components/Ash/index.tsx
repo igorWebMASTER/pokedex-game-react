@@ -15,12 +15,15 @@ import { useHover } from 'hooks/useHover';
 import { PokemonProps } from 'dtos/pokemon';
 
 import useSound from 'use-sound';
+import { useUI } from 'hooks/useUI';
 
 
 export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   const [sprite, setSprite] = useState(AshFront);
   const [tooltipStatus, setTooltipStatus] = useState("available" );
   const { slots } = useContext(PokedexContext);
+
+  const {  setModalView, openModal } = useUI();
 
   const [hoverRef, isHovered] = useHover();
 
@@ -52,7 +55,7 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   useEffect(() => {
     let initial = true;
 
-    if(isSearching && initial){
+    if(isSearching){
       setTimeout(() => {
         switch(sprite){
           case AshFront:
@@ -97,6 +100,8 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
             onClick={() => {
               if(tooltipStatus === "available" && !isSearching) {
                 onHandleGetRandomPokemon();
+                setModalView('CATCH_POKEMON_VIEW')
+                openModal()
               }
             }}
             onMouseEnter={() => {

@@ -58,7 +58,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
       ...data,
       types: selectedTypes,
     }
-
+    console.log(newData)
     handleAddCustomPokemon(newData)
     onHandleModal()
   }
