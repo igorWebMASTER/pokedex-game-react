@@ -90,21 +90,20 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
     <S.Character tooltipStatus={tooltipStatus}>
       {isHovered && <Tooltip type="" loading={isSearching} status={tooltipStatus} />}
       {!isHovered && isSearching && <Tooltip loading={isSearching} status={tooltipStatus} />}
-        
+
         <div ref={hoverRef as any}>
-          <img 
+          <img
             src={handleImage()}
             onClick={() => {
-              if(tooltipStatus === "available"){
+              if(tooltipStatus === "available" && !isSearching) {
                 onHandleGetRandomPokemon();
-            }
-            
-          }}
-          onMouseEnter={() => {
-            if(tooltipStatus === "full"){
-              handleSoundSFX("full");
-            }
-          }}
+              }
+            }}
+            onMouseEnter={() => {
+              if(tooltipStatus === "full"){
+                handleSoundSFX("full");
+              }
+            }}
           alt="ash" />
         </div>
     </S.Character>
