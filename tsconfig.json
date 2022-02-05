@@ -28,7 +28,7 @@
       "next-env.d.ts",
       "**/*.ts",
       "**/*.tsx"
-    ],
+, "src/components/ModalAddPokemon/Components/UploadImage/index.tsjsxx"    ],
     "exclude": [
       "node_modules"
     ]

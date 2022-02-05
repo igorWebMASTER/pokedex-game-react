@@ -6,6 +6,7 @@ import { FormAddPokemon } from './FormAddPokemon';
 
 import CloseModal from 'assets/images/close.png';
 
+import { UploadImage } from './Components/UploadImage';
 
 interface ModalProps {
   openCloseModal: boolean;
@@ -37,8 +38,7 @@ export function ModalAddPokemon({
                 >
                   <img src={CloseModal} alt="" />
                 </button>
-              <div>
-              </div>
+              <UploadImage />
             </S.ModalHeader>
             <S.ModalBody>
               <FormAddPokemon onHandleModal={requestCloseModal} />
