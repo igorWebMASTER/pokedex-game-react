@@ -16,19 +16,22 @@ import { PokemonProps } from 'dtos/pokemon';
 
 import useSound from 'use-sound';
 import { useUI } from 'hooks/useUI';
+import { PokemonContext } from 'context/pokemonContext';
 
 
-export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
+export function Ash() {
   const [sprite, setSprite] = useState(AshFront);
   const [tooltipStatus, setTooltipStatus] = useState("available" );
-  const { slots } = useContext(PokedexContext);
+  const { pokedex } = useContext(PokedexContext);
+  const {  isLoading: isSearching, handleGetRandomPokemon } = useContext(PokemonContext);
+
 
   const {  setModalView, openModal } = useUI();
 
   const [hoverRef, isHovered] = useHover();
 
   function verifyPokemonAvailability() {
-    const isOutOfSlots = slots.every((pokemon: PokemonProps) => pokemon.id);
+    const isOutOfSlots = pokedex.every((pokemon: PokemonProps) => pokemon.id);
 
     if(isOutOfSlots){
       setTooltipStatus("full");
@@ -47,10 +50,10 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
   }
 
   useEffect(() => {
-    if(slots){
+    if(pokedex){
       verifyPokemonAvailability()
     }
-  },[slots])
+  },[pokedex])
 
   useEffect(() => {
     let initial = true;
@@ -99,7 +102,7 @@ export function Ash({ onHandleGetRandomPokemon, isSearching }: any) {
             src={handleImage()}
             onClick={() => {
               if(tooltipStatus === "available" && !isSearching) {
-                onHandleGetRandomPokemon();
+                handleGetRandomPokemon();
                 setModalView('CATCH_POKEMON_VIEW')
                 openModal()
               }

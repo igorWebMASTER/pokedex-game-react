@@ -21,16 +21,13 @@ const ModalView = ({
 
 const ModalUI = () => {
   const { displayModal, closeModal, modalView } = useUI();
-  console.log({displayModal});
-  console.log({modalView});
 
   return displayModal ? (
     <>
-dasdasdas
-{/* <ModalView
+<ModalView
       modalView={modalView}
       closeModal={closeModal}
-    /> */}
+    />
     </>
   ) : null;
 };

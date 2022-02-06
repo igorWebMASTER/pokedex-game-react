@@ -20,10 +20,10 @@ type Action =
  type MODAL_VIEWS =
     'CATCH_POKEMON_VIEW'
  ;
-  //
+
 const initialState =  {
   displayModal: false,
-  modalView: 'sdasdasd',
+  modalView: '',
 };
 
 export const UIContext = createContext<State | any>(initialState);
@@ -59,11 +59,11 @@ function uiReducer(state: State, action: Action){
 export const UIProvider = (props:any) => {
   const [state, dispatch] = useReducer(uiReducer, initialState);
 
-  const openModal = useCallback(() => dispatch({ type: 'OPEN_MODAL '} as any), [
+  const openModal = useCallback(() => dispatch({ type: 'OPEN_MODAL'}), [
     dispatch,
   ]);
 
-  const closeModal = useCallback(() => dispatch({ type: 'CLOSE_MODAL '} as any), [
+  const closeModal = useCallback(() => dispatch({ type: 'CLOSE_MODAL'}), [
     dispatch,
   ]);
 
