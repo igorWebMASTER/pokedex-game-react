@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ModalOverlay = styled.div`
   background: var(--modal-background);
@@ -14,33 +14,18 @@ export const ModalOverlay = styled.div`
   z-index:90;
 `
 
-export const Text = styled.h1<{ isHovered : boolean }>`
-  margin-bottom: 1rem;
-  text-decoration: underline;
-  color: var(--link-color);
-
-  ${props => props.isHovered && css`
-    cursor: pointer;
-  `}
-
-`
-
 export const ModalContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 600px;
+  min-height: 700px;
   max-height:500px;
+  overflow: scroll;
   position: relative;
-
-  white-space: nowrap;
-  overflow: auto;
-  text-overflow: ellipsis;
 
   min-width: 350px;
   border-radius: 10px;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
-  text-align: center;
 
   @media screen and (max-width: 350px){
     min-width: 26rem;
@@ -59,8 +44,8 @@ export const ModalHeader = styled.div`
   align-items: center;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-
-
+  
+   
   button {
     margin-left: auto;
     margin-right: 20px;
@@ -75,7 +60,7 @@ export const ModalHeader = styled.div`
 
   div{
     z-index: 999;
-    width: calc(100% - 35%);
+    width: calc(100% - 41%);
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -87,10 +72,11 @@ export const ModalHeader = styled.div`
     position: relative;
     top: -20px;
 
+
     @media screen and (max-width: 320px){
       width: calc(100% - 20%);
     }
-
+    
 
     img{
       width: 100%;
@@ -100,9 +86,9 @@ export const ModalHeader = styled.div`
   }
 `
 
-export const ModalBody = styled.div`
+export const ModalBody = styled.div`  
   display: flex;
-  height: 800px;
+  height: 1309px;
   padding: 0 2rem;
   width: 100%;
   position: absolute;
@@ -110,15 +96,14 @@ export const ModalBody = styled.div`
   border-radius: 10px;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   background: #fff;
 
-
+  
 `
 
 export const ModalTextBody = styled.div`
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: bold;  
   font-size: 2rem;
   margin: 1em 0;
   padding: 0 2rem;
@@ -129,7 +114,7 @@ export const ModalTextBody = styled.div`
   display: flex;
   align-items: center;
 
-  /* margin-left: 40px; */
+  margin-left: 40px;
 
   img{
     margin-left: 10px;
@@ -155,17 +140,40 @@ export const ModalAbilitiesInfo = styled.div`
     flex-direction: column;
     border-left: 1px solid #ccc;
     color: #004a45;
-
+    
     span{
       margin: 0.2rem 0;
       font-size: 1.1rem;
-      font-weight: bold;
+      font-weight: bold; 
     }
 
     span.main-status{
       font-size: 1.9rem;
       font-weight: bold;
     }
+  }
+`
+
+export const HorizontalLine = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+
+  span{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #004a45;
+    margin: 0 1rem;
+  }
+
+  div{
+    width: 100%;
+    padding: 0 1rem;
+    height: 1px;
+    background: #ccc;
   }
 `
 
@@ -190,21 +198,22 @@ export const Badge = styled.div<{ color?: string }>`
     font-size: 1.2rem;
     font-weight: bold;
     background-color: ${props => props.color};
+
   `;
 
 export const AbilitiesInfoContainer = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-
+    
     div{
       display: flex;
       align-items: center;
       span{
         font-weight: bold;
       }
-
-
+      
+      
       img{
         margin-right: 1rem;
         align-self: center;
@@ -222,20 +231,20 @@ export const AbilitiesInfoContainer = styled.div`
       font-weight: bold;
       margin: 1rem 0.5rem;
     }
-
+  
   `
 
 export const CaptureButtonContainer = styled.div`
-    position: fixed;
-    left: 0;
-    right: 0;
 
   button{
-
-
+      
+      position: fixed;
+      top: 79%;
       max-width:300px;
       filter: drop-shadow(0 0px 2.15rem rgba(0, 0, 0, 0.347));
-
+      margin: 0% auto; /* Will not center vertically and won't work in IE6/7. */
+      left: 0;
+      right: 0;
   }
 `
 
@@ -277,15 +286,15 @@ export const StaticsContainer = styled.div`
   display: flex;
     justify-content: space-between;
     width: 100%;
-
+    
     div{
       display: flex;
       align-items: center;
       span{
         font-weight: bold;
       }
-
-
+      
+      
       img{
         margin-right: 1rem;
         align-self: center;
@@ -331,11 +340,3 @@ export const EditNamePokemon = styled.div`
     }
   }
 `
-
-export const Error = styled.span`
-  color: #ff0000;
-  position: relative;
-  font-size: 1.2rem;
-  left: -109px;
-  top: -13px;
-`;

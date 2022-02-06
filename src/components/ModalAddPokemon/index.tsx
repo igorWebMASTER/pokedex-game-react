@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';

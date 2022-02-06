@@ -9,26 +9,24 @@ import { motion } from 'framer-motion';
 import { translateType } from 'utils/translate';
 import { getColorOfTypePokemon } from 'utils/getColorOfTypePokemon';
 
-import { PokedexContext } from 'context/pokedexContext';
 import { useUI } from 'hooks/useUI';
 import { HorizontalLine } from 'components/HorizontalLine';
+import { PokemonContext } from 'context/pokemonContext';
+import { PokedexContext } from 'context/pokedexContext';
 
-export function ModalCatchPokemon({ randomPokemonData}: any)  {
-  const {  addPokemonToSlots } = useContext(PokedexContext);
+export function ModalCatchPokemon()  {
+  const {  randomPokemonData } = useContext(PokemonContext);
+  const {  handleAddPokemonToPokedex } = useContext(PokedexContext);
   const {  closeModal } = useUI() as any;
 
-  console.log({randomPokemonData})
 
-  if(randomPokemonData.lenght <= 0){
+  if(randomPokemonData &&randomPokemonData.lenght <= 0){
     return null;
   }
 
   return (
     <>
-
-      {/* {modalIsOpen && ( */}\
-        <S.ModalOverlay>
-          <motion.div
+         <motion.div
             initial={{ y: 200, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
@@ -106,7 +104,7 @@ export function ModalCatchPokemon({ randomPokemonData}: any)  {
                 <S.ButtonCatchPokemon
                   type="button"
                   onClick={() => {
-                    addPokemonToSlots(randomPokemonData)
+                    handleAddPokemonToPokedex(randomPokemonData)
                     closeModal();
                   }}
                 >
@@ -116,8 +114,6 @@ export function ModalCatchPokemon({ randomPokemonData}: any)  {
             </S.ModalBody>
           </S.ModalContainer>
          </motion.div>
-       </S.ModalOverlay>
-       {/* )} */}
      </>
   );
 }

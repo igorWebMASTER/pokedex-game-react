@@ -15,21 +15,20 @@ function Sidebar() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalEditPokemon, setIsOpenEditPokemon] = useState(false);
   const [modalAddCustomPokemon, setModaAddCustomPokemon] = useState(false);
-  const { slots, handleAddCustomPokemon: onHandleAddCustomPokemon } = useContext(PokedexContext);
+  const { pokedex, handleAddCustomPokemon: onHandleAddCustomPokemon } = useContext(PokedexContext);
 
   const [selectedPokemonData, setSelectedPokemonData] = useState([]);
 
-
   useEffect(() => {
-    if (slots) {
+    if (pokedex) {
       setSelectedPokemonData(() => {
-        const [pokemon] = slots && slots.filter((pokemon) => pokemon.id === selectedPokemonData.id);
+        const [pokemon] = pokedex && pokedex.filter((pokemon) => pokemon.id === selectedPokemonData.id);
        
         if (!pokemon) return [];
         return pokemon;
       })
     }
-  }, [slots])
+  }, [pokedex])
 
   function handleSelectPokemon(pokemon) {
     setSelectedPokemonData(pokemon);
@@ -81,7 +80,7 @@ function Sidebar() {
         openCloseModal={modalEditPokemon}
       />
       <S.SideBarList>
-        {slots && slots.
+        {pokedex && pokedex.
           map((pokemon, index) => {
             return (
               <S.SideBarItem key={index} isUsed={pokemon.id} >
@@ -109,7 +108,7 @@ function Sidebar() {
 
       <Button
         onClick={handleOpenAddPokemonModal} icon={iconPlus}
-        disabled={isEmpty(slots)}
+        disabled={isEmpty(pokedex)}
       />
     </S.SideBarWrapper>
   );

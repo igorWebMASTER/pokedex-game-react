@@ -2,13 +2,13 @@ import { PokemonProps } from 'dtos/pokemon';
 import { createContext, ReactNode, useState, useCallback, useEffect } from 'react';
 
 interface PokedexContextData {
-  addPokemonToSlots: Function;
-  setSlots: Function;
+  handleAddPokemonToPokedex: Function;
+  setPokedex: Function;
   handleEditNamePokemon:Function;
   handleReleasePokemon: Function;
   handleEditCustomPokemon: Function;
   handleAddCustomPokemon: Function;
-  slots: PokemonProps[];
+  pokedex: PokemonProps[];
 }
 
 
@@ -24,62 +24,60 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     return data;
   };
 
-  const [slots, setSlots] = useState(getInitialPokedexState) ;
+  const [pokedex, setPokedex] = useState(getInitialPokedexState) ;
 
   useEffect(() => {
-    if(slots) {
-      localStorage.setItem('@pokedex-game', JSON.stringify(slots))
+    if(pokedex) {
+      localStorage.setItem('@pokedex-game', JSON.stringify(pokedex))
     }
-  }, [slots])
+  }, [pokedex])
 
-  function addPokemonToSlots  (pokemon: PokemonProps) {
-    if (slots.find((slot: { id: string; }) => slot.id === pokemon.id)) return;
+  function handleAddPokemonToPokedex  (pokemon: PokemonProps) {
+    if (pokedex.find((slot: { id: string; }) => slot.id === pokemon.id)) return;
     
-    
-    slots.map((slot: { id: string; }, index: number) => {
+    pokedex.map((slot: { id: string; }, index: number) => {
       
       if (!slot.id) {
        
-        setSlots(([
-            ...slots.slice(0, index),
+        setPokedex(([
+            ...pokedex.slice(0, index),
             pokemon,
-            ...slots.slice(index + 1),
+            ...pokedex.slice(index + 1),
         ]));
       }
-      return slots;
+      return pokedex;
     });
   };
 
   function handleEditNamePokemon  (pokemonId: string, name: string) {
-    if (!slots.find((slot: { id: string; }) => slot.id === pokemonId)) return;
-     slots.map((slot: { id: string; }, index: number) => {
+    if (!pokedex.find((slot: { id: string; }) => slot.id === pokemonId)) return;
+     pokedex.map((slot: { id: string; }, index: number) => {
       if (slot.id === pokemonId) {
         const newSlots = {
-          ...slots[index],
+          ...pokedex[index],
           name,
         }
 
-          setSlots([
-            ...slots.slice(0, index),
+          setPokedex([
+            ...pokedex.slice(0, index),
             newSlots,
-            ...slots.slice(index + 1),
+            ...pokedex.slice(index + 1),
           ]);
         }
 
-      return slots;
+      return pokedex;
     });
   }
   
   function handleReleasePokemon(pokemonId: string) {
     if (!pokemonId) return;
-    if (slots.find((slot: { id: string; }) => slot.id === pokemonId)) {
-      const newSlots = slots.map((pokemon: { id: string; }) => {
-        if (pokemon.id === pokemonId) return [];
-        return pokemon;
-      });
+    if (!pokedex.find((slot: { id: string; }) => slot.id === pokemonId)) return;
+    const newSlots = pokedex.map((pokemon: { id: string; }) => {
+      if (pokemon.id === pokemonId) return [];
+      return pokemon;
+    });
 
-      setSlots(newSlots);
-    }
+    setPokedex(newSlots);
   }
 
   function handleAddCustomPokemon(data: PokemonProps) {
@@ -88,37 +86,37 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
       ...data,
       id: id,
     };
-    if (slots.find((slot: { name: string; }) => slot.name === data.name)) return;
-    slots.map((slot: { id: string; }, index: number) => {
+    if (pokedex.find((slot: { name: string; }) => slot.name === data.name)) return;
+    pokedex.map((slot: { id: string; }, index: number) => {
       if (!slot.id) {
-        setSlots([
-          ...slots.slice(0, index),
+        setPokedex([
+          ...pokedex.slice(0, index),
           newPokemonData,
-          ...slots.slice(index + 1),
+          ...pokedex.slice(index + 1),
         ]);
       }
-      return slots;
+      return pokedex;
     });
   }
 
   const handleEditCustomPokemon = (pokemon: any) => {
-    const newSlots = slots.map((slot: { id: string; }) => {
+    const newSlots = pokedex.map((slot: { id: string; }) => {
         if (slot.id === pokemon.id) {
           return pokemon
         }
         return slot;
      }
     );
-    setSlots(newSlots);
+    setPokedex(newSlots);
   }
   
 
   return (
     <PokedexContext.Provider
       value={{
-        slots,
-        setSlots,
-        addPokemonToSlots,
+        pokedex,
+        setPokedex,
+        handleAddPokemonToPokedex,
         handleReleasePokemon,
         handleEditNamePokemon,
         handleAddCustomPokemon,

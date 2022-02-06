@@ -6,6 +6,7 @@ import {
   enableBodyScroll,
 } from 'body-scroll-lock';
 
+import * as S from './style'
 
 const Modal  = ({ children, onClose }) => {
   const ref = useRef();
@@ -34,12 +35,12 @@ const Modal  = ({ children, onClose }) => {
   }, [handleKey]);
 
   return (
-    <div>
+    <S.ModalOverlay>
       <div role="dialog" ref={ref}>
-        <button onClick={() => onClose()} aria-label="Fechar"></button>dsadasdasd
+        {/* <button onClick={() => onClose()} aria-label="Fechar">Fechar</button> */}
         <div>{children}</div>
       </div>
-    </div>
+    </S.ModalOverlay>
   );
 };
 
