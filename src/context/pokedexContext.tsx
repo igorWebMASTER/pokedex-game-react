@@ -51,28 +51,32 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
 
   function handleEditNamePokemon  (pokemonId: string, name: string) {
     if (!pokedex.find((slot: { id: string; }) => slot.id === pokemonId)) return;
-     pokedex.map((slot: { id: string; }, index: number) => {
-      if (slot.id === pokemonId) {
-        const newSlots = {
-          ...pokedex[index],
-          name,
-        }
+    if(!pokemonId) return;
 
-          setPokedex([
-            ...pokedex.slice(0, index),
-            newSlots,
-            ...pokedex.slice(index + 1),
-          ]);
-        }
+    pokedex.forEach((pokemon: any, index: number) => {
+      if (pokemon.id === pokemonId) {
+        const newName =pokedex[index].name = name;
+
+        setPokedex([
+          ...pokedex.slice(0, index),
+          {
+            ...pokedex[index],
+            newName,
+          },
+          ...pokedex.slice(index + 1),
+        ]);
+
+      }
 
       return pokedex;
     });
+
   }
   
   function handleReleasePokemon(pokemonId: string) {
     if (!pokemonId) return;
     if (!pokedex.find((slot: { id: string; }) => slot.id === pokemonId)) return;
-    const newSlots = pokedex.map((pokemon: { id: string; }) => {
+    const newSlots = pokedex.map((pokemon: { id: string; }, index: number) => {
       if (pokemon.id === pokemonId) return [];
       return pokemon;
     });
