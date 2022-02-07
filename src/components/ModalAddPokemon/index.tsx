@@ -5,6 +5,7 @@ import * as S from './styles';
 import { FormAddPokemon } from './FormAddPokemon';
 
 import CloseModal from 'assets/images/close.png';
+import { useUI } from 'hooks/useUI';
 
 
 interface ModalProps {
@@ -13,13 +14,11 @@ interface ModalProps {
 }
 
 export function ModalAddPokemon({
-  openCloseModal,
-  requestCloseModal,
 }: ModalProps) {
+  const { closeModal } = useUI();
 
   return (
     <>
-    {openCloseModal && (<S.ModalOverlay>
       <motion.div
           initial={{ y: 200, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -33,7 +32,7 @@ export function ModalAddPokemon({
             <S.ModalHeader>
               <button 
                   type="button"
-                  onClick={requestCloseModal}
+                  onClick={closeModal}
                 >
                   <img src={CloseModal} alt="" />
                 </button>
@@ -41,11 +40,10 @@ export function ModalAddPokemon({
               </div>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormAddPokemon onHandleModal={requestCloseModal} />
+              <FormAddPokemon />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>
-      </S.ModalOverlay>)}
     </>
   );
 }

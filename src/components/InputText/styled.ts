@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const InputTextWrapper = styled.div`
   display: flex;
@@ -27,6 +27,11 @@ export const Input = styled.input < { hasShadow?: boolean } > `
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  ${props => props.hasShadow && css`
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2);
+  `}
+  // has shadow
+  
 
 
 

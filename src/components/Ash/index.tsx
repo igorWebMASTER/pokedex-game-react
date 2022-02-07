@@ -24,8 +24,7 @@ export function Ash() {
   const [tooltipStatus, setTooltipStatus] = useState("available" );
   const { pokedex } = useContext(PokedexContext);
   const {  isLoading: isSearching, handleGetRandomPokemon } = useContext(PokemonContext);
-
-
+  
   const {  setModalView, openModal } = useUI();
 
   const [hoverRef, isHovered] = useHover();
@@ -58,7 +57,7 @@ export function Ash() {
   useEffect(() => {
     let initial = true;
 
-    if(isSearching){
+    if(isSearching && initial){
       setTimeout(() => {
         switch(sprite){
           case AshFront:

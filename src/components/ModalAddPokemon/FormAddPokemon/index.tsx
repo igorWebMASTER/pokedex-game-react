@@ -13,9 +13,11 @@ import * as ModalForm from '../styles'
 import Button from 'components/Button';
 import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
+import { useUI } from 'hooks/useUI';
 
-export function FormAddPokemon({ onHandleModal }: any) {
+export function FormAddPokemon() {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
+  const { closeModal } = useUI();
 
   const { handleAddCustomPokemon } = useContext(PokedexContext);
   const {
@@ -53,14 +55,14 @@ export function FormAddPokemon({ onHandleModal }: any) {
     setSelectedTypes(type)
   }
 
-  function createPokemon(data: any){
+  function createCustomPokemon(data: any){
     const newData = {
       ...data,
       types: selectedTypes,
     }
-    console.log(newData)
-    handleAddCustomPokemon(newData)
-    onHandleModal()
+    
+    handleAddCustomPokemon(newData);
+    closeModal();
   }
 
   // useEffect(() => {
@@ -155,7 +157,7 @@ export function FormAddPokemon({ onHandleModal }: any) {
 
   return (
     <S.FormContainer >
-      <form onSubmit={handleSubmit(createPokemon)} >
+      <form onSubmit={handleSubmit(createCustomPokemon)} >
         <InputText
            label="Nome"
            type="text"
