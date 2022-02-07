@@ -15,13 +15,16 @@ import { PokemonContext } from 'context/pokemonContext';
 import { PokedexContext } from 'context/pokedexContext';
 
 export function ModalCatchPokemon()  {
-  const {  randomPokemonData } = useContext(PokemonContext);
+  const {  isLoading, randomPokemonData } = useContext(PokemonContext);
   const {  handleAddPokemonToPokedex } = useContext(PokedexContext);
   const {  closeModal } = useUI() as any;
 
-
-  if(randomPokemonData &&randomPokemonData.lenght <= 0){
-    return null;
+  if(isLoading) {
+    return (
+      <>
+        
+      </>
+    )
   }
 
   return (
