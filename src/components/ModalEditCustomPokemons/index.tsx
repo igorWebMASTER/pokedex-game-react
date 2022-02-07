@@ -5,23 +5,14 @@ import * as S from './styles';
 import { FormEditPokemon } from './FormEditPokemon';
 
 import CloseModal from 'assets/images/close.png';
+import { useUI } from 'hooks/useUI';
 
 
-interface ModalProps {
-  openCloseModal: boolean;
-  pokemonData: any;
-  requestCloseModal: () => void;
-}
-
-export function ModalEditCustomPokemons({
-  openCloseModal,
-  pokemonData,
-  requestCloseModal,
-}: ModalProps) {
+export function ModalEditCustomPokemons() {
+  const { closeModal } = useUI()
 
   return (
     <>
-    {openCloseModal && (<S.ModalOverlay>
       <motion.div
           initial={{ y: 200, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -35,7 +26,7 @@ export function ModalEditCustomPokemons({
             <S.ModalHeader>
               <button 
                   type="button"
-                  onClick={requestCloseModal}
+                  onClick={closeModal}
                 >
                   <img src={CloseModal} alt="" />
                 </button>
@@ -43,11 +34,10 @@ export function ModalEditCustomPokemons({
               </div>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormEditPokemon onHandleModal={requestCloseModal} pokemonData={pokemonData} />
+              <FormEditPokemon  />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>
-      </S.ModalOverlay>)}
     </>
   );
 }

@@ -14,15 +14,17 @@ import Button from 'components/Button';
 import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
 import toast from 'react-hot-toast';
+import { useUI } from 'hooks/useUI';
+import { PokemonProps } from 'dtos/pokemon';
 
-interface FormAddPokemonProps {
-  onHandleModal: () => void;
-  pokemonData?: any
-}
 
-export function FormEditPokemon({ onHandleModal, pokemonData }: FormAddPokemonProps) {
+export function FormEditPokemon() {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
-  const { handleEditCustomPokemon } = useContext(PokedexContext);
+  const { pokedex, handleEditCustomPokemon } = useContext(PokedexContext);
+  const { closeModal } = useUI()
+
+  const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected)
+  
   const {
     register,
     handleSubmit,
@@ -32,20 +34,20 @@ export function FormEditPokemon({ onHandleModal, pokemonData }: FormAddPokemonPr
   } = useForm({
     resolver: yupResolver(formSchema),
     defaultValues: {
-      hp: pokemonData?.hp ?? 0,
-      name: pokemonData?.name ?? '',
-      height: pokemonData?.height ?? 0,
-      weight: pokemonData?.weight ?? 0,
-      types: pokemonData?.types ?? [],
-      image:pokemonData?.image ??  '',
-      ability1: pokemonData?.ability1 ?? '',
-      ability2: pokemonData?.ability2 ?? '',
-      ability3: pokemonData?.ability3 ?? '',
-      ability4: pokemonData?.ability4 ?? '',
-      defense: pokemonData?.defense ??0,
-      attack: pokemonData?.attack ?? 0,
-      specialDefense:   pokemonData?.specialDefense ?? 0,
-      specialAttack:  pokemonData?.specialAttack ?? 0,
+      hp: selectedEditData?.hp ?? 0,
+      name: selectedEditData?.name ?? '',
+      height: selectedEditData?.height ?? 0,
+      weight: selectedEditData?.weight ?? 0,
+      types: selectedEditData?.types ?? [],
+      image:selectedEditData?.image ??  '',
+      ability1: selectedEditData?.ability1 ?? '',
+      ability2: selectedEditData?.ability2 ?? '',
+      ability3: selectedEditData?.ability3 ?? '',
+      ability4: selectedEditData?.ability4 ?? '',
+      defense: selectedEditData?.defense ??0,
+      attack: selectedEditData?.attack ?? 0,
+      specialDefense:   selectedEditData?.specialDefense ?? 0,
+      specialAttack:  selectedEditData?.specialAttack ?? 0,
     }
   });
 
@@ -60,13 +62,13 @@ export function FormEditPokemon({ onHandleModal, pokemonData }: FormAddPokemonPr
 
   function editCustomPokemon(data: any){
     const newData = {
-      ...pokemonData,
+      ...selectedEditData,
       ...data,
       types: selectedTypes,
     }
 
     handleEditCustomPokemon(newData)
-    onHandleModal();
+    closeModal()
     toast.success("Pokemon editado com sucesso!", {
       style: {
         border: '1px solid #713200',
