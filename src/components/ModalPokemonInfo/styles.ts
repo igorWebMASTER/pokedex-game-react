@@ -231,11 +231,8 @@ export const CaptureButtonContainer = styled.div`
     right: 0;
 
   button{
-
-
       max-width:300px;
       filter: drop-shadow(0 0px 2.15rem rgba(0, 0, 0, 0.347));
-
   }
 `
 
