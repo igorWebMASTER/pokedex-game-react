@@ -15,7 +15,7 @@ import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
 import { useUI } from 'hooks/useUI';
 
-export function FormAddPokemon() {
+export function FormAddPokemon({imageUrl }: any) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
   const { closeModal } = useUI();
 
@@ -59,6 +59,7 @@ export function FormAddPokemon() {
     const newData = {
       ...data,
       types: selectedTypes,
+      image: imageUrl
     }
     
     handleAddCustomPokemon(newData);

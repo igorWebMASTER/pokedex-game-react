@@ -46,7 +46,7 @@ export const ModalHeader = styled.div`
   border-bottom-left-radius: 0;
   
    
-  button {
+  button.button-close {
     margin-left: auto;
     margin-right: 20px;
     margin-top: 10px;
@@ -58,7 +58,10 @@ export const ModalHeader = styled.div`
     border: 2px solid #999;
   }
 
-  div{
+ 
+`
+
+export const ModalHeaderRounded = styled.div`
     z-index: 999;
     width: calc(100% - 41%);
     height: 200px;
@@ -83,7 +86,6 @@ export const ModalHeader = styled.div`
       max-width: 120px;
     }
 
-  }
 `
 
 export const ModalBody = styled.div`  

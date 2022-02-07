@@ -39,7 +39,6 @@ export const SelectType = forwardRef(({ onChange, error, handleSelectType, onBlu
         displayValue="name" 
         placeholder="Selecione o(s) tipo(s)"
       />
-
       {error && (<S.Error>{error.message}</S.Error>)}
     </>
   )

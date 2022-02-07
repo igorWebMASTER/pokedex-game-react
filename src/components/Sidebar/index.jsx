@@ -34,6 +34,8 @@ function Sidebar() {
   }
 
 
+  
+
   return (
     <S.SideBarWrapper>
       <S.SideBarList>
@@ -49,7 +51,7 @@ function Sidebar() {
                     }}
                     src={
                       pokemon?.sprites?.front_default ??
-                      pokeAvatar
+                      pokemon?.image?.[0]?.data_url
                     }
                     width={pokemon?.sprites?.front_default ? '' : '34px'}
                     alt={pokemon?.name}
