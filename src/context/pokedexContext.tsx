@@ -1,5 +1,5 @@
 import { PokemonProps } from 'dtos/pokemon';
-import { createContext, ReactNode, useState, useCallback, useEffect } from 'react';
+import { createContext, ReactNode, useState, useCallback, useEffect, useMemo } from 'react';
 
 interface PokedexContextData {
   handleAddPokemonToPokedex: Function;
@@ -8,7 +8,7 @@ interface PokedexContextData {
   handleReleasePokemon: Function;
   handleEditCustomPokemon: Function;
   handleAddCustomPokemon: Function;
-  pokedex: PokemonProps[];
+  pokedex: any;
 }
 
 
@@ -17,6 +17,8 @@ interface PokedexProviderProps {
 }
 
 export const PokedexContext = createContext({} as PokedexContextData);
+
+PokedexContext.displayName = 'PokedexContext';
 
 export function PokedexProvider({ children }: PokedexProviderProps) {
   const getInitialPokedexState = () => {
@@ -55,13 +57,11 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
 
     pokedex.forEach((pokemon: any, index: number) => {
       if (pokemon.id === pokemonId) {
-        const newName =pokedex[index].name = name;
-
         setPokedex([
           ...pokedex.slice(0, index),
           {
             ...pokedex[index],
-            newName,
+            name,
           },
           ...pokedex.slice(index + 1),
         ]);
@@ -114,18 +114,21 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     setPokedex(newSlots);
   }
   
+  
+  const values = useMemo(
+    () => ({
+      pokedex,
+      setPokedex,
+      handleAddPokemonToPokedex,
+      handleReleasePokemon,
+      handleEditNamePokemon,
+      handleAddCustomPokemon,
+      handleEditCustomPokemon
+  }), [pokedex, setPokedex, handleAddPokemonToPokedex, handleReleasePokemon, handleEditNamePokemon, handleAddCustomPokemon, handleEditCustomPokemon]);
 
   return (
     <PokedexContext.Provider
-      value={{
-        pokedex,
-        setPokedex,
-        handleAddPokemonToPokedex,
-        handleReleasePokemon,
-        handleEditNamePokemon,
-        handleAddCustomPokemon,
-        handleEditCustomPokemon
-      }}
+      value={values}
     >
       {children}
     </PokedexContext.Provider>
