@@ -2,8 +2,11 @@ import { useUI } from "hooks/useUI";
 import React from "react";
 
 import Modal from './Modal';
+import { ModalAddPokemon } from "./ModalAddPokemon";
 
 import { ModalCatchPokemon } from './ModalCatchPokemon'
+import { ModalEditCustomPokemons } from "./ModalEditCustomPokemons";
+import { ModalPokemonInfo } from "./ModalPokemonInfo";
 
 const ModalView = ({
   modalView,
@@ -12,9 +15,10 @@ const ModalView = ({
 
   return (
     <Modal onClose={closeModal}>
-      {modalView === "CATCH_POKEMON_VIEW" && (
-        <ModalCatchPokemon />
-      )}
+      {modalView === "CATCH_POKEMON_VIEW" && (<ModalCatchPokemon />)}
+      {modalView === "INFO_POKEMON_VIEW" && (<ModalPokemonInfo />)}
+      {modalView === "ADD_POKEMON_VIEW" && (<ModalAddPokemon />)}
+      {modalView === "EDIT_POKEMON_VIEW" && (<ModalEditCustomPokemons />)}
     </Modal>
   );
 };
@@ -24,10 +28,10 @@ const ModalUI = () => {
 
   return displayModal ? (
     <>
-<ModalView
-      modalView={modalView}
-      closeModal={closeModal}
-    />
+      <ModalView
+        modalView={modalView}
+        closeModal={closeModal}
+      />
     </>
   ) : null;
 };
