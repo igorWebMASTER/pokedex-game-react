@@ -1,4 +1,4 @@
-import { createContext, useReducer, useCallback } from "react";
+import { createContext, useReducer, useCallback, useMemo } from "react";
 
 export interface State {
   displayModal: boolean;
@@ -19,6 +19,10 @@ type Action =
 
  type MODAL_VIEWS =
     'CATCH_POKEMON_VIEW'
+    | 'EDIT_POKEMON_VIEW'
+    | 'ADD_POKEMON_VIEW'
+    | 'INFO_POKEMON_VIEW'
+    | 'EDIT_CUSTOM_POKEMON_VIEW'
  ;
 
 const initialState =  {
@@ -72,13 +76,16 @@ export const UIProvider = (props:any) => {
     [dispatch],
   );
 
-  return <UIContext.Provider value={{
+  const values = useMemo(
+    () => ({
     ...state,
     openModal,
     closeModal,
     setModalView,
-  }} {...props} />
-};
+  }), [state]);
+
+  return <UIContext.Provider value={values}  {...props} />
+}; 
 
 export const ManageUIContext = ({ children }: any) => (
   <UIProvider>
