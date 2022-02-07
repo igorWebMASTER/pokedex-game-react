@@ -14,7 +14,7 @@ import Button from 'components/Button';
 import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
 
-export function FormAddPokemon({ onHandleModal }: any) {
+export function FormAddPokemon({ onHandleModal, imageUrl }: any) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
 
   const { handleAddCustomPokemon } = useContext(PokedexContext);
@@ -57,7 +57,10 @@ export function FormAddPokemon({ onHandleModal }: any) {
     const newData = {
       ...data,
       types: selectedTypes,
+      image: imageUrl
     }
+
+    console.log(newData)
 
     handleAddCustomPokemon(newData)
     onHandleModal()

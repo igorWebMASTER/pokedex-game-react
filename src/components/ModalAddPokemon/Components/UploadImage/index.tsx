@@ -1,46 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ImageUploading from 'react-images-uploading';
 
-export function UploadImage() {
-  const [images, setImages] = React.useState([]);
+
+import * as S from './styles';
+
+export function UploadImage({ images, handleImage }: any) {
   const maxNumber = 1;
 
-  const onChange = (imageList: any, addUpdateIndex: any) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
-
+  
   return (
-    <div className="App">
+    <S.UploadImageContainer>
       <ImageUploading
         multiple
         value={images}
-        onChange={onChange}
+        onChange={handleImage}
         maxNumber={maxNumber}
         dataURLKey="data_url"
       >
         {({
           imageList,
           onImageUpload,
-          onImageRemoveAll,
-          onImageUpdate,
           onImageRemove,
           isDragging,
           dragProps,
         }) => (
-          // write your building UI
           <div className="upload__image-wrapper">
-            <button
-              style={isDragging ? { color: 'red' } : undefined}
-              onClick={onImageUpload}
-              {...dragProps}
-            >
-              Selecione para adicionar
-            </button>
+             <button
+               style={isDragging ? { color: 'red' } : undefined}
+               onClick={onImageUpload}
+               {...dragProps}
+             >
+               Selecione para adicionar
+             </button>
             &nbsp;
-            <button onClick={onImageRemoveAll}>Remover</button>
-            {imageList.map((image, index) => (
+            {imageList.map((image: any, index: number) => (
               <div key={index} className="image-item">
                 <img src={image['data_url']} alt="" width="100" />
                 <div className="image-item__btn-wrapper">
@@ -52,6 +45,6 @@ export function UploadImage() {
           </div>
         )}
       </ImageUploading>
-    </div>
+    </S.UploadImageContainer>
   );
 }

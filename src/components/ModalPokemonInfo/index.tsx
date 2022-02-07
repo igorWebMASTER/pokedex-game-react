@@ -92,7 +92,7 @@ export function ModalPokemonInfo({
                   <img src={CloseModal} alt="" />
                 </button>
               <div>
-                <img src={pokemonData?.sprites?.front_default} alt="" />
+                <img src={pokemonData?.sprites?.front_default ?? pokemonData?.image?.[0]?.data_url} alt="" />
               </div>
             </S.ModalHeader>
             <S.ModalBody>

@@ -61,6 +61,8 @@ function Sidebar() {
     return array.every(element => element.length !== 0);
   }
 
+  
+
   return (
     <S.SideBarWrapper>
       <ModalPokemonInfo
@@ -93,7 +95,7 @@ function Sidebar() {
                     }}
                     src={
                       pokemon?.sprites?.front_default ??
-                      pokeAvatar
+                      pokemon?.image?.[0]?.data_url
                     }
                     width={pokemon?.sprites?.front_default ? '' : '34px'}
                     alt={pokemon?.name}

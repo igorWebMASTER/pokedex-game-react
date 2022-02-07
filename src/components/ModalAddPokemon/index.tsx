@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
@@ -17,6 +17,15 @@ export function ModalAddPokemon({
   openCloseModal,
   requestCloseModal,
 }: ModalProps) {
+  const [images, setImages] = useState<any>([]);
+
+  function handleSelectImage(image: any){
+    setImages(image)
+  }
+
+  useEffect(() => {
+    setImages([]);
+  },[])
 
   return (
     <>
@@ -34,14 +43,17 @@ export function ModalAddPokemon({
             <S.ModalHeader>
               <button 
                   type="button"
+                  className="button-close"
                   onClick={requestCloseModal}
                 >
                   <img src={CloseModal} alt="" />
                 </button>
-              <UploadImage />
+                <S.ModalHeaderRounded>
+                    <UploadImage images={images} handleImage={handleSelectImage} />
+                </S.ModalHeaderRounded>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormAddPokemon onHandleModal={requestCloseModal} />
+              <FormAddPokemon onHandleModal={requestCloseModal}  imageUrl={images} />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>
