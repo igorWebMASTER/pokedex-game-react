@@ -6,10 +6,18 @@ import { FormEditPokemon } from './FormEditPokemon';
 
 import CloseModal from 'assets/images/close.png';
 import { useUI } from 'hooks/useUI';
+import { ModalHeaderRounded } from 'components/ModalAddPokemon/styles';
+import { UploadImage } from 'components/UploadImage';
 
 
 export function ModalEditCustomPokemons() {
-  const { closeModal } = useUI()
+  const { closeModal } = useUI();
+
+  const [imageInfo, setImageInfo] = useState<any>([]);
+
+  function handleSelectImage(image: any){
+    setImageInfo(image);
+  }
 
   return (
     <>
@@ -27,14 +35,16 @@ export function ModalEditCustomPokemons() {
               <button 
                   type="button"
                   onClick={closeModal}
+                  className="button-close"
                 >
                   <img src={CloseModal} alt="" />
                 </button>
-              <div>
-              </div>
+                <ModalHeaderRounded>
+                    <UploadImage images={imageInfo} handleImage={handleSelectImage} />
+                </ModalHeaderRounded>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormEditPokemon  />
+              <FormEditPokemon uploadImageInfo={imageInfo}   />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>

@@ -18,10 +18,15 @@ import { useUI } from 'hooks/useUI';
 import { PokemonProps } from 'dtos/pokemon';
 
 
-export function FormEditPokemon() {
+export type UploadImageInfo = {
+  uploadImageInfo: string[]; 
+}
+
+export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
   const { pokedex, handleEditCustomPokemon } = useContext(PokedexContext);
-  const { closeModal } = useUI()
+  const { closeModal } = useUI();
+  
 
   const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected)
   
@@ -65,6 +70,7 @@ export function FormEditPokemon() {
       ...selectedEditData,
       ...data,
       types: selectedTypes,
+      image: uploadImageInfo
     }
 
     handleEditCustomPokemon(newData)
@@ -206,6 +212,7 @@ export function FormEditPokemon() {
            <HorizontalLine  title={'Tipo'}/>
           <SelectType
             handleSelectType={handleSelectType}
+            selectedValues={selectedEditData?.types}
             {...register('types')}
             error={errors.types}
           />

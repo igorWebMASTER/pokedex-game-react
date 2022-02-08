@@ -18,12 +18,12 @@ export const ModalContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 700px;
+  min-height: 72rem;
   max-height:500px;
   overflow: scroll;
   position: relative;
 
-  min-width: 350px;
+  min-width: 333px;
   border-radius: 10px;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
 
@@ -46,7 +46,7 @@ export const ModalHeader = styled.div`
   border-bottom-left-radius: 0;
   
    
-  button {
+  button.button-close {
     margin-left: auto;
     margin-right: 20px;
     margin-top: 10px;
@@ -58,33 +58,7 @@ export const ModalHeader = styled.div`
     border: 2px solid #999;
   }
 
-  div{
-    z-index: 999;
-    width: calc(100% - 41%);
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius:50%;
-    background: #fff;
-    border: 4px solid var(--primary-default);
-    position: relative;
-    top: -20px;
-
-
-    @media screen and (max-width: 320px){
-      width: calc(100% - 20%);
-    }
-    
-
-    img{
-      width: 100%;
-      max-width: 120px;
-    }
-
-  }
-`
+`;
 
 export const ModalBody = styled.div`  
   display: flex;

@@ -15,7 +15,13 @@ import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
 import { useUI } from 'hooks/useUI';
 
-export function FormAddPokemon({imageUrl }: any) {
+import DropDown from '../../Dropdown';
+
+export type UploadImageInfo = {
+  uploadImageInfo: string[]; 
+}
+
+export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
   const { closeModal } = useUI();
 
@@ -59,8 +65,9 @@ export function FormAddPokemon({imageUrl }: any) {
     const newData = {
       ...data,
       types: selectedTypes,
-      image: imageUrl
+      image: uploadImageInfo
     }
+    console.log(newData);
     
     handleAddCustomPokemon(newData);
     closeModal();
@@ -155,6 +162,8 @@ export function FormAddPokemon({imageUrl }: any) {
       setValue("specialAttack", quantity - 1);
     }
   };
+
+
 
   return (
     <S.FormContainer >
