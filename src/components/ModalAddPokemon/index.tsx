@@ -6,8 +6,8 @@ import { FormAddPokemon } from './FormAddPokemon';
 
 import CloseModal from 'assets/images/close.png';
 import { useUI } from 'hooks/useUI';
+import { UploadImage } from 'components/UploadImage';
 
-import { UploadImage } from './Components/UploadImage';
 
 interface ModalProps {
   openCloseModal: boolean;
@@ -17,14 +17,14 @@ interface ModalProps {
 export function ModalAddPokemon({
 }: ModalProps) {
   const { closeModal } = useUI();
-  const [images, setImages] = useState<any>([]);
+  const [imageInfo, setImageInfo] = useState<any>([]);
 
   function handleSelectImage(image: any){
-    setImages(image)
+    setImageInfo(image);
   }
 
   useEffect(() => {
-    setImages([]);
+    setImageInfo([]);
   },[])
 
   return (
@@ -43,15 +43,16 @@ export function ModalAddPokemon({
               <button 
                   type="button"
                   onClick={closeModal}
+                  className="button-close"
                 >
                   <img src={CloseModal} alt="" />
                 </button>
                 <S.ModalHeaderRounded>
-                    <UploadImage images={images} handleImage={handleSelectImage} />
+                    <UploadImage images={imageInfo} handleImage={handleSelectImage} />
                 </S.ModalHeaderRounded>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormAddPokemon />
+              <FormAddPokemon uploadImageInfo={imageInfo} />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>
