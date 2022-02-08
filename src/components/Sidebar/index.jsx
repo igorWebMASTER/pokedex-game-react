@@ -16,25 +16,35 @@ function Sidebar() {
 
   function handleSelectPokemon(pokemonId) {
     const newPokedex = pokedex.map((pokemon) => {
+
+      const selected = pokemon.id === pokemonId;
       if (pokemon.id === pokemonId) {
         const newPokemon = {
           ...pokemon,
-          isSelected: true,
+          isSelected: selected,
         }
         return newPokemon;
       }
+
+
+      if (pokemon.isSelected) {
+        const newPokemon = {
+          ...pokemon,
+          isSelected: false,
+        }
+        return newPokemon;
+      }
+
       return {
         ...pokemon,
-        isSelected: false,
       }
+      
     })
     setPokedex(newPokedex);
     setModalView('INFO_POKEMON_VIEW');
     openModal();
   }
 
-
-  
 
   return (
     <S.SideBarWrapper>
