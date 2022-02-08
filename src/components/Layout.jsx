@@ -5,7 +5,7 @@ import Modal from './Modal';
 import { ModalAddPokemon } from "./ModalAddPokemon";
 
 import { ModalCatchPokemon } from './ModalCatchPokemon'
-import { ModalEditCustomPokemons } from "./ModalEditCustomPokemons";
+import { ModalEditCustomPokemons } from "./ModalEditCustomPokemon";
 import { ModalPokemonInfo } from "./ModalPokemonInfo";
 
 const ModalView = ({
