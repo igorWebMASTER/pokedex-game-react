@@ -19,6 +19,7 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 700px;
+  height:100vh;
   max-height:500px;
   overflow: scroll;
   position: relative;
