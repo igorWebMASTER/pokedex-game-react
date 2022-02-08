@@ -1,5 +1,6 @@
 import { PokemonProps } from 'dtos/pokemon';
 import { createContext, ReactNode, useState, useCallback, useEffect, useMemo } from 'react';
+import toast from 'react-hot-toast';
 
 interface PokedexContextData {
   handleAddPokemonToPokedex: Function;
@@ -85,12 +86,14 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
   }
 
   function handleAddCustomPokemon(data: PokemonProps) {
-    const id = Math.floor(Math.random() * 1000000);
+    const id = crypto
     const newPokemonData = {
       ...data,
       id: id,
     };
-    if (pokedex.find((slot: { name: string; }) => slot.name === data.name)) return;
+    if (pokedex.find((slot: { name: string; }) => slot.name === data.name)){ 
+      return toast.error('Esse nome já está sendo usado');
+   }
     pokedex.map((slot: { id: string; }, index: number) => {
       if (!slot.id) {
         setPokedex([

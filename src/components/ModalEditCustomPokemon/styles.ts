@@ -21,6 +21,7 @@ export const ModalContainer = styled.div`
   min-height: 72rem;
   max-height:500px;
   height: 100vh;
+  padding: 5rem 0;
   overflow: scroll;
   position: relative;
 
@@ -63,8 +64,8 @@ export const ModalHeader = styled.div`
 
 export const ModalBody = styled.div`  
   display: flex;
-  height: calc(100vh + 551px);
-  padding: 0 2rem;
+  height: calc(100vh + 712px);
+  padding: 4rem 2rem;
   width: 100%;
   position: absolute;
   top: 25%;

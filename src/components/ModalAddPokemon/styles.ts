@@ -21,8 +21,8 @@ export const ModalContainer = styled.div`
   min-height: 700px;
   height:100vh;
   max-height:500px;
-  padding: 3rem 0;
-  overflow: scroll;
+  padding: 5rem 0;
+  overflow: auto;
   position: relative;
 
   min-width: 333px;
@@ -92,8 +92,8 @@ export const ModalHeaderRounded = styled.div`
 
 export const ModalBody = styled.div`  
   display: flex;
-  height: auto;
-  padding: 7rem 2rem;
+  height: 1360px;
+  padding: 0 2rem;
   width: 100%;
   position: absolute;
   top: 25%;

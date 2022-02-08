@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
@@ -8,16 +8,27 @@ import CloseModal from 'assets/images/close.png';
 import { useUI } from 'hooks/useUI';
 import { ModalHeaderRounded } from 'components/ModalAddPokemon/styles';
 import { UploadImage } from 'components/UploadImage';
+import { PokemonProps } from 'dtos/pokemon';
+import { PokedexContext } from 'context/pokedexContext';
 
 
 export function ModalEditCustomPokemons() {
   const { closeModal } = useUI();
 
   const [imageInfo, setImageInfo] = useState<any>([]);
+  const { pokedex } = useContext(PokedexContext);
+
 
   function handleSelectImage(image: any){
     setImageInfo(image);
   }
+
+  const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected);
+
+  useEffect(() => {
+    handleSelectImage(selectedEditData?.image ?? '')  
+  }, [selectedEditData.image])
+
 
   return (
     <>

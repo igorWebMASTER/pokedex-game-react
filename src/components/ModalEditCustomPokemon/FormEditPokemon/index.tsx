@@ -272,7 +272,7 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
             {...register('attack')}
           />
            <InputNumber
-            label="SPECIAL-DEFENSE"
+            label="DEFESA ESPECIAL"
             type="number"
             suffix={""}
             placeholder="00"

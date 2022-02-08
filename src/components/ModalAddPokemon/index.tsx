@@ -9,6 +9,7 @@ import { useUI } from 'hooks/useUI';
 import { UploadImage } from 'components/UploadImage';
 
 
+
 interface ModalProps {
   openCloseModal: boolean;
   requestCloseModal: () => void;
