@@ -106,6 +106,7 @@ export function ModalPokemonInfo() {
                     setModalView('EDIT_POKEMON_VIEW');
                     openModal();
                   }}
+                  fontSize={1.2}
                   isHovered
                 >
                      Editar pokemon

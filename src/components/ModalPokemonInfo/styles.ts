@@ -14,10 +14,11 @@ export const ModalOverlay = styled.div`
   z-index:90;
 `
 
-export const Text = styled.h1<{ isHovered : boolean }>`
+export const Text = styled.h1<{ isHovered : boolean, fontSize?: number }>`
   margin-bottom: 1rem;
   text-decoration: underline;
   color: var(--link-color);
+  font-size: ${props => props.fontSize}rem;
 
   ${props => props.isHovered && css`
     cursor: pointer;
@@ -37,7 +38,7 @@ export const ModalContainer = styled.div`
   overflow: auto;
   text-overflow: ellipsis;
 
-  min-width: 350px;
+  min-width: 333px;
   border-radius: 10px;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
   text-align: center;
@@ -102,8 +103,8 @@ export const ModalHeader = styled.div`
 
 export const ModalBody = styled.div`
   display: flex;
-  height: 800px;
-  padding: 0 2rem;
+  height: auto;
+  padding:10rem 2rem;
   width: 100%;
   position: absolute;
   top: 25%;
@@ -229,7 +230,7 @@ export const CaptureButtonContainer = styled.div`
     position: fixed;
     left: 0;
     right: 0;
-
+    bottom: 8rem;
   button{
       max-width:300px;
       filter: drop-shadow(0 0px 2.15rem rgba(0, 0, 0, 0.347));
