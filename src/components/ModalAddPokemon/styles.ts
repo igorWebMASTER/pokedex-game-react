@@ -31,7 +31,7 @@ export const ModalContainer = styled.div`
 
   @media screen and (max-width: 350px){
     min-width: 28rem;
-    padding: 2.8rem 0;
+    padding: 7.8rem 0;
   }
 `
 
@@ -93,7 +93,7 @@ export const ModalHeaderRounded = styled.div`
 
 export const ModalBody = styled.div`
   display: flex;
-  height: 1360px;
+  height: calc(100vh + 900px);
   padding: 0 2rem;
   width: 100%;
   position: absolute;
