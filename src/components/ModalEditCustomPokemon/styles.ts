@@ -30,7 +30,8 @@ export const ModalContainer = styled.div`
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
 
   @media screen and (max-width: 350px){
-    min-width: 26rem;
+    min-width: 28rem;
+    padding:9rem 0;
   }
 `
 
@@ -46,8 +47,8 @@ export const ModalHeader = styled.div`
   align-items: center;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  
-   
+
+
   button.button-close {
     margin-left: auto;
     margin-right: 20px;
@@ -62,9 +63,9 @@ export const ModalHeader = styled.div`
 
 `;
 
-export const ModalBody = styled.div`  
+export const ModalBody = styled.div`
   display: flex;
-  height: calc(100vh + 712px);
+  height: calc(100vh + 912px);
   padding: 4rem 2rem;
   width: 100%;
   position: absolute;
@@ -74,12 +75,12 @@ export const ModalBody = styled.div`
   justify-content: center;
   background: #fff;
 
-  
+
 `
 
 export const ModalTextBody = styled.div`
   text-transform: uppercase;
-  font-weight: bold;  
+  font-weight: bold;
   font-size: 2rem;
   margin: 1em 0;
   padding: 0 2rem;
@@ -116,11 +117,11 @@ export const ModalAbilitiesInfo = styled.div`
     flex-direction: column;
     border-left: 1px solid #ccc;
     color: #004a45;
-    
+
     span{
       margin: 0.2rem 0;
       font-size: 1.1rem;
-      font-weight: bold; 
+      font-weight: bold;
     }
 
     span.main-status{
@@ -181,15 +182,15 @@ export const AbilitiesInfoContainer = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    
+
     div{
       display: flex;
       align-items: center;
       span{
         font-weight: bold;
       }
-      
-      
+
+
       img{
         margin-right: 1rem;
         align-self: center;
@@ -207,13 +208,13 @@ export const AbilitiesInfoContainer = styled.div`
       font-weight: bold;
       margin: 1rem 0.5rem;
     }
-  
+
   `
 
 export const CaptureButtonContainer = styled.div`
 
   button{
-      
+
       position: fixed;
       top: 79%;
       max-width:300px;
@@ -262,15 +263,15 @@ export const StaticsContainer = styled.div`
   display: flex;
     justify-content: space-between;
     width: 100%;
-    
+
     div{
       display: flex;
       align-items: center;
       span{
         font-weight: bold;
       }
-      
-      
+
+
       img{
         margin-right: 1rem;
         align-self: center;

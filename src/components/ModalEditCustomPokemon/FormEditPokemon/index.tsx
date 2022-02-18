@@ -19,17 +19,17 @@ import { PokemonProps } from 'dtos/pokemon';
 
 
 export type UploadImageInfo = {
-  uploadImageInfo: string[]; 
+  uploadImageInfo: string[];
 }
 
 export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
   const { pokedex, handleEditCustomPokemon } = useContext(PokedexContext);
   const { closeModal } = useUI();
-  
+
 
   const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected)
-  
+  console.log(selectedEditData);
   const {
     register,
     handleSubmit,
@@ -43,7 +43,7 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
       name: selectedEditData?.name ?? '',
       height: selectedEditData?.height ?? 0,
       weight: selectedEditData?.weight ?? 0,
-      types: selectedEditData?.types ?? [],
+      types: selectedEditData?.types,
       image:selectedEditData?.image ??  '',
       ability1: selectedEditData?.ability1 ?? '',
       ability2: selectedEditData?.ability2 ?? '',
@@ -69,9 +69,11 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
     const newData = {
       ...selectedEditData,
       ...data,
-      types: selectedTypes,
+      types: selectedTypes || selectedEditData?.types ,
       image: uploadImageInfo
     }
+
+    console.log(selectedTypes ?? selectedEditData?.types )
 
     handleEditCustomPokemon(newData)
     closeModal()
@@ -167,6 +169,8 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
       setValue("specialAttack", quantity - 1);
     }
   };
+
+
 
 
   return (

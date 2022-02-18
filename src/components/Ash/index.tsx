@@ -24,7 +24,7 @@ export function Ash() {
   const [tooltipStatus, setTooltipStatus] = useState("available" );
   const { pokedex } = useContext(PokedexContext);
   const {  isLoading: isSearching, handleGetRandomPokemon } = useContext(PokemonContext);
-  
+
   const {  setModalView, openModal } = useUI();
 
   const [hoverRef, isHovered] = useHover();
@@ -52,37 +52,39 @@ export function Ash() {
     if(pokedex){
       verifyPokemonAvailability()
     }
-  },[pokedex])
+  },[pokedex]);
+
+  let timerSprite = setTimeout(() => {
+    switch(sprite){
+      case AshFront:
+        setSprite(AshLeftLeg);
+        break;
+      case AshLeftLeg:
+        setSprite(AshRightLeg);
+        break;
+      case AshRightLeg:
+        setSprite(AshLeftLeg);
+        break;
+      case AshStop:
+        setSprite(AshLeftLeg);
+        break;
+      default:
+        setSprite(AshFront);
+        break;
+    }
+  }, 300);
 
   useEffect(() => {
     let initial = true;
 
     if(isSearching && initial){
-      setTimeout(() => {
-        switch(sprite){
-          case AshFront:
-            setSprite(AshLeftLeg);
-            break;
-          case AshLeftLeg:
-            setSprite(AshRightLeg);
-            break;
-          case AshRightLeg:
-            setSprite(AshLeftLeg);
-            break;
-          case AshStop:
-            setSprite(AshLeftLeg);
-            break;
-          default:
-            setSprite(AshFront);
-            break;
-        }
-      }, 300);
+      timerSprite
     }
 
     return () => {
-      initial = false
+      clearTimeout(timerSprite)
     }
-  }, [sprite, isSearching]);
+  }, [isSearching]);
 
   function handleImage(){
     if(!isSearching ){

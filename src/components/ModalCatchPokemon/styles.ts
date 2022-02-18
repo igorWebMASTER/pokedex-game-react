@@ -32,7 +32,8 @@ export const ModalContainer = styled.div`
   text-align: center;
 
   @media screen and (max-width: 350px){
-    min-width: 26rem;
+    min-width: 28rem;
+    padding: 2.8rem 0;
   }
 
 `
