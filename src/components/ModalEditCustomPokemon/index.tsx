@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import * as S from './styles';
-import { FormAddPokemon } from './FormAddPokemon';
+import { FormEditPokemon } from './FormEditPokemon';
 
 import CloseModal from 'assets/images/close.png';
 import { useUI } from 'hooks/useUI';
+import { ModalHeaderRounded } from 'components/ModalAddPokemon/styles';
 import { UploadImage } from 'components/UploadImage';
+import { PokemonProps } from 'dtos/pokemon';
+import { PokedexContext } from 'context/pokedexContext';
 
 
-
-interface ModalProps {
-  openCloseModal: boolean;
-  requestCloseModal: () => void;
-}
-
-export function ModalAddPokemon({
-}: ModalProps) {
+export function ModalEditCustomPokemons() {
   const { closeModal } = useUI();
+
   const [imageInfo, setImageInfo] = useState<any>([]);
+  const { pokedex } = useContext(PokedexContext);
+
 
   function handleSelectImage(image: any){
     setImageInfo(image);
   }
 
+  const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected);
+
   useEffect(() => {
-    setImageInfo([]);
-  },[])
+    handleSelectImage(selectedEditData?.image ?? '')  
+  }, [selectedEditData.image])
+
 
   return (
     <>
@@ -48,12 +50,12 @@ export function ModalAddPokemon({
                 >
                   <img src={CloseModal} alt="" />
                 </button>
-                <S.ModalHeaderRounded>
+                <ModalHeaderRounded>
                     <UploadImage images={imageInfo} handleImage={handleSelectImage} />
-                </S.ModalHeaderRounded>
+                </ModalHeaderRounded>
             </S.ModalHeader>
             <S.ModalBody>
-              <FormAddPokemon uploadImageInfo={imageInfo} />
+              <FormEditPokemon uploadImageInfo={imageInfo}   />
             </S.ModalBody>
         </S.ModalContainer>
         </motion.div>

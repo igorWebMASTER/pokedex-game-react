@@ -6,7 +6,7 @@ export const Character = styled.div<{ tooltipStatus?: string }>`
   align-items: center;
   justify-content: center;
 
-  & > img {
+  & > div img {
     cursor: ${props => (props.tooltipStatus === "available" ? 'pointer' : 'not-allowed')};
   }
 `;

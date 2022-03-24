@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const ModalOverlay = styled.div`
   background: var(--modal-background);
@@ -14,25 +14,40 @@ export const ModalOverlay = styled.div`
   z-index:90;
 `
 
+export const Text = styled.h1<{ isHovered : boolean, fontSize?: number }>`
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  color: var(--link-color);
+  font-size: ${props => props.fontSize}rem;
+
+  ${props => props.isHovered && css`
+    cursor: pointer;
+  `}
+
+`
+
 export const ModalContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   min-height: 600px;
   max-height:500px;
+  padding: 2rem auto;
+  height: 100vh;
   position: relative;
 
   white-space: nowrap;
   overflow: auto;
   text-overflow: ellipsis;
 
-  min-width: 350px;
+  min-width: 333px;
   border-radius: 10px;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.05);
   text-align: center;
 
   @media screen and (max-width: 350px){
-    min-width: 26rem;
+    min-width: 28rem;
+    padding: 2.8rem 0;
   }
 `
 
@@ -91,8 +106,8 @@ export const ModalHeader = styled.div`
 
 export const ModalBody = styled.div`
   display: flex;
-  height: 800px;
-  padding: 0 2rem;
+  height: auto;
+  padding:10rem 2rem;
   width: 100%;
   position: absolute;
   top: 25%;
@@ -118,7 +133,7 @@ export const ModalTextBody = styled.div`
   display: flex;
   align-items: center;
 
-  margin-left: 40px;
+  /* margin-left: 40px; */
 
   img{
     margin-left: 10px;
@@ -216,16 +231,12 @@ export const AbilitiesInfoContainer = styled.div`
 
 export const CaptureButtonContainer = styled.div`
     position: fixed;
-     margin: 0% auto;
-     left: 0;
-      right: 0;
-
+    left: 0;
+    right: 0;
+    bottom: 8rem;
   button{
-
-
       max-width:300px;
       filter: drop-shadow(0 0px 2.15rem rgba(0, 0, 0, 0.347));
-
   }
 `
 

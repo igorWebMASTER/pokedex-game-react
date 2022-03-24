@@ -1,89 +1,67 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import Button from 'components/Button';
-
-import boopSfx from '../../assets/sounds/Stat Fall Down.mp3';
 
 import iconPlus from 'assets/images/plus.png';
 import pokeAvatar from 'assets/images/poke-avatar.png';
 
 import * as S from './styled';
-import { ModalPokemonInfo } from '../ModalPokemonInfo';
-import { ModalAddPokemon } from '../ModalAddPokemon';
 import { PokedexContext } from 'context/pokedexContext';
-// import useSound from 'use-sound';
+import { useUI } from 'hooks/useUI';
+import { isFullArray } from 'utils/isFullArray';
 
 function Sidebar() {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalAddCustomPokemon, setModaAddCustomPokemon] = useState(false);
-  const { slots, handleAddCustomPokemon: onHandleAddCustomPokemon } = useContext(PokedexContext);
+  const { setModalView, openModal } = useUI();
+  const { pokedex, setPokedex } = useContext(PokedexContext);
 
-  const [selectedPokemonData, setSelectedPokemonData] = useState([]);
+  function handleSelectPokemon(pokemonId) {
+    const newPokedex = pokedex.map((pokemon) => {
 
-  useEffect(() => {
-    if (slots) {
-      setSelectedPokemonData(() => {
-        const [pokemon] = slots && slots.filter((pokemon) => pokemon.id === selectedPokemonData.id);
-        if (!pokemon) return [];
-        return pokemon;
-      })
-    }
-  }, [slots])
+      const selected = pokemon.id === pokemonId;
+      if (pokemon.id === pokemonId) {
+        const newPokemon = {
+          ...pokemon,
+          isSelected: selected,
+        }
+        return newPokemon;
+      }
 
-  function handleSelectPokemon(pokemon) {
-    setSelectedPokemonData(pokemon);
-    handleOpenCatchedPokemonModal();
+
+      if (pokemon.isSelected) {
+        const newPokemon = {
+          ...pokemon,
+          isSelected: false,
+        }
+        return newPokemon;
+      }
+
+      return {
+        ...pokemon,
+      }
+      
+    })
+    setPokedex(newPokedex);
+    setModalView('INFO_POKEMON_VIEW');
+    openModal();
   }
 
-  function handleOpenCatchedPokemonModal() {
-    setIsOpen(!modalIsOpen);
-  }
-
-  // const [play] = useSound(boopSfx);
-
-  function handleOpenAddPokemonModal() {
-    setModaAddCustomPokemon(!modalAddCustomPokemon);
-    play();
-  }
-
-  function handleAddCustomPokemon(data) {
-    onHandleAddCustomPokemon(data);
-    console.log(data)
-    setModaAddCustomPokemon(!modalAddCustomPokemon);
-  }
-
-  function isEmpty(array) {
-    if(Array.isArray(array)){
-      return array.every(element => element.length !== 0);
-    }
-  }
 
   return (
     <S.SideBarWrapper>
-      <ModalPokemonInfo
-        requestCloseModal={handleOpenCatchedPokemonModal}
-        openCloseModal={modalIsOpen}
-        pokemonData={selectedPokemonData}
-      />
-      <ModalAddPokemon
-        onHandleAddCustomPokemon={handleAddCustomPokemon}
-        requestCloseModal={handleOpenAddPokemonModal}
-        openCloseModal={modalAddCustomPokemon}
-      />
       <S.SideBarList>
-        {slots && slots.length > 0 && slots.
-          map((pokemon) => {
+        {pokedex && pokedex.
+          map((pokemon, index) => {
             return (
-              <S.SideBarItem isUsed={pokemon.id} key={pokemon?.id}>
+              <S.SideBarItem key={index} isUsed={pokemon.id} >
                 {pokemon?.id ? (
                   <img
                     loading="eager"
                     onClick={() => {
-                      handleSelectPokemon(pokemon);
+                      handleSelectPokemon(pokemon.id)
                     }}
                     src={
                       pokemon?.sprites?.front_default ??
-                      pokeAvatar
+                      pokemon?.image?.[0]?.data_url
                     }
                     width={pokemon?.sprites?.front_default ? '' : '34px'}
                     alt={pokemon?.name}
@@ -92,14 +70,16 @@ function Sidebar() {
                   '?'
                 )}
               </S.SideBarItem>
-            );
-          })
-          .reverse()}
+            )}).reverse()}
       </S.SideBarList>
 
       <Button
-        onClick={handleOpenAddPokemonModal} icon={iconPlus}
-        disabled={isEmpty(slots)}
+        onClick={() => {
+          setModalView('ADD_POKEMON_VIEW')
+          openModal();
+        }}
+        icon={iconPlus}
+        disabled={isFullArray(pokedex)}
       />
     </S.SideBarWrapper>
   );

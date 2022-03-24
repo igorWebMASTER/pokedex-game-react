@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as S from './styled';
 
-function Button({ text, icon, onClick, onlyIcon, ...rest }) {
+function Button({ text, icon, onClick = () => console.log(), onlyIcon, ...rest }) {
   return (
     <S.ButtonWrapper
       className={`${icon ? 'icon' : ''}`}

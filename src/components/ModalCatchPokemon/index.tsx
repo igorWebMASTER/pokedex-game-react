@@ -1,87 +1,35 @@
 import React, { useContext, useState } from 'react';
 
 import * as S from './styles';
-import { Ash } from '../Ash';
 
 import PokeBall from 'assets/images/pokeball.png'
 import CloseModal from 'assets/images/close.png'
 
 import { motion } from 'framer-motion';
 import { translateType } from 'utils/translate';
-import { getPokemonById } from 'app/api';
 import { getColorOfTypePokemon } from 'utils/getColorOfTypePokemon';
 
+import { useUI } from 'hooks/useUI';
+import { HorizontalLine } from 'components/HorizontalLine';
+import { PokemonContext } from 'context/pokemonContext';
 import { PokedexContext } from 'context/pokedexContext';
 
-export interface PokemonProps {
-  lenght: number;
-  name: string;
-  weight: number;
-  height: number;
-  sprites: {
-    front_default: string;
-  };
-  stats: {
-    base_stat: number;
-    stat: {
-      name: string;
-    };
-  }[];
-  types: string[];
-  abilities: {
-    ability: {
-      name: string;
-    };
-  }[];
-}
+export function ModalCatchPokemon()  {
+  const {  isLoading, randomPokemonData } = useContext(PokemonContext);
+  const {  handleAddPokemonToPokedex } = useContext(PokedexContext);
+  const {  closeModal } = useUI() as any;
 
-
-export function ModalGeneral()  {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [randomPokemonData, setRandomPokemonData] = useState<PokemonProps>(
-    {} as PokemonProps
-  );
-
-  const {  addPokemonToSlots } = useContext(PokedexContext);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function generatePokemonId() {
-    const idPokemon = Math.floor(Math.random() * 897 + 1);
-    return idPokemon;
-  }
-
-  async function handleGetRandomPokemon() {
-    try {
-      setIsLoading(true);
-      const pokemonId = generatePokemonId();
-      const pokemonData = await getPokemonById(pokemonId)
-      setTimeout(() => {
-       setRandomPokemonData(pokemonData);
-       openModal();
-       setIsLoading(false);
-      }, 1000)
-    } catch (e) {
-      console.log(e);
-    }
+  if(isLoading) {
+    return (
+      <>
+        
+      </>
+    )
   }
 
   return (
     <>
-      <Ash
-        onHandleGetRandomPokemon={handleGetRandomPokemon}
-        isSearching={isLoading}
-      />
-      {modalIsOpen && (
-        <S.ModalOverlay>
-          <motion.div
+         <motion.div
             initial={{ y: 200, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
@@ -106,7 +54,6 @@ export function ModalGeneral()  {
               <S.ModalTextBody>
               {`${randomPokemonData?.name}`}
               </S.ModalTextBody>
-              <br />
               <S.ModalAbilitiesInfo>
                 <div>
                   <span>
@@ -137,14 +84,7 @@ export function ModalGeneral()  {
                 </div>
               </S.ModalAbilitiesInfo>
               <br />
-              <S.HorizontalLine>
-                   <div>
-                   </div>
-                   <span>Tipo </span>
-                   <div>
-                   </div>
-              </S.HorizontalLine>
-
+              <HorizontalLine title={'Tipo'} />
               <S.TypeInfoContainer>
                 {randomPokemonData?.types?.map((info: any) => (
                   <S.Badge
@@ -155,14 +95,7 @@ export function ModalGeneral()  {
                   </S.Badge>
                 ))}
                </S.TypeInfoContainer>
-
-               <S.HorizontalLine>
-                   <div>
-                   </div>
-                     <span>HABILIDADES </span>
-                    <div>
-                    </div>
-              </S.HorizontalLine>
+               <HorizontalLine title={'HABILIDADES'} />
               <S.AbilitiesInfoContainer>
               {randomPokemonData?.abilities?.slice(0, 2).map((info: any, index: number) => (
                       <span key={info.ability.name}>
@@ -174,7 +107,7 @@ export function ModalGeneral()  {
                 <S.ButtonCatchPokemon
                   type="button"
                   onClick={() => {
-                    addPokemonToSlots(randomPokemonData)
+                    handleAddPokemonToPokedex(randomPokemonData)
                     closeModal();
                   }}
                 >
@@ -184,8 +117,6 @@ export function ModalGeneral()  {
             </S.ModalBody>
           </S.ModalContainer>
          </motion.div>
-       </S.ModalOverlay>
-       )}
      </>
   );
 }

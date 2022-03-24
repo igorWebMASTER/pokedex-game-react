@@ -42,11 +42,6 @@ export function translateType(type: string) {
 }
 
 export function translateStats(stat: any) {
-
-    if (stat === "special-atack") {
-        return "specialAtack";
-    }
-
     const stats = {
         "hp": "HP",
         "attack": "Ataque",

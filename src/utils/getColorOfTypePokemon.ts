@@ -1,3 +1,7 @@
+type colorOfPokemon = {
+    [key: string]: string;
+}
+
 export const getColorOfTypePokemon = (type: string) => {
     const types = {
         normal: '#00b300',
@@ -18,7 +22,7 @@ export const getColorOfTypePokemon = (type: string) => {
         rock: "#5E491C",
         steel: "#7F8488",
         water: "#3B9BF1",
-    } as any
+    } as colorOfPokemon;
 
     return types[type] || '#3B9BF1';
 }

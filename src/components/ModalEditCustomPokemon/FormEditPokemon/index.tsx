@@ -13,19 +13,23 @@ import * as ModalForm from '../styles'
 import Button from 'components/Button';
 import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
+import toast from 'react-hot-toast';
 import { useUI } from 'hooks/useUI';
+import { PokemonProps } from 'dtos/pokemon';
 
-import DropDown from '../../Dropdown';
 
 export type UploadImageInfo = {
-  uploadImageInfo: string[]; 
+  uploadImageInfo: string[];
 }
 
-export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
+export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
   const [selectedTypes, setSelectedTypes] = useState<any>([])
+  const { pokedex, handleEditCustomPokemon } = useContext(PokedexContext);
   const { closeModal } = useUI();
 
-  const { handleAddCustomPokemon } = useContext(PokedexContext);
+
+  const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected)
+  console.log(selectedEditData);
   const {
     register,
     handleSubmit,
@@ -35,20 +39,20 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
   } = useForm({
     resolver: yupResolver(formSchema),
     defaultValues: {
-      hp: 0,
-      name: "",
-      height: 0,
-      weight:0,
-      types: [],
-      image: "",
-      ability1: "",
-      ability2: "",
-      ability3: "",
-      ability4: "",
-      defense: 0,
-      attack: 0,
-      specialDefense: 0,
-      specialAttack: 0,
+      hp: selectedEditData?.hp ?? 0,
+      name: selectedEditData?.name ?? '',
+      height: selectedEditData?.height ?? 0,
+      weight: selectedEditData?.weight ?? 0,
+      types: selectedEditData?.types,
+      image:selectedEditData?.image ??  '',
+      ability1: selectedEditData?.ability1 ?? '',
+      ability2: selectedEditData?.ability2 ?? '',
+      ability3: selectedEditData?.ability3 ?? '',
+      ability4: selectedEditData?.ability4 ?? '',
+      defense: selectedEditData?.defense ??0,
+      attack: selectedEditData?.attack ?? 0,
+      specialDefense:   selectedEditData?.specialDefense ?? 0,
+      specialAttack:  selectedEditData?.specialAttack ?? 0,
     }
   });
 
@@ -61,27 +65,30 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
     setSelectedTypes(type)
   }
 
-  function createCustomPokemon(data: any){
+  function editCustomPokemon(data: any){
     const newData = {
+      ...selectedEditData,
       ...data,
-      types: selectedTypes,
+      types: selectedTypes || selectedEditData?.types ,
       image: uploadImageInfo
     }
-    console.log(newData);
-    
-    handleAddCustomPokemon(newData);
-    closeModal();
-  }
 
-  // useEffect(() => {
-  //   if (pokemonData) {
-  //     Object.entries(pokemonData).forEach(
-  //       ([name, value]) => {
-  //         setValue(name as any, value)
-  //         console.log(name, value)
-  //       });
-  //   }
-  // }, [setValue, pokemonData]);
+    console.log(selectedTypes ?? selectedEditData?.types )
+
+    handleEditCustomPokemon(newData)
+    closeModal()
+    toast.success("Pokemon editado com sucesso!", {
+      style: {
+        border: '1px solid #713200',
+        padding: '16px',
+        color: '#157100',
+      },
+      iconTheme: {
+        primary: '#713200',
+        secondary: '#FFFAEE',
+      },
+    })
+  }
 
   const increaseHp = () => {
     const quantity = watch("hp");
@@ -165,9 +172,10 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
 
 
 
+
   return (
     <S.FormContainer >
-      <form onSubmit={handleSubmit(createCustomPokemon)} >
+      <form onSubmit={handleSubmit(editCustomPokemon)} >
         <InputText
            label="Nome"
            type="text"
@@ -196,6 +204,7 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
           <InputNumber
               label="ALTURA"
               type="number"
+              //  name="hp"
               readOnly
               suffix={"Cm"}
               placeholder="Altura"
@@ -207,6 +216,7 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
            <HorizontalLine  title={'Tipo'}/>
           <SelectType
             handleSelectType={handleSelectType}
+            selectedValues={selectedEditData?.types}
             {...register('types')}
             error={errors.types}
           />
@@ -266,7 +276,7 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
             {...register('attack')}
           />
            <InputNumber
-            label="SPECIAL-DEFENSE"
+            label="DEFESA ESPECIAL"
             type="number"
             suffix={""}
             placeholder="00"
@@ -288,10 +298,9 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
             {...register('specialAttack')}
           />
            <Button
-              text="CRIAR POKEMON"
+              text="EDITAR POKEMON"
               icon=""
               onlyIcon=""
-              onClick={() => console.log('')}
             />
       </form>
     </S.FormContainer>

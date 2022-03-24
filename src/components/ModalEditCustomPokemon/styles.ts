@@ -18,11 +18,11 @@ export const ModalContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 700px;
-  height:100vh;
+  min-height: 72rem;
   max-height:500px;
+  height: 100vh;
   padding: 5rem 0;
-  overflow: auto;
+  overflow: scroll;
   position: relative;
 
   min-width: 333px;
@@ -31,7 +31,7 @@ export const ModalContainer = styled.div`
 
   @media screen and (max-width: 350px){
     min-width: 28rem;
-    padding: 7.8rem 0;
+    padding:9rem 0;
   }
 `
 
@@ -61,40 +61,12 @@ export const ModalHeader = styled.div`
     border: 2px solid #999;
   }
 
-
-`
-
-export const ModalHeaderRounded = styled.div`
-    z-index: 999;
-    width: calc(100% - 41%);
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius:50%;
-    background: #fff;
-    border: 4px solid var(--primary-default);
-    position: relative;
-    top: -20px;
-
-
-    @media screen and (max-width: 320px){
-      width: calc(100% - 20%);
-    }
-
-
-    img{
-      width: 100%;
-      max-width: 120px;
-    }
-
-`
+`;
 
 export const ModalBody = styled.div`
   display: flex;
-  height: calc(100vh + 900px);
-  padding: 0 2rem;
+  height: calc(100vh + 912px);
+  padding: 4rem 2rem;
   width: 100%;
   position: absolute;
   top: 25%;

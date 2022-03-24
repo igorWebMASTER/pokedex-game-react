@@ -1,11 +1,13 @@
 export interface PokemonProps {
+  [x: string]: any;
   lenght: number;
   name: string;
-  id: string;
+  id?: string | undefined;
   weight: number;
   base_experience: number;
   hp: number;
   attack?: string;
+  isSelected?: boolean;
   specialAttack?: string;
   specialDefense?: string;
   defense?: string;
@@ -25,4 +27,5 @@ export interface PokemonProps {
   ability2?: string;
   ability3?: string;
   ability4?: string;
+  pokemon: boolean;
 }
