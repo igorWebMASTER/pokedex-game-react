@@ -19,46 +19,46 @@ export function ModalEditCustomPokemons() {
   const { pokedex } = useContext(PokedexContext);
 
 
-  function handleSelectImage(image: any){
+  function handleSelectImage(image: any) {
     setImageInfo(image);
   }
 
-  const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected);
+  const selectedEditData = pokedex.find((pokemon: PokemonProps) => pokemon.isSelected) as PokemonProps;
 
   useEffect(() => {
-    handleSelectImage(selectedEditData?.image ?? '')  
+    handleSelectImage(selectedEditData?.image ?? '')
   }, [selectedEditData.image])
 
 
   return (
     <>
       <motion.div
-          initial={{ y: 200, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
-          }}
-        >
+        initial={{ y: 200, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          type: 'spring',
+          stiffness: 260,
+          damping: 20,
+        }}
+      >
         <S.ModalContainer>
-            <S.ModalHeader>
-              <button 
-                  type="button"
-                  onClick={closeModal}
-                  className="button-close"
-                >
-                  <img src={CloseModal} alt="" />
-                </button>
-                <ModalHeaderRounded>
-                    <UploadImage images={imageInfo} handleImage={handleSelectImage} />
-                </ModalHeaderRounded>
-            </S.ModalHeader>
-            <S.ModalBody>
-              <FormEditPokemon uploadImageInfo={imageInfo}   />
-            </S.ModalBody>
+          <S.ModalHeader>
+            <button
+              type="button"
+              onClick={closeModal}
+              className="button-close"
+            >
+              <img src={CloseModal} alt="" />
+            </button>
+            <ModalHeaderRounded>
+              <UploadImage images={imageInfo} handleImage={handleSelectImage} />
+            </ModalHeaderRounded>
+          </S.ModalHeader>
+          <S.ModalBody>
+            <FormEditPokemon uploadImageInfo={imageInfo} />
+          </S.ModalBody>
         </S.ModalContainer>
-        </motion.div>
+      </motion.div>
     </>
   );
 }

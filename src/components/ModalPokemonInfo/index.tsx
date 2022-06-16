@@ -38,7 +38,7 @@ export function ModalPokemonInfo() {
 
   const { closeModal, openModal, setModalView } = useUI();
 
-  const selectedPokemon = pokedex.find((pokemon: any) => pokemon.isSelected);
+  const selectedPokemon = pokedex.find((pokemon: any) => pokemon.isSelected) as PokemonProps;
 
   const {
     register,
@@ -48,9 +48,6 @@ export function ModalPokemonInfo() {
   } = useForm({
     resolver: yupResolver(changeNamePokemonSchema),
   });
-
-
-
 
   function handleChangeName(data: PokemonProps) {
     handleEditNamePokemon(selectedPokemon.id, data.name);

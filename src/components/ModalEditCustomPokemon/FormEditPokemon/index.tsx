@@ -123,47 +123,47 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
 
   const increaseAttack = () => {
     const quantity = watch("attack");
-    setValue("attack", quantity + 1);
+    setValue("attack", +quantity + 1);
   }
   const decreaseAttack = () => {
     const quantity = watch("attack");
     if (quantity > 1) {
-      setValue("attack", quantity - 1);
+      setValue("attack", +quantity - 1);
     }
   };
 
   const increaseDefense = () => {
     const quantity = watch("defense");
-    setValue("defense", quantity + 1);
+    setValue("defense", +quantity + 1);
   }
   const decreaseDefense = () => {
     const quantity = watch("defense");
     if (quantity > 1) {
-      setValue("defense", quantity - 1);
+      setValue("defense", +quantity - 1);
     }
   };
 
   const increaseSpecialDefense = () => {
     const quantity = watch("specialDefense");
-    setValue("specialDefense", quantity + 1);
+    setValue("specialDefense", +quantity + 1);
   }
 
   const decreaseSpecialDefense = () => {
     const quantity = watch("specialDefense");
     if (quantity > 1) {
-      setValue("specialDefense", quantity - 1);
+      setValue("specialDefense", +quantity - 1);
     }
   };
 
   const increaseSpecialAttack = () => {
     const quantity = watch("specialAttack");
-    setValue("specialAttack", quantity + 1);
+    setValue("specialAttack", +quantity + 1);
   }
 
   const decreaseSpecialAttack = () => {
     const quantity = watch("specialAttack");
     if (quantity > 1) {
-      setValue("specialAttack", quantity - 1);
+      setValue("specialAttack", +quantity - 1);
     }
   };
 

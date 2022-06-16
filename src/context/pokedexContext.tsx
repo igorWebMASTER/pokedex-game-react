@@ -5,11 +5,11 @@ import toast from 'react-hot-toast';
 interface PokedexContextData {
   handleAddPokemonToPokedex: Function;
   setPokedex: Function;
-  handleEditNamePokemon:Function;
+  handleEditNamePokemon: Function;
   handleReleasePokemon: Function;
   handleEditCustomPokemon: Function;
   handleAddCustomPokemon: Function;
-  pokedex: any;
+  pokedex: PokemonProps[];
 }
 
 
@@ -27,34 +27,34 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     return data;
   };
 
-  const [pokedex, setPokedex] = useState(getInitialPokedexState) ;
+  const [pokedex, setPokedex] = useState(getInitialPokedexState);
 
   useEffect(() => {
-    if(pokedex) {
+    if (pokedex) {
       localStorage.setItem('@pokedex-game', JSON.stringify(pokedex))
     }
   }, [pokedex])
 
-  function handleAddPokemonToPokedex  (pokemon: PokemonProps) {
+  function handleAddPokemonToPokedex(pokemon: PokemonProps) {
     if (pokedex.find((slot: { id: string; }) => slot.id === pokemon.id)) return;
-    
+
     pokedex.map((slot: { id: string; }, index: number) => {
-      
+
       if (!slot.id) {
-       
+
         setPokedex(([
-            ...pokedex.slice(0, index),
-            pokemon,
-            ...pokedex.slice(index + 1),
+          ...pokedex.slice(0, index),
+          pokemon,
+          ...pokedex.slice(index + 1),
         ]));
       }
       return pokedex;
     });
   };
 
-  function handleEditNamePokemon  (pokemonId: string, name: string) {
+  function handleEditNamePokemon(pokemonId: string, name: string) {
     if (!pokedex.find((slot: { id: string; }) => slot.id === pokemonId)) return;
-    if(!pokemonId) return;
+    if (!pokemonId) return;
 
     pokedex.forEach((pokemon: any, index: number) => {
       if (pokemon.id === pokemonId) {
@@ -66,14 +66,13 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
           },
           ...pokedex.slice(index + 1),
         ]);
-
       }
 
       return pokedex;
     });
 
   }
-  
+
   function handleReleasePokemon(pokemonId: string) {
     if (!pokemonId) return;
     if (!pokedex.find((slot: { id: string; }) => slot.id === pokemonId)) return;
@@ -91,9 +90,9 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
       ...data,
       id: id,
     };
-    if (pokedex.find((slot: { name: string; }) => slot.name === data.name)){ 
+    if (pokedex.find((slot: { name: string; }) => slot.name === data.name)) {
       return toast.error('Esse nome já está sendo usado');
-   }
+    }
     pokedex.map((slot: { id: string; }, index: number) => {
       if (!slot.id) {
         setPokedex([
@@ -108,16 +107,16 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
 
   const handleEditCustomPokemon = (pokemon: any) => {
     const newSlots = pokedex.map((slot: { id: string; }) => {
-        if (slot.id === pokemon.id) {
-          return pokemon
-        }
-        return slot;
-     }
+      if (slot.id === pokemon.id) {
+        return pokemon
+      }
+      return slot;
+    }
     );
     setPokedex(newSlots);
   }
-  
-  
+
+
   const values = useMemo(
     () => ({
       pokedex,
@@ -127,7 +126,7 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
       handleEditNamePokemon,
       handleAddCustomPokemon,
       handleEditCustomPokemon
-  }), [pokedex, setPokedex, handleAddPokemonToPokedex, handleReleasePokemon, handleEditNamePokemon, handleAddCustomPokemon, handleEditCustomPokemon]);
+    }), [pokedex, setPokedex, handleAddPokemonToPokedex, handleReleasePokemon, handleEditNamePokemon, handleAddCustomPokemon, handleEditCustomPokemon]);
 
   return (
     <PokedexContext.Provider
