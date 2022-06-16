@@ -5,7 +5,7 @@ import pokemonLogo from 'assets/images/pokemonLogo.png';
 import { Link } from 'react-router-dom';
 import * as Styled from './styles';
 
-export function InitialPage() {
+export default function InitialPage() {
 
   return (
     <Styled.ContainerHomeScreen>
@@ -15,7 +15,7 @@ export function InitialPage() {
         </Styled.Logo>
         <Styled.HomeContent>
           <Link to="/game">
-            <Button text="START" icon="" onClick={() => {}} onlyIcon="false" />
+            <Button text="START" icon="" onClick={() => { }} onlyIcon="false" />
           </Link>
         </Styled.HomeContent>
       </Styled.ContentHome>
