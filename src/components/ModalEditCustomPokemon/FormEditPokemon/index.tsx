@@ -28,8 +28,7 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
   const { closeModal } = useUI();
 
 
-  const selectedEditData =  pokedex.find((pokemon: PokemonProps) => pokemon.isSelected)
-  console.log(selectedEditData);
+  const selectedEditData = pokedex.find((pokemon: PokemonProps) => pokemon.isSelected)
   const {
     register,
     handleSubmit,
@@ -44,15 +43,15 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
       height: selectedEditData?.height ?? 0,
       weight: selectedEditData?.weight ?? 0,
       types: selectedEditData?.types,
-      image:selectedEditData?.image ??  '',
+      image: selectedEditData?.image ?? '',
       ability1: selectedEditData?.ability1 ?? '',
       ability2: selectedEditData?.ability2 ?? '',
       ability3: selectedEditData?.ability3 ?? '',
       ability4: selectedEditData?.ability4 ?? '',
-      defense: selectedEditData?.defense ??0,
+      defense: selectedEditData?.defense ?? 0,
       attack: selectedEditData?.attack ?? 0,
-      specialDefense:   selectedEditData?.specialDefense ?? 0,
-      specialAttack:  selectedEditData?.specialAttack ?? 0,
+      specialDefense: selectedEditData?.specialDefense ?? 0,
+      specialAttack: selectedEditData?.specialAttack ?? 0,
     }
   });
 
@@ -65,15 +64,13 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
     setSelectedTypes(type)
   }
 
-  function editCustomPokemon(data: any){
+  function editCustomPokemon(data: any) {
     const newData = {
       ...selectedEditData,
       ...data,
-      types: selectedTypes || selectedEditData?.types ,
+      types: selectedTypes || selectedEditData?.types,
       image: uploadImageInfo
     }
-
-    console.log(selectedTypes ?? selectedEditData?.types )
 
     handleEditCustomPokemon(newData)
     closeModal()
@@ -177,131 +174,131 @@ export function FormEditPokemon({ uploadImageInfo }: UploadImageInfo) {
     <S.FormContainer >
       <form onSubmit={handleSubmit(editCustomPokemon)} >
         <InputText
-           label="Nome"
-           type="text"
-           placeholder="name"
-           {...register("name")}
-           error={errors.name}
-          />
-          <InputNumber
-              label="HP"
-              type="number"
-              readOnly
-              {...register('hp')}
-              handleIncrease={increaseHp}
-              handleDecrease={decreaseHp}
-              error={errors.hp}
-          />
-          <InputNumber
-              label="Peso"
-              {...register('weight')}
-              suffix={"Kg"}
-              readOnly
-              handleIncrease={increaseWeight}
-              handleDecrease={decreaseWeight}
-              error={errors.weight}
-          />
-          <InputNumber
-              label="ALTURA"
-              type="number"
-              //  name="hp"
-              readOnly
-              suffix={"Cm"}
-              placeholder="Altura"
-              handleIncrease={increaseHeight}
-              handleDecrease={decreaseHeight}
-              error={errors.height}
-              {...register('height')}
-            />
-           <HorizontalLine  title={'Tipo'}/>
-          <SelectType
-            handleSelectType={handleSelectType}
-            selectedValues={selectedEditData?.types}
-            {...register('types')}
-            error={errors.types}
-          />
-           <HorizontalLine  title={'HABILIDADES'}/>
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 1"
-              {...register("ability1")}
-              error={errors.ability1}
-            />
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 2"
-              {...register("ability2")}
-              error={errors.ability2}
-            />
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 3"
-              {...register("ability3")}
-              error={errors.ability3}
-            />
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 4"
-              {...register("ability4")}
-              error={errors.ability4}
-            />
-          <ModalForm.HorizontalLine>
-            <HorizontalLine  title={'ESTATÍSTICAS'}/>
-          </ModalForm.HorizontalLine>
-          <InputNumber
-            label="DEFESA"
-            type="number"
-            icon=""
-            readOnly
-            suffix={""}
-            placeholder="00"
-            handleIncrease={increaseDefense}
-            handleDecrease={decreaseDefense}
-            error={errors.defense}
-            {...register('defense')}
-          />
-          <InputNumber
-            label="ATAQUE"
-            type="number"
-            readOnly
-            suffix={""}
-            placeholder="00"
-            handleIncrease={increaseAttack}
-            handleDecrease={decreaseAttack}
-            error={errors.attack}
-            {...register('attack')}
-          />
-           <InputNumber
-            label="DEFESA ESPECIAL"
-            type="number"
-            suffix={""}
-            placeholder="00"
-            readOnly
-            handleIncrease={increaseSpecialDefense}
-            handleDecrease={decreaseSpecialDefense}
-            error={errors.specialDefense}
-            {...register('specialDefense')}
-          />
-          <InputNumber
-            label="ATAQUE ESPECIAL"
-            type="number"
-            suffix={""}
-            placeholder="00"
-            readOnly
-            handleIncrease={increaseSpecialAttack}
-            handleDecrease={decreaseSpecialAttack}
-            error={errors.specialAttack}
-            {...register('specialAttack')}
-          />
-           <Button
-              text="EDITAR POKEMON"
-              icon=""
-              onlyIcon=""
-            />
+          label="Nome"
+          type="text"
+          placeholder="name"
+          {...register("name")}
+          error={errors.name}
+        />
+        <InputNumber
+          label="HP"
+          type="number"
+          readOnly
+          {...register('hp')}
+          handleIncrease={increaseHp}
+          handleDecrease={decreaseHp}
+          error={errors.hp}
+        />
+        <InputNumber
+          label="Peso"
+          {...register('weight')}
+          suffix={"Kg"}
+          readOnly
+          handleIncrease={increaseWeight}
+          handleDecrease={decreaseWeight}
+          error={errors.weight}
+        />
+        <InputNumber
+          label="ALTURA"
+          type="number"
+          //  name="hp"
+          readOnly
+          suffix={"Cm"}
+          placeholder="Altura"
+          handleIncrease={increaseHeight}
+          handleDecrease={decreaseHeight}
+          error={errors.height}
+          {...register('height')}
+        />
+        <HorizontalLine title={'Tipo'} />
+        <SelectType
+          handleSelectType={handleSelectType}
+          selectedValues={selectedEditData?.types}
+          {...register('types')}
+          error={errors.types}
+        />
+        <HorizontalLine title={'HABILIDADES'} />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 1"
+          {...register("ability1")}
+          error={errors.ability1}
+        />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 2"
+          {...register("ability2")}
+          error={errors.ability2}
+        />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 3"
+          {...register("ability3")}
+          error={errors.ability3}
+        />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 4"
+          {...register("ability4")}
+          error={errors.ability4}
+        />
+        <ModalForm.HorizontalLine>
+          <HorizontalLine title={'ESTATÍSTICAS'} />
+        </ModalForm.HorizontalLine>
+        <InputNumber
+          label="DEFESA"
+          type="number"
+          icon=""
+          readOnly
+          suffix={""}
+          placeholder="00"
+          handleIncrease={increaseDefense}
+          handleDecrease={decreaseDefense}
+          error={errors.defense}
+          {...register('defense')}
+        />
+        <InputNumber
+          label="ATAQUE"
+          type="number"
+          readOnly
+          suffix={""}
+          placeholder="00"
+          handleIncrease={increaseAttack}
+          handleDecrease={decreaseAttack}
+          error={errors.attack}
+          {...register('attack')}
+        />
+        <InputNumber
+          label="DEFESA ESPECIAL"
+          type="number"
+          suffix={""}
+          placeholder="00"
+          readOnly
+          handleIncrease={increaseSpecialDefense}
+          handleDecrease={decreaseSpecialDefense}
+          error={errors.specialDefense}
+          {...register('specialDefense')}
+        />
+        <InputNumber
+          label="ATAQUE ESPECIAL"
+          type="number"
+          suffix={""}
+          placeholder="00"
+          readOnly
+          handleIncrease={increaseSpecialAttack}
+          handleDecrease={decreaseSpecialAttack}
+          error={errors.specialAttack}
+          {...register('specialAttack')}
+        />
+        <Button
+          text="EDITAR POKEMON"
+          icon=""
+          onlyIcon=""
+        />
       </form>
     </S.FormContainer>
   );
