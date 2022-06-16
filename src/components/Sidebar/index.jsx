@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import Button from 'components/Button';
 
 import iconPlus from 'assets/images/plus.png';
-import pokeAvatar from 'assets/images/poke-avatar.png';
 
 import * as S from './styled';
 import { PokedexContext } from 'context/pokedexContext';
@@ -38,7 +37,7 @@ function Sidebar() {
       return {
         ...pokemon,
       }
-      
+
     })
     setPokedex(newPokedex);
     setModalView('INFO_POKEMON_VIEW');
@@ -70,7 +69,8 @@ function Sidebar() {
                   '?'
                 )}
               </S.SideBarItem>
-            )}).reverse()}
+            )
+          }).reverse()}
       </S.SideBarList>
 
       <Button

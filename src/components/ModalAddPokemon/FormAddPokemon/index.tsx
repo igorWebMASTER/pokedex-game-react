@@ -15,10 +15,8 @@ import { formSchema } from 'app/validations';
 import { HorizontalLine } from 'components/HorizontalLine';
 import { useUI } from 'hooks/useUI';
 
-import DropDown from '../../Dropdown';
-
 export type UploadImageInfo = {
-  uploadImageInfo: string[]; 
+  uploadImageInfo: string[];
 }
 
 export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
@@ -38,7 +36,7 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
       hp: 0,
       name: "",
       height: 0,
-      weight:0,
+      weight: 0,
       types: [],
       image: "",
       ability1: "",
@@ -61,14 +59,12 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
     setSelectedTypes(type)
   }
 
-  function createCustomPokemon(data: any){
+  function createCustomPokemon(data: any) {
     const newData = {
       ...data,
       types: selectedTypes,
       image: uploadImageInfo
     }
-    console.log(newData);
-    
     handleAddCustomPokemon(newData);
     closeModal();
   }
@@ -169,130 +165,130 @@ export function FormAddPokemon({ uploadImageInfo }: UploadImageInfo) {
     <S.FormContainer >
       <form onSubmit={handleSubmit(createCustomPokemon)} >
         <InputText
-           label="Nome"
-           type="text"
-           placeholder="name"
-           {...register("name")}
-           error={errors.name}
-          />
-          <InputNumber
-              label="HP"
-              type="number"
-              readOnly
-              {...register('hp')}
-              handleIncrease={increaseHp}
-              handleDecrease={decreaseHp}
-              error={errors.hp}
-          />
-          <InputNumber
-              label="Peso"
-              {...register('weight')}
-              suffix={"Kg"}
-              readOnly
-              handleIncrease={increaseWeight}
-              handleDecrease={decreaseWeight}
-              error={errors.weight}
-          />
-          <InputNumber
-              label="ALTURA"
-              type="number"
-              readOnly
-              suffix={"Cm"}
-              placeholder="Altura"
-              handleIncrease={increaseHeight}
-              handleDecrease={decreaseHeight}
-              error={errors.height}
-              {...register('height')}
-            />
-           <HorizontalLine  title={'Tipo'}/>
-          <SelectType
-            handleSelectType={handleSelectType}
-            {...register('types')}
-            error={errors.types}
-          />
-           <HorizontalLine  title={'HABILIDADES'}/>
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 1"
-              {...register("ability1")}
-              error={errors.ability1}
-            />
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 2"
-              {...register("ability2")}
-              error={errors.ability2}
-            />
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 3"
-              {...register("ability3")}
-              error={errors.ability3}
-            />
-            <InputText
-              label=""
-              type="text"
-              placeholder="Habilidade 4"
-              {...register("ability4")}
-              error={errors.ability4}
-            />
-          <ModalForm.HorizontalLine>
-            <HorizontalLine  title={'ESTATÍSTICAS'}/>
-          </ModalForm.HorizontalLine>
-          <InputNumber
-            label="DEFESA"
-            type="number"
-            icon=""
-            readOnly
-            suffix={""}
-            placeholder="00"
-            handleIncrease={increaseDefense}
-            handleDecrease={decreaseDefense}
-            error={errors.defense}
-            {...register('defense')}
-          />
-          <InputNumber
-            label="ATAQUE"
-            type="number"
-            readOnly
-            suffix={""}
-            placeholder="00"
-            handleIncrease={increaseAttack}
-            handleDecrease={decreaseAttack}
-            error={errors.attack}
-            {...register('attack')}
-          />
-           <InputNumber
-            label="SPECIAL-DEFENSE"
-            type="number"
-            suffix={""}
-            placeholder="00"
-            readOnly
-            handleIncrease={increaseSpecialDefense}
-            handleDecrease={decreaseSpecialDefense}
-            error={errors.specialDefense}
-            {...register('specialDefense')}
-          />
-          <InputNumber
-            label="ATAQUE ESPECIAL"
-            type="number"
-            suffix={""}
-            placeholder="00"
-            readOnly
-            handleIncrease={increaseSpecialAttack}
-            handleDecrease={decreaseSpecialAttack}
-            error={errors.specialAttack}
-            {...register('specialAttack')}
-          />
-           <Button
-              text="CRIAR POKEMON"
-              icon=""
-              onlyIcon=""
-              onClick={() => console.log('')}
-            />
+          label="Nome"
+          type="text"
+          placeholder="name"
+          {...register("name")}
+          error={errors.name}
+        />
+        <InputNumber
+          label="HP"
+          type="number"
+          readOnly
+          {...register('hp')}
+          handleIncrease={increaseHp}
+          handleDecrease={decreaseHp}
+          error={errors.hp}
+        />
+        <InputNumber
+          label="Peso"
+          {...register('weight')}
+          suffix={"Kg"}
+          readOnly
+          handleIncrease={increaseWeight}
+          handleDecrease={decreaseWeight}
+          error={errors.weight}
+        />
+        <InputNumber
+          label="ALTURA"
+          type="number"
+          readOnly
+          suffix={"Cm"}
+          placeholder="Altura"
+          handleIncrease={increaseHeight}
+          handleDecrease={decreaseHeight}
+          error={errors.height}
+          {...register('height')}
+        />
+        <HorizontalLine title={'Tipo'} />
+        <SelectType
+          handleSelectType={handleSelectType}
+          {...register('types')}
+          error={errors.types}
+        />
+        <HorizontalLine title={'HABILIDADES'} />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 1"
+          {...register("ability1")}
+          error={errors.ability1}
+        />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 2"
+          {...register("ability2")}
+          error={errors.ability2}
+        />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 3"
+          {...register("ability3")}
+          error={errors.ability3}
+        />
+        <InputText
+          label=""
+          type="text"
+          placeholder="Habilidade 4"
+          {...register("ability4")}
+          error={errors.ability4}
+        />
+        <ModalForm.HorizontalLine>
+          <HorizontalLine title={'ESTATÍSTICAS'} />
+        </ModalForm.HorizontalLine>
+        <InputNumber
+          label="DEFESA"
+          type="number"
+          icon=""
+          readOnly
+          suffix={""}
+          placeholder="00"
+          handleIncrease={increaseDefense}
+          handleDecrease={decreaseDefense}
+          error={errors.defense}
+          {...register('defense')}
+        />
+        <InputNumber
+          label="ATAQUE"
+          type="number"
+          readOnly
+          suffix={""}
+          placeholder="00"
+          handleIncrease={increaseAttack}
+          handleDecrease={decreaseAttack}
+          error={errors.attack}
+          {...register('attack')}
+        />
+        <InputNumber
+          label="SPECIAL-DEFENSE"
+          type="number"
+          suffix={""}
+          placeholder="00"
+          readOnly
+          handleIncrease={increaseSpecialDefense}
+          handleDecrease={decreaseSpecialDefense}
+          error={errors.specialDefense}
+          {...register('specialDefense')}
+        />
+        <InputNumber
+          label="ATAQUE ESPECIAL"
+          type="number"
+          suffix={""}
+          placeholder="00"
+          readOnly
+          handleIncrease={increaseSpecialAttack}
+          handleDecrease={decreaseSpecialAttack}
+          error={errors.specialAttack}
+          {...register('specialAttack')}
+        />
+        <Button
+          text="CRIAR POKEMON"
+          icon=""
+          onlyIcon=""
+          onClick={() => console.log('')}
+        />
       </form>
     </S.FormContainer>
   );

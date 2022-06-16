@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const ModalOverlay = styled.div`
   background: var(--modal-background);
@@ -65,7 +65,7 @@ export const ModalHeader = styled.div`
 
 export const ModalBody = styled.div`
   display: flex;
-  height: calc(100vh + 912px);
+  height: auto;
   padding: 4rem 2rem;
   width: 100%;
   position: absolute;
@@ -74,8 +74,6 @@ export const ModalBody = styled.div`
   flex-direction: column;
   justify-content: center;
   background: #fff;
-
-
 `
 
 export const ModalTextBody = styled.div`

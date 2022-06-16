@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from "styled-components"
 
 export const ModalOverlay = styled.div`
   background: var(--modal-background);
@@ -14,7 +14,7 @@ export const ModalOverlay = styled.div`
   z-index:90;
 `
 
-export const Text = styled.h1<{ isHovered : boolean, fontSize?: number }>`
+export const Text = styled.h1<{ isHovered: boolean, fontSize?: number }>`
   margin-bottom: 1rem;
   text-decoration: underline;
   color: var(--link-color);
@@ -233,7 +233,7 @@ export const CaptureButtonContainer = styled.div`
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 8rem;
+    bottom: 4.5rem;
   button{
       max-width:300px;
       filter: drop-shadow(0 0px 2.15rem rgba(0, 0, 0, 0.347));

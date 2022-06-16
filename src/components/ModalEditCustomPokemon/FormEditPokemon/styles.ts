@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from "styled-components/macro"
 
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
-
+    margin-top:12rem;
     form {
         display: flex;
         flex-direction: column;
@@ -33,7 +33,7 @@ export const FormContainer = styled.div`
             max-width: 250px;
             filter: drop-shadow(0 0px 2.15rem rgba(0,0,0,0.347));
             margin: 0% auto;
-       
+
     }
     }
 
@@ -47,7 +47,7 @@ export const FormContainer = styled.div`
             margin: 0.1rem 0;
         }
     }
-    
-    
+
+
 
 `
